@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind utilities;
+@tailwind utilities;
+
+@layer base {
+  h1 {
+  }
+  body {
+    @apply font-primary antialiased text-sm md:text-base text-theme-7 dark:text-theme-3 bg-theme-1 dark:bg-theme-8;
+  }
+}
