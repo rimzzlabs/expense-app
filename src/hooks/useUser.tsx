@@ -14,8 +14,10 @@ const useUser = () => {
         email: supabaseUser?.email as string,
         username: supabaseUser?.user_metadata.username as string
       })
+    } else {
+      setUser(null)
     }
-  }, [Supabase.Supabase.auth.user()])
+  }, [Supabase.Supabase.auth.user])
 
   return {
     user
