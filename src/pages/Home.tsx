@@ -1,8 +1,10 @@
+import { AuthLayer } from '@/components'
+
 const HomePage: React.FunctionComponent = () => {
   return (
-    <section>
-      <h1>Hello world</h1>
-    </section>
+    <AuthLayer>
+      <h1>Helllo World</h1>
+    </AuthLayer>
   )
 }
 
