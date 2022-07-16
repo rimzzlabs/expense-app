@@ -6,17 +6,47 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "lint": "yarn eslint --config ./.eslintrc.cjs ./src/**/*.{tsx,ts}",
+    "postinstall": "husky install",
+    "type-check": "tsc --project tsconfig.json --pretty --noEmit",
+    "format": "prettier --config ./.prettierrc.cjs -w ./src/**/*.{tsx,ts}"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
+    "@supabase/supabase-js": "^1.35.4",
+    "@tailwindcss/forms": "^0.5.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.3.0",
+    "react-icons": "^4.4.0",
+    "react-router-dom": "^6.3.0"
   },
   "devDependencies": {
+    "@trivago/prettier-plugin-sort-imports": "^3.2.0",
+    "@types/node": "^18.0.5",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.30.6",
+    "@typescript-eslint/parser": "^5.30.6",
     "@vitejs/plugin-react": "^2.0.0",
+    "autoprefixer": "^10.4.7",
+    "clsx": "^1.2.1",
+    "cz-conventional-changelog": "3.3.0",
+    "eslint": "^8.19.0",
+    "eslint-plugin-react": "^7.30.1",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "postcss": "^8.4.14",
+    "prettier": "^2.7.1",
+    "tailwind-merge": "^1.4.0",
+    "tailwindcss": "^3.1.6",
     "typescript": "^4.6.4",
     "vite": "^3.0.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
