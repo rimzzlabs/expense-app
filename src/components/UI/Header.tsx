@@ -1,13 +1,10 @@
-import { Button } from '@/components/UI'
-
-import { useTheme } from '@/hooks'
 import { twclsx } from '@/utils'
 
-import { HiMoon as Moon, HiSun as Sun } from 'react-icons/hi'
+import Nav from './Nav'
+
 import { Link, useLocation } from 'react-router-dom'
 
 const Header: React.FunctionComponent = () => {
-  const { theme, toggleTheme } = useTheme()
   const { pathname } = useLocation()
 
   if (pathname === '/404') return null
@@ -34,12 +31,7 @@ const Header: React.FunctionComponent = () => {
           ExpenseApp
         </Link>
 
-        <Button
-          onClick={toggleTheme}
-          className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
-        >
-          {theme === 'dark' ? <Sun /> : <Moon />}
-        </Button>
+        <Nav />
       </div>
     </header>
   )
