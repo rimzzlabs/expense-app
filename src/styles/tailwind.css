@@ -4,8 +4,25 @@
 
 @layer base {
   h1 {
+    @apply font-primary text-2xl font-bold md:text-4xl text-theme-8 dark:text-theme-2;
+  }
+
+  h2 {
+    @apply font-primary text-xl font-bold md:text-3xl text-theme-8 dark:text-theme-2;
+  }
+
+  h3 {
+    @apply font-primary text-lg font-bold md:text-2xl text-theme-8 dark:text-theme-2;
+  }
+
+  h4 {
+    @apply font-primary text-base font-bold md:text-lg text-theme-8 dark:text-theme-2;
   }
   body {
     @apply font-primary antialiased text-sm md:text-base text-theme-7 dark:text-theme-3 bg-theme-1 dark:bg-theme-8;
+  }
+
+  .layout {
+    @apply w-11/12 mx-auto max-w-3xl;
   }
 }
