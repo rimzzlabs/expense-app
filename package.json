@@ -7,10 +7,10 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint": "yarn eslint --config ./.eslintrc.cjs ./src/**/*.{tsx,ts}",
+    "lint": "yarn eslint --config ./.eslintrc.cjs",
     "postinstall": "husky install",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "format": "prettier --config ./.prettierrc.cjs -w ./src/**/*.{tsx,ts}"
+    "format": "prettier --config ./.prettierrc.cjs -w"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
