@@ -17,6 +17,7 @@ export default {
       const response = await this.Supabase.auth.signIn({ ...payload })
       if (response.error) {
         toast.error(response.error.message ?? 'Could not signin')
+        return null
       }
       toast.success('Signed in!')
       return response.user
