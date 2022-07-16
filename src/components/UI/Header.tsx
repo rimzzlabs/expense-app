@@ -4,7 +4,7 @@ import { useTheme } from '@/hooks'
 import { twclsx } from '@/utils'
 
 import { HiMoon as Moon, HiSun as Sun } from 'react-icons/hi'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const Header: React.FunctionComponent = () => {
   const { theme, toggleTheme } = useTheme()
@@ -15,7 +15,7 @@ const Header: React.FunctionComponent = () => {
   return (
     <header
       className={twclsx(
-        'fixed top-0 inset-x-0',
+        'fixed top-0 inset-x-0 z-40',
         'bg-theme-1 dark:bg-theme-8',
         '[@supports(backdrop-filter:blur(0))]:backdrop-blur',
         '[@supports(backdrop-filter:blur(0))]:bg-theme-1/80',
@@ -23,7 +23,8 @@ const Header: React.FunctionComponent = () => {
       )}
     >
       <div className={twclsx('layout', 'flex items-center justify-between', 'h-20')}>
-        <p
+        <Link
+          to='/'
           className={twclsx(
             'bg-clip-text text-transparent',
             'text-xl md:text-2xl font-bold',
@@ -31,7 +32,7 @@ const Header: React.FunctionComponent = () => {
           )}
         >
           ExpenseApp
-        </p>
+        </Link>
 
         <Button
           onClick={toggleTheme}
