@@ -1,35 +1,89 @@
-import { ButtonLink, InputGroup, PrimaryButton } from '@/components'
+import { ButtonLink, Input, InputError, PrimaryButton } from '@/components'
 
-import { twclsx } from '@/utils'
+import { useUser } from '@/hooks'
+import { Supabase } from '@/services'
+import { signinSchema, twclsx } from '@/utils'
+
+import { yupResolver } from '@hookform/resolvers/yup'
+import { SigninUserPayload } from 'expense-app'
+import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 const SigninPage: React.FunctionComponent = () => {
+  const navigate = useNavigate()
+  const { user } = useUser()
+
+  const defaultValues: SigninUserPayload = { email: '', password: '' }
+  const rhf = useForm<SigninUserPayload>({
+    defaultValues,
+    resolver: yupResolver(signinSchema)
+  })
+
+  const onSubmit = async (args: SigninUserPayload) => {
+    const response = await Supabase.signIn(args)
+    if (response) {
+      navigate('/', { replace: true })
+    }
+    rhf.reset()
+  }
+
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user])
+
   return (
     <section className={twclsx('flex flex-col gap-4', 'pt-10 md:gap-8')}>
       <div className='w-full'>
         <h1 className='text-4xl md:text-5xl mb-4'>Welcome back!</h1>
-        <p className='mb-2'>let&apos;s miss your history? signin to see your expense history🤑.</p>
+        <p>let&apos;s miss your history? signin to see your expense history🤑.</p>
       </div>
 
-      <form className='grid grid-cols-1 gap-6 max-w-lg'>
+      <form onSubmit={rhf.handleSubmit(onSubmit)} className='grid grid-cols-1 gap-6 max-w-lg'>
         <h2>
           Signin to{' '}
           <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary-5 to-ternary-5'>
             ExpenseApp
           </span>
         </h2>
-        <InputGroup
-          type='email'
-          label='Email Address'
-          htmlForAndName='email'
-          placeholder='Email address to verify you :D'
-        />
 
-        <InputGroup
-          type='password'
-          label='Password'
-          htmlForAndName='password'
-          placeholder='A strong password is required'
-        />
+        <div className='flex flex-col gap-2'>
+          <label htmlFor='email'>Email</label>
+
+          <Input
+            type='email'
+            id='email'
+            placeholder='Your ExpenseApp email address'
+            className={twclsx(
+              rhf.formState.errors.email?.message &&
+                'border-error-1 dark:border-error-1 focus:border-error-1 focus:ring-error-1'
+            )}
+            {...rhf.register('email')}
+          />
+          {rhf.formState.errors.email?.message && (
+            <InputError msg={rhf.formState.errors.email.message} />
+          )}
+        </div>
+
+        <div className='flex flex-col gap-2'>
+          <label htmlFor='password'>Password</label>
+
+          <Input
+            type='password'
+            id='password'
+            placeholder='Your ExpenseApp password'
+            className={twclsx(
+              rhf.formState.errors.password?.message &&
+                'border-error-1 dark:border-error-1 focus:border-error-1 focus:ring-error-1'
+            )}
+            {...rhf.register('password')}
+          />
+          {rhf.formState.errors.password?.message && (
+            <InputError msg={rhf.formState.errors.password.message} />
+          )}
+        </div>
 
         <div className='flex items-center gap-2'>
           <PrimaryButton className={twclsx('w-full md:max-w-max', 'py-2.5 px-6 font-semibold')}>
