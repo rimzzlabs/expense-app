@@ -10,7 +10,7 @@
     "lint": "yarn eslint --config ./.eslintrc.cjs",
     "postinstall": "husky install",
     "type-check": "tsc --project tsconfig.json --pretty --noEmit",
-    "format": "prettier --config ./.prettierrc.cjs -w"
+    "format": "prettier --config ./.prettierrc.cjs"
   },
   "dependencies": {
     "@headlessui/react": "^1.6.6",
