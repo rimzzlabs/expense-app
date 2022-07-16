@@ -41,6 +41,11 @@ module.exports = {
         2: colors.red[600],
         3: colors.red[700]
       },
+      success: {
+        1: colors.emerald[500],
+        2: colors.emerald[600],
+        3: colors.emerald[700]
+      },
       transparent: colors.transparent
     },
     fontFamily: {
