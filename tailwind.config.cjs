@@ -17,6 +17,15 @@ module.exports = {
         6: colors.blue[600],
         7: colors.blue[700]
       },
+      ternary: {
+        1: colors.emerald[100],
+        2: colors.emerald[200],
+        3: colors.emerald[300],
+        4: colors.emerald[400],
+        5: colors.emerald[500],
+        6: colors.emerald[600],
+        7: colors.emerald[700]
+      },
       theme: {
         1: colors.white,
         2: colors.neutral[100],
@@ -26,11 +35,17 @@ module.exports = {
         6: colors.neutral[700],
         7: colors.neutral[800],
         8: colors.neutral[900]
-      }
+      },
+      error: {
+        1: colors.red[500],
+        2: colors.red[600],
+        3: colors.red[700]
+      },
+      transparent: colors.transparent
     },
     fontFamily: {
-      primary: ['"Inter"', ...fontFamily.sans]
+      primary: ["'Inter'", ...fontFamily.sans]
     }
   },
-  plugins: []
+  plugins: [require('@tailwindcss/forms')]
 }
