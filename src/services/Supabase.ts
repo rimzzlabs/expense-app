@@ -49,6 +49,24 @@ export default {
     }
   },
 
+  async signOut() {
+    const toastId = toast.loading('Loading...')
+    try {
+      const response = await this.Supabase.auth.signOut()
+      if (response.error) {
+        toast.error(response.error.message)
+        return false
+      }
+      toast.success('Signed out!')
+      return true
+    } catch (e) {
+      toast.error('Could not signing you out, please try again')
+      return false
+    } finally {
+      toast.remove(toastId)
+    }
+  },
+
   async createExpense(payload: CreateExpensePayload) {
     const toastId = toast.loading('Loading...')
     try {
