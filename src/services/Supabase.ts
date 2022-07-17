@@ -7,8 +7,6 @@ import { v4 as uid } from 'uuid'
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
 
-export const session = supabase.auth.session()
-
 export const signIn = async (payload: SigninUserPayload) => {
   const id = toast.loading('Loading..')
   try {
@@ -66,12 +64,12 @@ export const signOut = async () => {
   }
 }
 
-export const createExpense = async (payload: CreateExpensePayload) => {
+export const createExpense = async (payload: CreateExpensePayload, userId: string) => {
   const toastId = toast.loading('Loading...')
   try {
     const response = await supabase.from<Expense>('expense').insert({
       ...payload,
-      user_id: session?.user?.id,
+      user_id: userId,
       history_id: uid()
     })
     if (response.error) {
@@ -88,11 +86,10 @@ export const createExpense = async (payload: CreateExpensePayload) => {
   }
 }
 
-export const getExpense = async () => {
-  const id = session?.user?.id
-  if (id) {
+export const getExpense = async (sessionId: string) => {
+  if (sessionId) {
     try {
-      const response = await supabase.from<Expense>('expense').select('*').eq('user_id', id)
+      const response = await supabase.from<Expense>('expense').select('*').eq('user_id', sessionId)
       if (response.status > 400) {
         toast.error(response.statusText)
         return null
@@ -105,8 +102,8 @@ export const getExpense = async () => {
   }
 }
 
-export const updateExpense = async (payload: Expense) => {
-  const id = session?.user?.id
+export const updateExpense = async (payload: Expense, userId: string) => {
+  const id = userId
   if (id) {
     const toastId = toast.loading('Updating...')
     try {
