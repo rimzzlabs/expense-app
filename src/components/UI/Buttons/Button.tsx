@@ -11,7 +11,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({ className: c, ...props }
   const className = twclsx(
     'inline-flex items-center justify-center',
     'rounded-lg border border-theme-3 dark:border-theme-7',
-    'outline-none ring-primary-5 dark:ring-primary-4 transition-all',
+    'outline-none transition-all',
     'focus-visible:ring',
     c
   )
