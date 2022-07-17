@@ -22,12 +22,11 @@ export const createExpenseSchema = yup.object().shape({
     .string()
     .required(requiredMsg)
     .min(6, 'At least 6 characters')
-    .max(16, 'Should less than 16 characters'),
+    .max(24, 'Should less than 24 characters'),
   total_money: yup
     .number()
-    .transform(() => undefined)
-    .nullable()
-    .notRequired()
     .required(requiredMsg)
+    .typeError('Amount should not an empty string')
+    .moreThan(4, 'At least 5 dollar')
     .lessThan(10000000000, 'maximum money exceeded')
 })
