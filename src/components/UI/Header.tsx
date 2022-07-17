@@ -2,10 +2,12 @@ import { twclsx } from '@/utils'
 
 import Nav from './Nav'
 
+import { HiArrowLeft } from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom'
 
 const Header: React.FunctionComponent = () => {
   const { pathname } = useLocation()
+  const isOnProfilePage = pathname === '/profile'
 
   if (pathname === '/404') return null
 
@@ -24,12 +26,16 @@ const Header: React.FunctionComponent = () => {
         <Link
           to='/'
           className={twclsx(
-            'bg-clip-text text-transparent',
-            'text-xl md:text-2xl font-bold',
-            'bg-gradient-to-r from-primary-5 to-ternary-5'
+            !isOnProfilePage &&
+              'bg-clip-text text-transparent text-xl md:text-2xl font-bold bg-gradient-to-r from-primary-5 to-ternary-5',
+            isOnProfilePage &&
+              'group inline-flex items-center gap-2 py-2 px-4 rounded-lg transition hover:bg-theme-3 dark:hover:bg-theme-7'
           )}
         >
-          ExpenseApp
+          {isOnProfilePage && (
+            <HiArrowLeft className='group-hover:translate-x-1 transition-transform' />
+          )}
+          {isOnProfilePage ? <span>Back</span> : 'ExpenseApp'}
         </Link>
 
         <Nav />
