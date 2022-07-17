@@ -13,7 +13,7 @@ ExpenseApp is an app to see you expense history, income history and help you not
 
 ## What's For
 
-This app is an implementation of React with Firebase, simply have Authentication and CRUD operation.
+This app is an implementation of React with Supabase, simply have Authentication and CRUD operation.
 
 ### Stack
 
