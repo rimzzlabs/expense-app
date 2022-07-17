@@ -1,4 +1,4 @@
-import { Header, LoadingPage } from '@/components/UI'
+import { Header, LoadingPage } from '@/components'
 
 import { usePrompt, useTheme } from '@/hooks'
 import { Layout } from '@/templates'
