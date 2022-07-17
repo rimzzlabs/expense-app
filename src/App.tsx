@@ -16,6 +16,9 @@ const Profile = lazy(() => import('./pages').then((m) => ({ default: m.Profile }
 const NotFound = lazy(() => import('./pages').then((m) => ({ default: m.NotFound })))
 
 const ModalPrompt = lazy(() => import('@/components').then((m) => ({ default: m.ModalPrompt })))
+const ModalCreateExpense = lazy(() =>
+  import('@/components').then((m) => ({ default: m.ModalCreateExpense }))
+)
 
 const ExpenseApp: React.FunctionComponent = () => {
   const { theme } = useTheme()
@@ -53,6 +56,10 @@ const ExpenseApp: React.FunctionComponent = () => {
           onConfirm={state.onConfirm}
           show={state.isOpen}
         />
+      </Suspense>
+
+      <Suspense fallback={<LoadingPage />}>
+        <ModalCreateExpense />
       </Suspense>
     </Suspense>
   )
