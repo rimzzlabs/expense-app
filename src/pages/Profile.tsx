@@ -1,7 +1,7 @@
-import { AuthLayer, Input, PrimaryButton } from '@/components'
+import { AuthLayer, ErrorButton, Input } from '@/components'
 
-import { useUser } from '@/hooks'
-import { Supabase } from '@/services'
+import { usePrompt, useUser } from '@/hooks'
+import { signOut } from '@/services'
 import { twclsx } from '@/utils'
 
 import { useEffect } from 'react'
@@ -10,9 +10,10 @@ import { useNavigate } from 'react-router-dom'
 const ProfilePage: React.FunctionComponent = () => {
   const { user } = useUser()
   const navigate = useNavigate()
+  const { openPrompt } = usePrompt()
 
-  const signout = async () => {
-    await Supabase.signOut()
+  const handleSignout = async () => {
+    await signOut()
     navigate('/signin', { replace: true })
   }
 
@@ -40,12 +41,18 @@ const ProfilePage: React.FunctionComponent = () => {
           </div>
         </form>
 
-        <PrimaryButton
-          onClick={signout}
-          className={twclsx('py-2.5 px-5', 'bg-error-2 text-theme-1', 'hover:bg-error-3')}
+        <ErrorButton
+          onClick={() =>
+            openPrompt({
+              message: 'Are you sure you want to signout from ExpenseApp?',
+              title: 'Signout warning',
+              onConfirm: handleSignout
+            })
+          }
+          className={twclsx('py-2.5 px-5')}
         >
           Signout
-        </PrimaryButton>
+        </ErrorButton>
       </div>
     </AuthLayer>
   )
