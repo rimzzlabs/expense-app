@@ -19,3 +19,5 @@ const initialValue: Prompt = {
 }
 
 export const promptAtom = atom<Prompt>(initialValue)
+
+export const createExpenseModalIsOpen = atom(false)
