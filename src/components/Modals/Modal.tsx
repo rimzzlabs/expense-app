@@ -3,7 +3,7 @@ import { twclsx } from '@/utils'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment } from 'react'
 
-type ModalProps = {
+export type ModalProps = {
   show: boolean
   title: string
   children: React.ReactNode
@@ -49,18 +49,21 @@ const Modal: React.FunctionComponent<ModalProps> = (props) => {
               as='div'
               className={twclsx(
                 'w-11/12 p-6 lg:p-8 rounded-lg shadow-lg',
-                'bg-theme-1 dark:bg-theme-6'
+                'bg-theme-1 dark:bg-theme-7',
+                props.className
               )}
             >
               <Dialog.Title
-                as='h2'
+                as='h3'
                 className={twclsx(
-                  'bg-clip-text text-transparent',
+                  'bg-clip-text text-transparent dark:text-transparent',
                   'bg-gradient-to-r from-primary-5 to-ternary-5'
                 )}
               >
                 {props.title}
               </Dialog.Title>
+
+              {props.children}
             </Dialog.Panel>
           </Transition.Child>
         </div>
