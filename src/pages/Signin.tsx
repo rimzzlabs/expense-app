@@ -43,7 +43,7 @@ const SigninPage: React.FunctionComponent = () => {
     <section className={twclsx('flex flex-col gap-4', 'pt-10 md:gap-8')}>
       <div className='w-full'>
         <h1 className='text-4xl md:text-5xl mb-4'>Welcome back!</h1>
-        <p>let&apos;s miss your history? signin to see your expense history🤑.</p>
+        <p>Miss your expense history? signin to see your expenses💰.</p>
       </div>
 
       <form onSubmit={rhf.handleSubmit(onSubmit)} className='grid grid-cols-1 gap-6 max-w-lg'>
