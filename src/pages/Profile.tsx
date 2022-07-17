@@ -10,10 +10,11 @@ import { useNavigate } from 'react-router-dom'
 const ProfilePage: React.FunctionComponent = () => {
   const { user } = useUser()
   const navigate = useNavigate()
-  const { openPrompt } = usePrompt()
+  const { openPrompt, closePrompt } = usePrompt()
 
   const handleSignout = async () => {
     await signOut()
+    closePrompt()
     navigate('/signin', { replace: true })
   }
 
