@@ -1,30 +1,40 @@
 import { getExpense } from '@/services'
 import { expenseListsAtom } from '@/store'
 
+import useUser from './useUser'
+
 import { useAtom } from 'jotai'
 import { useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 const useExpense = () => {
+  const { user } = useUser()
   const [expenseLists, setExpenseLists] = useAtom(expenseListsAtom)
 
   const refreshExpense = async () => {
-    const response = await getExpense()
-    if (response) {
-      setExpenseLists(response)
+    if (user) {
+      const response = await getExpense(user?.id as string)
+      if (response) {
+        setExpenseLists(response)
+      }
+      return
     }
+    toast.error('Could not refresh expense')
   }
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-extra-semi
     ;(async () => {
-      if (expenseLists.length === 0) {
-        const response = await getExpense()
+      if (expenseLists.length === 0 && user?.id) {
+        const response = await getExpense(user.id)
         if (response) {
           setExpenseLists(response)
+          return
         }
+        toast.error('Cannot get your expense')
       }
     })()
-  }, [])
+  }, [user])
 
   return {
     expenseLists,

@@ -12,7 +12,8 @@ const useUser = () => {
     if (supabaseUser) {
       setUser({
         email: supabaseUser?.email as string,
-        username: supabaseUser?.user_metadata.username as string
+        username: supabaseUser?.user_metadata.username as string,
+        id: supabaseUser.id
       })
     } else {
       setUser(null)
