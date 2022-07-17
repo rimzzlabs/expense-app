@@ -1,4 +1,4 @@
-import { LoadingPage } from '@/components/UI'
+import { LoadingPage } from '@/components'
 
 import { useUser } from '@/hooks'
 
