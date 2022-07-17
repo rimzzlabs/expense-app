@@ -13,7 +13,7 @@ import {
   HiSun as Sun,
   HiX as X
 } from 'react-icons/hi'
-import { Link, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 const AuthMenu: React.FunctionComponent = () => {
   const isMatches = useMediaQuery('(min-width: 768px)')
@@ -26,6 +26,12 @@ const AuthMenu: React.FunctionComponent = () => {
   const navRef = useRef<HTMLDivElement>(null)
 
   const [menuOpen, setMenuOpen] = useState(false)
+
+  const resolveNavLinkClassName = (props: { isActive: boolean }) =>
+    twclsx(
+      'py-2 px-4 transition rounded-lg',
+      props.isActive ? 'bg-primary-5 text-white' : 'hover:bg-theme-2 dark:hover:bg-theme-7'
+    )
 
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev)
@@ -45,25 +51,13 @@ const AuthMenu: React.FunctionComponent = () => {
   if (isMatches) {
     return (
       <nav className={twclsx('inline-flex items-center gap-2.5')}>
-        <Link
-          to='/expense'
-          className={twclsx(
-            'py-2 px-4 transition rounded-lg',
-            'hover:bg-theme-2 dark:hover:bg-theme-7'
-          )}
-        >
+        <NavLink to='/expense' className={resolveNavLinkClassName}>
           Expense
-        </Link>
+        </NavLink>
 
-        <Link
-          to='/profile'
-          className={twclsx(
-            'py-2 px-4 transition rounded-lg',
-            'hover:bg-theme-2 dark:hover:bg-theme-7'
-          )}
-        >
+        <NavLink to='/profile' className={resolveNavLinkClassName}>
           Profile
-        </Link>
+        </NavLink>
 
         {!hideCreateButton && (
           <Button

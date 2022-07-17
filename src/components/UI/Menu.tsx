@@ -12,7 +12,7 @@ import {
   HiSun as Sun,
   HiUser as User
 } from 'react-icons/hi'
-import { Link, useNavigate } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
 type MenuProps = {
   toggleMenu: () => void
@@ -22,6 +22,13 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
   const { theme, toggleTheme } = useTheme()
   const { openPrompt, closePrompt } = usePrompt()
   const navigate = useNavigate()
+
+  const resolveNavLinkClassName = (props: { isActive: boolean }) =>
+    twclsx(
+      'inline-flex items-center gap-4',
+      'w-full py-4 px-6',
+      props.isActive ? 'bg-primary-5 text-theme-1' : 'hover:bg-primary-3 hover:text-theme-1'
+    )
 
   const handleLogout = async () => {
     closePrompt()
@@ -61,30 +68,14 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
         </div>
 
         <nav className={twclsx('flex flex-col', 'h-full w-full')}>
-          <Link
-            onClick={toggleMenu}
-            to='/profile'
-            className={twclsx(
-              'inline-flex items-center gap-4',
-              'w-full py-4 px-6',
-              'hover:bg-primary-5 hover:text-theme-1'
-            )}
-          >
+          <NavLink onClick={toggleMenu} to='/profile' className={resolveNavLinkClassName}>
             <User />
             <span>Profile</span>
-          </Link>
-          <Link
-            onClick={toggleMenu}
-            to='/expense'
-            className={twclsx(
-              'inline-flex items-center gap-4',
-              'w-full py-4 px-6',
-              'hover:bg-primary-5 hover:text-theme-1'
-            )}
-          >
+          </NavLink>
+          <NavLink onClick={toggleMenu} to='/expense' className={resolveNavLinkClassName}>
             <HiCurrencyDollar />
             <span>Expense</span>
-          </Link>
+          </NavLink>
           <Button
             onClick={handleLogoutClick}
             className={twclsx(
