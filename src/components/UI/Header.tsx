@@ -16,10 +16,11 @@ const Header: React.FunctionComponent = () => {
         'bg-theme-1 dark:bg-theme-8',
         '[@supports(backdrop-filter:blur(0))]:backdrop-blur',
         '[@supports(backdrop-filter:blur(0))]:bg-theme-1/80',
-        '[@supports(backdrop-filter:blur(0))]:dark:bg-theme-8/80'
+        '[@supports(backdrop-filter:blur(0))]:dark:bg-theme-8/80',
+        ' border-b border-b-theme-3 dark:border-b-theme-7'
       )}
     >
-      <div className={twclsx('layout', 'flex items-center justify-between', 'h-20')}>
+      <div className={twclsx('layout relative', 'flex items-center justify-between', 'h-20')}>
         <Link
           to='/'
           className={twclsx(
