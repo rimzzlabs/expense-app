@@ -49,7 +49,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
       >
         <div className='flex items-center justify-between py-2 px-6'>
           <p className='font-semibold text-lg'>Menu</p>
-          <Button onClick={toggleTheme} className={twclsx('h-8 w-8', 'text-lg hover:ring')}>
+          <Button onClick={toggleTheme} className={twclsx('h-9 w-9', 'text-lg hover:ring')}>
             {theme === 'dark' ? <Sun /> : <Moon />}
           </Button>
         </div>
