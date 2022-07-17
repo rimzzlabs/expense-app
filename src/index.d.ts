@@ -1,6 +1,14 @@
 declare module 'expense-app' {
   export type Theme = 'light' | 'dark'
 
+  export type Prompt = {
+    isOpen: boolean
+    title: string
+    message: string
+    onClose: () => void
+    onConfirm: () => void
+  }
+
   export type User = {
     username: string
     email: string
@@ -8,11 +16,11 @@ declare module 'expense-app' {
 
   export type Expense = {
     id: string
-    expense_id: string
+    history_id: string
+    user_id: string
     created_at: string | Date
     title: string
     total_money: number
-    history_id: string
   }
 
   export type ExpenseHistory = {
