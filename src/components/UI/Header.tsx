@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 const Header: React.FunctionComponent = () => {
   const { pathname } = useLocation()
-  const isOnProfilePage = pathname === '/profile'
+  const isOnHomepage = pathname === '/'
 
   if (pathname === '/404') return null
 
@@ -26,16 +26,16 @@ const Header: React.FunctionComponent = () => {
         <Link
           to='/'
           className={twclsx(
-            !isOnProfilePage &&
+            isOnHomepage &&
               'bg-clip-text text-transparent text-xl md:text-2xl font-bold bg-gradient-to-r from-primary-5 to-ternary-5',
-            isOnProfilePage &&
+            !isOnHomepage &&
               'group inline-flex items-center gap-2 py-2 px-4 rounded-lg transition hover:bg-theme-3 dark:hover:bg-theme-7'
           )}
         >
-          {isOnProfilePage && (
+          {!isOnHomepage && (
             <HiArrowLeft className='group-hover:translate-x-1 transition-transform' />
           )}
-          {isOnProfilePage ? <span>Back</span> : 'ExpenseApp'}
+          {isOnHomepage ? 'ExpenseApp' : <span>Back</span>}
         </Link>
 
         <Nav />
