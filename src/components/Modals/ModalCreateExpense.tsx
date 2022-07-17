@@ -1,6 +1,7 @@
 import { Button, Input, InputError, PrimaryButton } from '@/components'
 
-import { useCreateExpenseModal } from '@/hooks'
+import { useCreateExpenseModal, useExpense, useUser } from '@/hooks'
+import { createExpense } from '@/services'
 import { createExpenseSchema, twclsx } from '@/utils'
 
 import Modal from './Modal'
@@ -12,6 +13,8 @@ import { useForm } from 'react-hook-form'
 
 const ModalCreateExpense: React.FunctionComponent = () => {
   const defaultValues: CreateExpensePayload = { title: '', total_money: 0 }
+  const { user } = useUser()
+  const { refreshExpense } = useExpense()
 
   const { isOpen, closeModal } = useCreateExpenseModal()
   const rhf = useForm<CreateExpensePayload>({
@@ -19,8 +22,12 @@ const ModalCreateExpense: React.FunctionComponent = () => {
     resolver: yupResolver(createExpenseSchema)
   })
 
-  const onSubmit = (args: CreateExpensePayload) => {
-    console.info(args)
+  const onSubmit = async (args: CreateExpensePayload) => {
+    const response = await createExpense(args, user?.id as string)
+    if (response) {
+      await refreshExpense()
+      closeModal()
+    }
     rhf.reset()
   }
 
@@ -66,7 +73,9 @@ const ModalCreateExpense: React.FunctionComponent = () => {
               rhf.formState.errors.total_money?.message &&
                 'border-error-1 dark:border-error-1 focus:border-error-2 focus:ring-error-1'
             )}
-            {...rhf.register('total_money')}
+            {...rhf.register<keyof CreateExpensePayload>('total_money', {
+              valueAsNumber: true
+            })}
           />
           {rhf.formState.errors.total_money?.message && (
             <InputError msg={rhf.formState.errors.total_money.message} />
