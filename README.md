@@ -6,8 +6,8 @@ ExpenseApp is an app to see you expense history, income history and help you not
 
 ## Develop on your local machine
 
-1. Register to supabase
-2. Get your projects' Anon Key and URL
+1. Register to [Supabase](https://supabase.com)
+2. Get your projects' **Anon Key** and your projects' **URL**
 3. Paste it on `.env.file`
 4. _more docs soon..._
 
