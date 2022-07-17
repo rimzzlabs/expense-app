@@ -1,6 +1,6 @@
-import { Button, ButtonLink } from '@/components'
+import { Button } from '@/components'
 
-import { useMediaQuery, useTheme } from '@/hooks'
+import { useCreateExpenseModal, useMediaQuery, useTheme } from '@/hooks'
 import { twclsx } from '@/utils'
 
 import Menu from './Menu'
@@ -11,13 +11,15 @@ import {
   HiMoon as Moon,
   HiPlus as Plus,
   HiSun as Sun,
-  HiUser as User,
   HiX as X
 } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
 
 const AuthMenu: React.FunctionComponent = () => {
   const isMatches = useMediaQuery('(min-width: 768px)')
   const { theme, toggleTheme } = useTheme()
+  const { openModal } = useCreateExpenseModal()
+
   const navRef = useRef<HTMLDivElement>(null)
 
   const [menuOpen, setMenuOpen] = useState(false)
@@ -39,8 +41,31 @@ const AuthMenu: React.FunctionComponent = () => {
 
   if (isMatches) {
     return (
-      <nav className={twclsx('inline-flex items-center gap-4')}>
-        <Button className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}>
+      <nav className={twclsx('inline-flex items-center gap-2.5')}>
+        <Link
+          to='/expense'
+          className={twclsx(
+            'py-2 px-4 transition rounded-lg',
+            'hover:bg-theme-2 dark:hover:bg-theme-7'
+          )}
+        >
+          Expense
+        </Link>
+
+        <Link
+          to='/profile'
+          className={twclsx(
+            'py-2 px-4 transition rounded-lg',
+            'hover:bg-theme-2 dark:hover:bg-theme-7'
+          )}
+        >
+          Profile
+        </Link>
+
+        <Button
+          onClick={openModal}
+          className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
+        >
           <span className='sr-only'>Add expense</span>
           <Plus />
         </Button>
@@ -51,25 +76,16 @@ const AuthMenu: React.FunctionComponent = () => {
         >
           {theme === 'dark' ? <Sun /> : <Moon />}
         </Button>
-
-        <ButtonLink
-          to='/profile'
-          className={twclsx(
-            'h-10 md:h-12 w-10 md:w-12 p-0',
-            'text-lg border hover:ring',
-            'bg-transparent hover:bg-transparent',
-            'border-theme-3 dark:border-theme-7 text-theme-7 dark:text-theme-3'
-          )}
-        >
-          <User />
-        </ButtonLink>
       </nav>
     )
   }
 
   return (
     <div className={twclsx('inline-flex items-center gap-4')}>
-      <Button className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}>
+      <Button
+        onClick={openModal}
+        className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
+      >
         <span className='sr-only'>Add expense</span>
         <Plus />
       </Button>
