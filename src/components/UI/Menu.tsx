@@ -5,7 +5,13 @@ import { signOut } from '@/services'
 import { twclsx } from '@/utils'
 
 import { forwardRef } from 'react'
-import { HiLogout as Logout, HiMoon as Moon, HiSun as Sun, HiUser as User } from 'react-icons/hi'
+import {
+  HiCurrencyDollar,
+  HiLogout as Logout,
+  HiMoon as Moon,
+  HiSun as Sun,
+  HiUser as User
+} from 'react-icons/hi'
 import { Link, useNavigate } from 'react-router-dom'
 
 type MenuProps = {
@@ -66,6 +72,18 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
           >
             <User />
             <span>Profile</span>
+          </Link>
+          <Link
+            onClick={toggleMenu}
+            to='/expense'
+            className={twclsx(
+              'inline-flex items-center gap-4',
+              'w-full py-4 px-6',
+              'hover:bg-primary-5 hover:text-theme-1'
+            )}
+          >
+            <HiCurrencyDollar />
+            <span>Expense</span>
           </Link>
           <Button
             onClick={handleLogoutClick}
