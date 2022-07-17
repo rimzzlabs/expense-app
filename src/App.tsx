@@ -12,6 +12,7 @@ const Home = lazy(() => import('./pages').then((m) => ({ default: m.Home })))
 const Signup = lazy(() => import('./pages').then((m) => ({ default: m.Signup })))
 const Signin = lazy(() => import('./pages').then((m) => ({ default: m.Signin })))
 const Profile = lazy(() => import('./pages').then((m) => ({ default: m.Profile })))
+const Expense = lazy(() => import('./pages').then((m) => ({ default: m.Expense })))
 
 const NotFound = lazy(() => import('./pages').then((m) => ({ default: m.NotFound })))
 
@@ -41,6 +42,7 @@ const ExpenseApp: React.FunctionComponent = () => {
           <Route path='signup' element={<Signup />} />
           <Route path='signin' element={<Signin />} />
           <Route path='profile' element={<Profile />} />
+          <Route path='expense' element={<Expense />} />
         </Route>
 
         <Route path='/404' element={<NotFound />} />
