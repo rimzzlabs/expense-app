@@ -86,10 +86,10 @@ export const createExpense = async (payload: CreateExpensePayload, userId: strin
   }
 }
 
-export const getExpense = async (sessionId: string) => {
-  if (sessionId) {
+export const getExpense = async (userId: string) => {
+  if (userId) {
     try {
-      const response = await supabase.from<Expense>('expense').select('*').eq('user_id', sessionId)
+      const response = await supabase.from<Expense>('expense').select('*').eq('user_id', userId)
       if (response.status > 400) {
         toast.error(response.statusText)
         return null
@@ -103,8 +103,7 @@ export const getExpense = async (sessionId: string) => {
 }
 
 export const updateExpense = async (payload: Expense, userId: string) => {
-  const id = userId
-  if (id) {
+  if (userId) {
     const toastId = toast.loading('Updating...')
     try {
       const response = await supabase.from<Expense>('expense').update({ ...payload })
