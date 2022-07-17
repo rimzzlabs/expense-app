@@ -1,6 +1,6 @@
 import { ButtonLink, Input, InputError, PrimaryButton } from '@/components'
 
-import { Supabase } from '@/services'
+import { signUp } from '@/services'
 import { signupSchema, twclsx } from '@/utils'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -18,7 +18,7 @@ const SignupPage: React.FunctionComponent = () => {
     shouldFocusError: true
   })
   const onSubmit = async (args: SignupUserPayload) => {
-    const response = await Supabase.signUp(args)
+    const response = await signUp(args)
     if (response) {
       navigate('/', { replace: true })
     }
