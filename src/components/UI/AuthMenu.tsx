@@ -13,12 +13,15 @@ import {
   HiSun as Sun,
   HiX as X
 } from 'react-icons/hi'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 const AuthMenu: React.FunctionComponent = () => {
   const isMatches = useMediaQuery('(min-width: 768px)')
   const { theme, toggleTheme } = useTheme()
   const { openModal } = useCreateExpenseModal()
+  const { pathname } = useLocation()
+
+  const hideCreateButton = pathname === '/profile' || pathname.startsWith('/expense')
 
   const navRef = useRef<HTMLDivElement>(null)
 
@@ -62,13 +65,15 @@ const AuthMenu: React.FunctionComponent = () => {
           Profile
         </Link>
 
-        <Button
-          onClick={openModal}
-          className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
-        >
-          <span className='sr-only'>Add expense</span>
-          <Plus />
-        </Button>
+        {!hideCreateButton && (
+          <Button
+            onClick={openModal}
+            className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
+          >
+            <span className='sr-only'>Add expense</span>
+            <Plus />
+          </Button>
+        )}
 
         <Button
           onClick={toggleTheme}
@@ -82,13 +87,15 @@ const AuthMenu: React.FunctionComponent = () => {
 
   return (
     <div className={twclsx('inline-flex items-center gap-4')}>
-      <Button
-        onClick={openModal}
-        className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
-      >
-        <span className='sr-only'>Add expense</span>
-        <Plus />
-      </Button>
+      {!hideCreateButton && (
+        <Button
+          onClick={openModal}
+          className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
+        >
+          <span className='sr-only'>Add expense</span>
+          <Plus />
+        </Button>
+      )}
 
       <Button
         onClick={toggleMenu}
