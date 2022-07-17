@@ -37,7 +37,13 @@ const useExpense = () => {
   }, [user])
 
   return {
-    expenseLists,
+    expenseLists: expenseLists.sort((a, b) =>
+      new Date(a.created_at) < new Date(b.created_at)
+        ? 1
+        : new Date(a.created_at) > new Date(b.created_at)
+        ? -1
+        : 0
+    ),
     refreshExpense
   }
 }
