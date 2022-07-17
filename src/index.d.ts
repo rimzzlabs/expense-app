@@ -10,6 +10,7 @@ declare module 'expense-app' {
   }
 
   export type User = {
+    id: string
     username: string
     email: string
   }
