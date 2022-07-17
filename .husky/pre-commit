@@ -11,6 +11,11 @@ yarn lint ||
     false;
 )
 
-echo '🎉 No error found: committing this now.... ✨🚀🏄‍♂️🍻'
+echo 'Running npx lintstaged 🔎'
 
-npx lint-staged
+npx lint-staged || (
+    echo 'There was a problem running lint-staged, quitting..';
+    false;
+)
+
+echo '🎉 No error found: committing this now.... ✨🚀🏄‍♂️🍻'
