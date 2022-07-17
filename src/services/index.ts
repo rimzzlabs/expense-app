@@ -1,2 +1,2 @@
 export * from './env'
-export { default as Supabase } from './Supabase'
+export * from './supabase'
