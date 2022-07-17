@@ -1,5 +1,6 @@
-import { ExpenseCard } from '@/components'
+import { ExpenseCard, Image } from '@/components'
 
+import empty_state from '@/assets/empty_expense.svg'
 import { useExpense } from '@/hooks'
 
 const ExpenseLists: React.FunctionComponent = () => {
@@ -15,7 +16,12 @@ const ExpenseLists: React.FunctionComponent = () => {
     )
   }
 
-  return <p>You don&apos;t have any expense.</p>
+  return (
+    <div className='flex flex-col gap-2 items-center justify-center text-center w-full py-10'>
+      <Image src={empty_state} alt='Empty state' className='w-40 h-40' />
+      <p className='text-lg md:text-xl font-bold'>You don&apos;t have any expenses</p>
+    </div>
+  )
 }
 
 export default ExpenseLists
