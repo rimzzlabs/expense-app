@@ -1,4 +1,4 @@
-import { Supabase } from '@/services'
+import { supabase } from '@/services'
 import { userAtom } from '@/store'
 
 import { useAtom } from 'jotai'
@@ -8,7 +8,7 @@ const useUser = () => {
   const [user, setUser] = useAtom(userAtom)
 
   useEffect(() => {
-    const supabaseUser = Supabase.Supabase.auth.user()
+    const supabaseUser = supabase.auth.user()
     if (supabaseUser) {
       setUser({
         email: supabaseUser?.email as string,
@@ -17,7 +17,7 @@ const useUser = () => {
     } else {
       setUser(null)
     }
-  }, [Supabase.Supabase.auth.user])
+  }, [supabase.auth.user])
 
   return {
     user
