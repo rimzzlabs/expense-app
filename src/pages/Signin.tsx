@@ -1,7 +1,7 @@
 import { ButtonLink, Input, InputError, PrimaryButton } from '@/components'
 
 import { useUser } from '@/hooks'
-import { Supabase } from '@/services'
+import { signIn } from '@/services'
 import { signinSchema, twclsx } from '@/utils'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -21,11 +21,16 @@ const SigninPage: React.FunctionComponent = () => {
   })
 
   const onSubmit = async (args: SigninUserPayload) => {
-    const response = await Supabase.signIn(args)
+    const response = await signIn(args)
     if (response) {
       navigate('/', { replace: true })
     }
-    rhf.reset()
+    if (!response) {
+      rhf.resetField('password')
+      rhf.setError('password', { message: 'Password is required' })
+    } else {
+      rhf.reset()
+    }
   }
 
   useEffect(() => {
