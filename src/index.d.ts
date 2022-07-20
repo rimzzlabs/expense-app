@@ -55,4 +55,8 @@ declare module 'expense-app' {
     amount: number
     type: ExpenseHistory['type']
   }
+
+  export type SelectOptionProps<T = Record<string, string>[]> = {
+    list: T
+  }
 }
