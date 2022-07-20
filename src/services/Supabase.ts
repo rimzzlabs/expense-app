@@ -183,7 +183,7 @@ export const createExpenseHistory = async (payload: CreateHistoryPayload, id: st
   try {
     const response = await supabase
       .from<ExpenseHistory>('history')
-      .insert({ ...payload, expense_id: id })
+      .insert({ ...payload, expense_id: id }, { returning: 'minimal' })
     if (response.status >= 400) {
       toast.error(response.statusText)
       return null
