@@ -33,17 +33,18 @@ This app is an implementation of React with Supabase, simply have Authentication
 - [x] Signup
 - [x] Signout
 - [x] Read Expense
-- [ ] Write Expense
+- [x] Write Expense
 - [ ] Update Expense
-- [ ] Delete Expense
-- [ ] Read Expense History
-- [ ] Write Expense History
+- [x] Delete Expense
+- [x] Read Expense History
+- [x] Write Expense History
 - [ ] Update Expense History
 - [ ] Delete Expense History
 - [ ] Update Profile Username
 - [ ] Update User Email
 - [ ] Update User Password
 - [ ] Forgot Password
+- [ ] oAuth with Google and GitHub
 
 ## Contribution
 
