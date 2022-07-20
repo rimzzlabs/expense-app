@@ -11,7 +11,7 @@ const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m
 
 const ExpenseHistory: React.FunctionComponent = () => {
   const { expense } = useExpenseDetail()
-  const { expenseHistory } = useExpenseHistory()
+  const { expenseHistory, openModal } = useExpenseHistory()
 
   return (
     <AuthLayer>
@@ -52,7 +52,7 @@ const ExpenseHistory: React.FunctionComponent = () => {
                 <span>{expense.title}</span>
               </h2>
 
-              <PrimaryButton className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
+              <PrimaryButton onClick={openModal} className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
                 <HiPlus />
                 <span className='hidden md:block'>Create</span>
               </PrimaryButton>
