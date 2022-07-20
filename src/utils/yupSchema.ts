@@ -25,8 +25,25 @@ export const createExpenseSchema = yup.object().shape({
     .max(24, 'Should less than 24 characters'),
   total_money: yup
     .number()
-    .required(requiredMsg)
     .typeError('Amount should not empty')
-    .moreThan(4, 'At least 5 dollar')
-    .lessThan(10000000000, 'maximum money exceeded')
+    .negative('Should not a negative number')
+    .min(1, 'At least 1 dollar')
+    .required(requiredMsg)
+    .lessThan(10000000000, 'Maximum money exceeded')
+})
+
+export const createHistorySchema = yup.object().shape({
+  source: yup
+    .string()
+    .required(requiredMsg)
+    .min(6, 'At least 6 characters')
+    .max(32, 'Should less than 24 characters'),
+  type: yup.string().not(['Select'], 'Is it income or outcome?').required(requiredMsg),
+  amount: yup
+    .number()
+    .typeError('Amount should not empty')
+    .negative('Should not a negative number')
+    .min(1, 'At least 1 dollar')
+    .required(requiredMsg)
+    .lessThan(5000000, 'Maximum money exceeded')
 })
