@@ -21,6 +21,9 @@ const ModalPrompt = lazy(() => import('@/components').then((m) => ({ default: m.
 const ModalCreateExpense = lazy(() =>
   import('@/components').then((m) => ({ default: m.ModalCreateExpense }))
 )
+const ModalCreateHistory = lazy(() =>
+  import('@/components').then((m) => ({ default: m.ModalCreateHistory }))
+)
 
 const ExpenseApp: React.FunctionComponent = () => {
   const { theme } = useTheme()
@@ -58,6 +61,10 @@ const ExpenseApp: React.FunctionComponent = () => {
 
       <Suspense fallback={<LoadingPage />}>
         <ModalCreateExpense />
+      </Suspense>
+
+      <Suspense fallback={<LoadingPage />}>
+        <ModalCreateHistory />
       </Suspense>
     </Suspense>
   )
