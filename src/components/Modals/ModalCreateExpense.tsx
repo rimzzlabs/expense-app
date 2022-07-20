@@ -37,9 +37,9 @@ const ModalCreateExpense: React.FunctionComponent = () => {
 
   return (
     <Modal show={isOpen} onClose={closeModal} title='Create expense' className={twclsx('max-w-lg')}>
-      <p className='max-w-prose'>
-        Just like a wallet, expense represint your wallet to display how much money you are
-        currently want to calculate.
+      <p className='max-w-prose mt-2'>
+        Just like a wallet, expense represent your wallet to display how much money you are
+        currently want to calculate with your income and outcome.
       </p>
 
       <form

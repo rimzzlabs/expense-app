@@ -26,7 +26,7 @@ export const createExpenseSchema = yup.object().shape({
   total_money: yup
     .number()
     .required(requiredMsg)
-    .typeError('Amount should not an empty string')
+    .typeError('Amount should not empty')
     .moreThan(4, 'At least 5 dollar')
     .lessThan(10000000000, 'maximum money exceeded')
 })

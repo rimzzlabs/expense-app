@@ -5,6 +5,7 @@ declare module 'expense-app' {
     isOpen: boolean
     title: string
     message: string
+    children?: React.ReactNode
     onClose: () => void
     onConfirm: () => void
   }
@@ -26,6 +27,7 @@ declare module 'expense-app' {
 
   export type ExpenseHistory = {
     id: string
+    expense_id: string
     created_at: string | Date
     source: string
     type: 'income' | 'outcome'
@@ -46,5 +48,11 @@ declare module 'expense-app' {
   export type CreateExpensePayload = {
     title: string
     total_money: number
+  }
+
+  export type CreateHistoryPayload = {
+    source: string
+    amount: number
+    type: ExpenseHistory['type']
   }
 }

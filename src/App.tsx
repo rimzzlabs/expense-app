@@ -13,6 +13,7 @@ const Signup = lazy(() => import('./pages').then((m) => ({ default: m.Signup }))
 const Signin = lazy(() => import('./pages').then((m) => ({ default: m.Signin })))
 const Profile = lazy(() => import('./pages').then((m) => ({ default: m.Profile })))
 const Expense = lazy(() => import('./pages').then((m) => ({ default: m.Expense })))
+const ExpenseHistory = lazy(() => import('./pages').then((m) => ({ default: m.ExpenseHistory })))
 
 const NotFound = lazy(() => import('./pages').then((m) => ({ default: m.NotFound })))
 
@@ -43,6 +44,7 @@ const ExpenseApp: React.FunctionComponent = () => {
           <Route path='signin' element={<Signin />} />
           <Route path='profile' element={<Profile />} />
           <Route path='expense' element={<Expense />} />
+          <Route path='expense/:id' element={<ExpenseHistory />} />
         </Route>
 
         <Route path='/404' element={<NotFound />} />
@@ -51,13 +53,7 @@ const ExpenseApp: React.FunctionComponent = () => {
       </Routes>
 
       <Suspense fallback={<LoadingPage />}>
-        <ModalPrompt
-          title={state.title}
-          message={state.message}
-          onClose={closePrompt}
-          onConfirm={state.onConfirm}
-          show={state.isOpen}
-        />
+        <ModalPrompt {...state} onClose={closePrompt} />
       </Suspense>
 
       <Suspense fallback={<LoadingPage />}>

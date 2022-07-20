@@ -3,19 +3,12 @@ import { ErrorButton, PrimaryButton } from '@/components'
 import { twclsx } from '@/utils'
 
 import { Dialog, Transition } from '@headlessui/react'
+import { Prompt } from 'expense-app'
 import { Fragment } from 'react'
 
-type PromptProps = {
-  show: boolean
-  title: string
-  message: string
-  onClose: () => void
-  onConfirm: () => void
-}
-
-const ModalPrompt: React.FunctionComponent<PromptProps> = (props) => {
+const ModalPrompt: React.FunctionComponent<Prompt> = (props) => {
   return (
-    <Transition as={Fragment} show={props.show}>
+    <Transition as={Fragment} show={props.isOpen}>
       <Dialog as='div' onClose={props.onClose} className='relative z-50'>
         <Transition.Child
           as={Fragment}
@@ -65,6 +58,7 @@ const ModalPrompt: React.FunctionComponent<PromptProps> = (props) => {
               </Dialog.Title>
 
               <p className='max-w-prose my-2'>{props.message}</p>
+              {props.children}
 
               <div className='flex items-center gap-4'>
                 <ErrorButton onClick={props.onConfirm} className={twclsx('py-2.5 px-5')}>

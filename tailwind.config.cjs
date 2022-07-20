@@ -36,6 +36,11 @@ module.exports = {
         7: colors.neutral[800],
         8: colors.neutral[900]
       },
+      warning: {
+        1: colors.yellow[500],
+        2: colors.yellow[600],
+        3: colors.yellow[700]
+      },
       error: {
         1: colors.red[500],
         2: colors.red[600],

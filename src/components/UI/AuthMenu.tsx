@@ -30,7 +30,7 @@ const AuthMenu: React.FunctionComponent = () => {
   const resolveNavLinkClassName = (props: { isActive: boolean }) =>
     twclsx(
       'py-2 px-4 transition rounded-lg',
-      props.isActive ? 'bg-primary-5 text-white' : 'hover:bg-theme-2 dark:hover:bg-theme-7'
+      props.isActive ? 'bg-primary-5 text-theme-1' : 'hover:bg-theme-2 dark:hover:bg-theme-7'
     )
 
   const toggleMenu = () => {
@@ -60,19 +60,13 @@ const AuthMenu: React.FunctionComponent = () => {
         </NavLink>
 
         {!hideCreateButton && (
-          <Button
-            onClick={openModal}
-            className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
-          >
+          <Button onClick={openModal} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
             <span className='sr-only'>Add expense</span>
             <Plus />
           </Button>
         )}
 
-        <Button
-          onClick={toggleTheme}
-          className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
-        >
+        <Button onClick={toggleTheme} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
           {theme === 'dark' ? <Sun /> : <Moon />}
         </Button>
       </nav>
@@ -82,10 +76,7 @@ const AuthMenu: React.FunctionComponent = () => {
   return (
     <div className={twclsx('inline-flex items-center gap-4')}>
       {!hideCreateButton && (
-        <Button
-          onClick={openModal}
-          className={twclsx('h-10 md:h-12 w-10 md:w-12', 'text-lg hover:ring')}
-        >
+        <Button onClick={openModal} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
           <span className='sr-only'>Add expense</span>
           <Plus />
         </Button>

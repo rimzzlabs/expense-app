@@ -7,7 +7,7 @@ import { Link, useLocation } from 'react-router-dom'
 
 const Header: React.FunctionComponent = () => {
   const { pathname } = useLocation()
-  const isOnHomepage = pathname === '/'
+  const isOnHomepage = pathname === '/' || pathname === '/signin' || pathname === '/signup'
 
   if (pathname === '/404') return null
 

@@ -1,7 +1,14 @@
 import { SUPABASE_ANON_KEY, SUPABASE_URL } from './env'
 
 import { createClient } from '@supabase/supabase-js'
-import { CreateExpensePayload, Expense, SigninUserPayload, SignupUserPayload } from 'expense-app'
+import {
+  CreateExpensePayload,
+  CreateHistoryPayload,
+  Expense,
+  ExpenseHistory,
+  SigninUserPayload,
+  SignupUserPayload
+} from 'expense-app'
 import toast from 'react-hot-toast'
 import { v4 as uid } from 'uuid'
 
@@ -124,10 +131,80 @@ export const updateExpense = async (payload: Expense, userId: string) => {
   }
 }
 
-export const deleteExpense = async (expenseId: string) => {
+export const deleteExpense = async (expenseId: string, expense_history: string) => {
   const toastId = toast.loading('Loading...')
   try {
-    const response = await supabase.from<Expense>('expense').delete().eq('id', expenseId)
+    const responseHistory = await supabase
+      .from<ExpenseHistory>('history')
+      .delete({ returning: 'minimal' })
+      .match({ expense_id: expense_history })
+
+    const response = await supabase
+      .from<Expense>('expense')
+      .delete({ returning: 'minimal' })
+      .eq('id', expenseId)
+
+    if (response.status > 300 || responseHistory.status > 300) {
+      toast.error(response.statusText)
+      return null
+    }
+    if (response.data) {
+      await deleteHistory(response.data[0].history_id)
+    }
+    toast.success('Deleted successfully')
+    return response
+  } catch (e) {
+    toast.error('Could not delete expense, please try again later')
+    return null
+  } finally {
+    toast.remove(toastId)
+  }
+}
+
+export const getExpenseHistory = async (historyId: string) => {
+  try {
+    const response = await supabase
+      .from<ExpenseHistory>('history')
+      .select('*')
+      .eq('expense_id', historyId)
+    if (response.status > 400) {
+      toast.error(response.statusText)
+      return null
+    }
+    return response.data
+  } catch (e) {
+    toast.error('Could not delete expense, please try again later')
+    return null
+  }
+}
+
+export const createExpenseHistory = async (payload: CreateHistoryPayload, id: string) => {
+  const toastId = toast.loading('Adding history...')
+  try {
+    const response = await supabase
+      .from<ExpenseHistory>('history')
+      .insert({ ...payload, expense_id: id })
+    if (response.status >= 400) {
+      toast.error(response.statusText)
+      return null
+    }
+    toast.success('History added!')
+    return response.data
+  } catch (e) {
+    toast.error('Could not add expense history, please try again')
+    return null
+  } finally {
+    toast.remove(toastId)
+  }
+}
+
+export const deleteHistory = async (history_id: string) => {
+  const toastId = toast.loading('Loading...')
+  try {
+    const response = await supabase
+      .from<ExpenseHistory>('history')
+      .delete()
+      .eq('expense_id', history_id)
     if (response.status > 400) {
       toast.error(response.statusText)
       return null
@@ -135,7 +212,7 @@ export const deleteExpense = async (expenseId: string) => {
     toast.success('Deleted successfully')
     return response.data
   } catch (e) {
-    toast.error('Could not delete expense, please try again later')
+    toast.error('Could not delete history, please try again later')
     return null
   } finally {
     toast.remove(toastId)

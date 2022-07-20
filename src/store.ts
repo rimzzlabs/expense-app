@@ -6,6 +6,7 @@ export const themeAtom = atomWithStorage<Theme>('APP_THEME', 'light')
 
 export const userAtom = atom<User | null>(null)
 
+export const expenseAtom = atom<Expense | null>(null)
 export const expenseListsAtom = atom<Expense[]>([])
 
 export const historyListsAtom = atom<ExpenseHistory[]>([])
@@ -13,6 +14,7 @@ export const historyListsAtom = atom<ExpenseHistory[]>([])
 const initialValue: Prompt = {
   onClose: () => null,
   onConfirm: () => null,
+
   title: '',
   message: '',
   isOpen: false
@@ -21,3 +23,4 @@ const initialValue: Prompt = {
 export const promptAtom = atom<Prompt>(initialValue)
 
 export const createExpenseModalIsOpen = atom(false)
+export const createdHistoryModal = atom(false)
