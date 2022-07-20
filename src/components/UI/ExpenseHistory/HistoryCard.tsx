@@ -6,7 +6,14 @@ const HistoryCard: React.FunctionComponent<ExpenseHistory> = (exp) => {
   return (
     <div
       key={exp.id}
-      className='p-4 rounded-lg shadow-md dark:shadow-none bg-theme-1 dark:bg-theme-7'
+      className={twclsx(
+        'relative',
+        'p-4 pl-6 rounded-lg shadow-md dark:shadow-none',
+        'bg-theme-1 dark:bg-theme-7',
+        'after:absolute after:left-0 after:inset-y-0',
+        'after:w-4',
+        exp.type === 'outcome' ? 'after:bg-error-1' : 'after:bg-success-1'
+      )}
     >
       <h3
         className={twclsx(
