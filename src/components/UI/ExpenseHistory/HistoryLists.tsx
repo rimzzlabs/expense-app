@@ -8,7 +8,7 @@ type HistoryListsProps = {
 
 const HistoryLists: React.FunctionComponent<HistoryListsProps> = ({ history }) => {
   return (
-    <section className='grid grid-cols-2 gap-4'>
+    <section className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
       {history.map((exp) => (
         <HistoryCard key={exp.id} {...exp} />
       ))}

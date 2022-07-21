@@ -23,11 +23,10 @@ const ModalCreateExpense: React.FunctionComponent = () => {
   })
 
   const onSubmit = async (args: CreateExpensePayload) => {
-    const response = await createExpense(args, user?.id as string)
-    if (response) {
-      await refreshExpense()
-      closeModal()
-    }
+    await createExpense(args, user?.id as string)
+    await refreshExpense()
+
+    closeModal()
     rhf.reset()
   }
 

@@ -1,4 +1,4 @@
-import { Expense, ExpenseHistory, Prompt, Theme, User } from 'expense-app'
+import { Expense, ExpenseDetail, ExpenseHistory, Prompt, Theme, User } from 'expense-app'
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
@@ -6,7 +6,7 @@ export const themeAtom = atomWithStorage<Theme>('APP_THEME', 'light')
 
 export const userAtom = atom<User | null>(null)
 
-export const expenseAtom = atom<Expense | null>(null)
+export const expenseAtom = atom<ExpenseDetail | null>(null)
 export const expenseListsAtom = atom<Expense[]>([])
 
 export const historyListsAtom = atom<ExpenseHistory[]>([])

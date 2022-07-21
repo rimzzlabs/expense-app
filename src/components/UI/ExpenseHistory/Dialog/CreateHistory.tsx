@@ -1,12 +1,15 @@
 import { Button, Input, InputError, Modal, PrimaryButton, Select } from '@/components'
 
 import { useExpenseHistory } from '@/hooks'
+import { expenseAtom } from '@/store'
 import { createHistorySchema, twclsx } from '@/utils'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CreateHistoryPayload } from 'expense-app'
+import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import toast from 'react-hot-toast'
 
 type List = Array<{
   children: string
@@ -15,6 +18,8 @@ type List = Array<{
 
 export const ModalCreateHistory = () => {
   const { isOpen, closeModal, addHistory, refreshExpenseHistory } = useExpenseHistory()
+  const [expense] = useAtom(expenseAtom)
+
   const defaultValues: CreateHistoryPayload = { source: '', amount: 0, type: 'income' }
   const list: List = [
     { children: 'Income', value: 'income' },
@@ -27,17 +32,36 @@ export const ModalCreateHistory = () => {
   })
 
   const onSubmit = async (val: CreateHistoryPayload) => {
+    if (!expense) {
+      closeModal()
+      rhf.reset()
+      return
+    }
+    if (val.type === 'outcome' && expense.currentMoney - val.amount < 0) {
+      toast.error('Not enough money to spent')
+      rhf.reset({ amount: 0, type: 'income', source: val.source })
+      rhf.setError('amount', { message: "You're broke😢" })
+      rhf.setError('type', { message: "Outcome? you're broke😢" })
+      return
+    }
+
+    if (expense.currentMoney === 0 && val.type === 'outcome') {
+      toast.error("You don't have any money left!")
+      rhf.reset()
+      return
+    }
+
     await addHistory(val)
     await refreshExpenseHistory()
-    rhf.reset()
     closeModal()
+    rhf.reset()
   }
 
   useEffect(() => rhf.reset(), [])
 
   return (
     <Modal show={isOpen} onClose={closeModal} title='New History' className={twclsx('max-w-lg')}>
-      <p className='max-w-prose mt-2'>Add incomre or outcome to your expense&apos;s history</p>
+      <p className='max-w-prose mt-2'>Add income or outcome to your expense&apos;s history</p>
 
       <form
         onSubmit={rhf.handleSubmit(onSubmit)}

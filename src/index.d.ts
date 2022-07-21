@@ -25,6 +25,12 @@ declare module 'expense-app' {
     total_money: number
   }
 
+  export type ExpenseDetail = {
+    totalIncome: number
+    totalOutcome: number
+    currentMoney: number
+  } & Expense
+
   export type ExpenseHistory = {
     id: string
     expense_id: string

@@ -15,27 +15,25 @@ const useExpenseHistory = () => {
 
   const refreshExpenseHistory = useCallback(async () => {
     const response = await getExpenseHistory(expenseDetail?.history_id as string)
-
-    if (!response) return
+    if (!response) return null
     setExpenseHistory(response)
+    return response
   }, [expenseDetail?.history_id, expenseHistory])
 
   const addHistory = useCallback(
     async (payload: CreateHistoryPayload) =>
       await createExpenseHistory(payload, expenseDetail?.history_id as string),
-
     [expenseDetail?.history_id, expenseHistory]
   )
 
   useEffect(() => {
     if (expenseDetail?.history_id) {
       ;(async () => {
-        if (!expenseDetail.history_id) return
-
+        if (!expenseDetail) return
         await refreshExpenseHistory()
       })()
     }
-  }, [expenseDetail?.history_id])
+  }, [expenseDetail])
 
   return {
     expenseHistory,

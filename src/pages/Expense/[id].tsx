@@ -1,17 +1,48 @@
 import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton } from '@/components'
 
 import empty_history from '@/assets/empty_history.svg'
-import { useExpenseDetail, useExpenseHistory } from '@/hooks'
+import { useExpenseHistory } from '@/hooks'
+import * as atoms from '@/store'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
-import { Suspense, lazy } from 'react'
+import { useAtom } from 'jotai'
+import { Suspense, lazy, useEffect } from 'react'
 import { HiCalendar, HiCash, HiCreditCard, HiPlus } from 'react-icons/hi'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoyLists })))
 
 const ExpenseHistory: React.FunctionComponent = () => {
-  const { expense } = useExpenseDetail()
+  const param = useParams()
+  const navigate = useNavigate()
+
+  const [expenseLists] = useAtom(atoms.expenseListsAtom)
+  const [expense, setExpenseDetail] = useAtom(atoms.expenseAtom)
+
   const { expenseHistory, openModal } = useExpenseHistory()
+
+  useEffect(() => {
+    const filteredExpense = expenseLists.filter((e) => e.history_id === param.id)[0]
+
+    if (!filteredExpense) {
+      navigate('/')
+      return
+    }
+
+    const totalIncome = expenseHistory
+      ?.filter((e) => e.type === 'income')
+      .reduce((acc, cur) => acc + cur.amount, 0)
+    const totalOutcome = expenseHistory
+      ?.filter((e) => e.type === 'outcome')
+      .reduce((acc, cur) => acc + cur.amount, 0)
+
+    setExpenseDetail({
+      ...filteredExpense,
+      totalIncome,
+      totalOutcome,
+      currentMoney: filteredExpense.total_money + totalIncome - totalOutcome
+    })
+  }, [expenseLists, expenseHistory])
 
   return (
     <AuthLayer>
@@ -47,10 +78,35 @@ const ExpenseHistory: React.FunctionComponent = () => {
 
           <section className='pt-10'>
             <div className={twclsx('flex items-center justify-between', 'w-full')}>
-              <h2 className='inline-flex items-center gap-1'>
-                <HiCreditCard />
-                <span>{expense.title}</span>
-              </h2>
+              <div className='inline-flex flex-col gap-4'>
+                <h2 className='inline-flex items-center gap-2'>
+                  <HiCreditCard />
+                  <span>{expense.title}</span>
+                </h2>
+
+                <div className={twclsx('inline-flex flex-col gap-2')}>
+                  <p>
+                    Curently have:{' '}
+                    <span className='font-semibold text-success-1'>
+                      {formatCurrency(expense.currentMoney ?? 0)}
+                    </span>
+                  </p>
+
+                  <p>
+                    Money earned:{' '}
+                    <span className='font-semibold text-success-1'>
+                      {formatCurrency(expense.totalIncome ?? 0)}
+                    </span>
+                  </p>
+
+                  <p>
+                    Money spended:{' '}
+                    <span className='font-semibold text-warning-1'>
+                      {formatCurrency(expense.totalOutcome ?? 0)}
+                    </span>
+                  </p>
+                </div>
+              </div>
 
               <PrimaryButton onClick={openModal} className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
                 <HiPlus />

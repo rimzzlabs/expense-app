@@ -2,13 +2,14 @@ import { ExpenseCard, Image } from '@/components'
 
 import empty_state from '@/assets/empty_expense.svg'
 import { useExpense } from '@/hooks'
+import { twclsx } from '@/utils'
 
 const ExpenseLists: React.FunctionComponent = () => {
   const { expenseLists } = useExpense()
 
   if (expenseLists.length > 0) {
     return (
-      <div className='grid grid-cols-1 gap-4 w-full flex-auto'>
+      <div className={twclsx('grid grid-cols-1 sm:grid-cols-2 gap-4 w-full flex-auto')}>
         {expenseLists.map((expense) => (
           <ExpenseCard key={expense.id} {...expense} />
         ))}
@@ -17,7 +18,13 @@ const ExpenseLists: React.FunctionComponent = () => {
   }
 
   return (
-    <div className='flex flex-col gap-2 items-center justify-center text-center w-full py-10'>
+    <div
+      className={twclsx(
+        'flex flex-col items-center justify-center',
+        'gap-2 w-full',
+        'text-center py-10'
+      )}
+    >
       <Image src={empty_state} alt='Empty state' className='w-40 h-40' />
       <p className='text-lg md:text-xl font-bold'>You don&apos;t have any expenses</p>
     </div>
