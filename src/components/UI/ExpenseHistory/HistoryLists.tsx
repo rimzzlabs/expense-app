@@ -1,6 +1,7 @@
 import { HistoryCard } from '@/components'
 
 import { ExpenseHistory } from 'expense-app'
+import { memo } from 'react'
 
 type HistoryListsProps = {
   history: ExpenseHistory[]
@@ -16,4 +17,4 @@ const HistoryLists: React.FunctionComponent<HistoryListsProps> = ({ history }) =
   )
 }
 
-export default HistoryLists
+export default memo(HistoryLists)

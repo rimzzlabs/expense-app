@@ -4,6 +4,8 @@ import empty_state from '@/assets/empty_expense.svg'
 import { useExpense } from '@/hooks'
 import { twclsx } from '@/utils'
 
+import { memo } from 'react'
+
 const ExpenseLists: React.FunctionComponent = () => {
   const { expenseLists } = useExpense()
 
@@ -31,4 +33,4 @@ const ExpenseLists: React.FunctionComponent = () => {
   )
 }
 
-export default ExpenseLists
+export default memo(ExpenseLists)
