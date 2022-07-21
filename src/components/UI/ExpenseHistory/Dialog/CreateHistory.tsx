@@ -17,7 +17,7 @@ type List = Array<{
 }>
 
 export const ModalCreateHistory = () => {
-  const { isOpen, closeModal, addHistory, refreshExpenseHistory } = useExpenseHistory()
+  const { isOpen, closeModal, addHistory } = useExpenseHistory()
   const [expense] = useAtom(expenseAtom)
 
   const defaultValues: CreateHistoryPayload = { source: '', amount: 0, type: 'income' }
@@ -37,6 +37,7 @@ export const ModalCreateHistory = () => {
       rhf.reset()
       return
     }
+
     if (val.type === 'outcome' && expense.currentMoney - val.amount < 0) {
       toast.error('Not enough money to spent')
       rhf.reset({ amount: 0, type: 'income', source: val.source })
@@ -52,7 +53,7 @@ export const ModalCreateHistory = () => {
     }
 
     await addHistory(val)
-    await refreshExpenseHistory()
+
     closeModal()
     rhf.reset()
   }

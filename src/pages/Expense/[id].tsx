@@ -93,14 +93,14 @@ const ExpenseHistory: React.FunctionComponent = () => {
                   </p>
 
                   <p>
-                    Money earned:{' '}
+                    Earned:{' '}
                     <span className='font-semibold text-success-1'>
                       {formatCurrency(expense.totalIncome ?? 0)}
                     </span>
                   </p>
 
                   <p>
-                    Money spended:{' '}
+                    Spended:{' '}
                     <span className='font-semibold text-warning-1'>
                       {formatCurrency(expense.totalOutcome ?? 0)}
                     </span>
