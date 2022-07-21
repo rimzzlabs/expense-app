@@ -2,7 +2,7 @@
 
 ExpenseApp is an app to see you expense history, income history and help you notes what you're buying lately💰
 
-> I built this only on weekend to spend my **lonely** time as a Frontend Developer
+> I built this only on weekend and sometimes at night to spend my **lonely** time as a Frontend Developer
 
 ## Develop on your local machine
 
