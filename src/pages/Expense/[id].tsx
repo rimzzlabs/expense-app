@@ -108,7 +108,10 @@ const ExpenseHistory: React.FunctionComponent = () => {
                 </div>
               </div>
 
-              <PrimaryButton onClick={openModal} className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
+              <PrimaryButton
+                onClick={openModal}
+                className={twclsx('self-start py-2 px-2 md:px-4', 'gap-2')}
+              >
                 <HiPlus />
                 <span className='hidden md:block'>Create</span>
               </PrimaryButton>
