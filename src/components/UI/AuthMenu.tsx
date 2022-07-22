@@ -1,4 +1,4 @@
-import { Button } from '@/components'
+import { Button, Tooltip } from '@/components'
 
 import { useCreateExpenseModal, useMediaQuery, useTheme } from '@/hooks'
 import { twclsx } from '@/utils'
@@ -60,15 +60,19 @@ const AuthMenu: React.FunctionComponent = () => {
         </NavLink>
 
         {!hideCreateButton && (
-          <Button onClick={openModal} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
-            <span className='sr-only'>Add expense</span>
-            <Plus />
-          </Button>
+          <Tooltip title='Add Expense' position='bottom' arrowSize='regular' arrow>
+            <Button onClick={openModal} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
+              <span className='sr-only'>Add expense</span>
+              <Plus />
+            </Button>
+          </Tooltip>
         )}
 
-        <Button onClick={toggleTheme} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
-          {theme === 'dark' ? <Sun /> : <Moon />}
-        </Button>
+        <Tooltip title='Switch theme'>
+          <Button onClick={toggleTheme} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
+            {theme === 'dark' ? <Sun /> : <Moon />}
+          </Button>
+        </Tooltip>
       </nav>
     )
   }
@@ -76,10 +80,12 @@ const AuthMenu: React.FunctionComponent = () => {
   return (
     <div className={twclsx('inline-flex items-center gap-4')}>
       {!hideCreateButton && (
-        <Button onClick={openModal} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
-          <span className='sr-only'>Add expense</span>
-          <Plus />
-        </Button>
+        <Tooltip title='Add Expense' position='bottom' arrowSize='regular' arrow>
+          <Button onClick={openModal} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
+            <span className='sr-only'>Add expense</span>
+            <Plus />
+          </Button>
+        </Tooltip>
       )}
 
       <Button
