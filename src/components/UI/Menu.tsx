@@ -7,7 +7,7 @@ import { twclsx } from '@/utils'
 import { forwardRef } from 'react'
 import {
   HiCurrencyDollar,
-  HiLogout as Logout,
+  HiLogout,
   HiMoon as Moon,
   HiSun as Sun,
   HiUser as User
@@ -36,7 +36,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
     navigate('/signin')
   }
 
-  const handleLogoutClick = async () => {
+  const handleSignoutClick = async () => {
     toggleMenu()
     openPrompt({
       message: 'Are you sure you want to signout from ExpenseApp?',
@@ -77,15 +77,15 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
             <span>Expense</span>
           </NavLink>
           <Button
-            onClick={handleLogoutClick}
+            onClick={handleSignoutClick}
             className={twclsx(
               'inline-flex items-center gap-4',
               'w-full py-4 px-6 border-none justify-start rounded-none',
               'hover:bg-error-2 hover:text-theme-1'
             )}
           >
-            <Logout />
-            <span>Logout</span>
+            <HiLogout />
+            <span>Sign out</span>
           </Button>
         </nav>
       </div>
