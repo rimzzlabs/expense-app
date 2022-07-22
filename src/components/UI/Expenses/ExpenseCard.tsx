@@ -69,7 +69,13 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
       </span>
 
       <div className={twclsx('inline-flex items-center justify-end', 'gap-4 w-full col-span-2')}>
-        <Tooltip title='Edit Expense' className='mr-auto'>
+        <Tooltip
+          title='Edit Expense'
+          position='top-start'
+          className='mr-auto'
+          arrowSize='regular'
+          arrow
+        >
           <Button
             onClick={showModal}
             className={twclsx(
