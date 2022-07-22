@@ -3,7 +3,7 @@ import * as atoms from '@/store'
 
 import { CreateHistoryPayload } from 'expense-app'
 import { useAtom } from 'jotai'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 
 const useExpenseHistory = () => {
   const [expenseHistory, setExpenseHistory] = useAtom(atoms.historyListsAtom)
@@ -18,22 +18,13 @@ const useExpenseHistory = () => {
     if (!response) return null
     setExpenseHistory(response)
     return response
-  }, [expenseDetail?.history_id, expenseHistory])
+  }, [expenseDetail?.history_id])
 
   const addHistory = useCallback(
     async (payload: CreateHistoryPayload) =>
       await createExpenseHistory(payload, expenseDetail?.history_id as string),
-    [expenseDetail?.history_id, expenseHistory]
+    [expenseDetail?.history_id]
   )
-
-  useEffect(() => {
-    if (expenseDetail?.history_id) {
-      ;(async () => {
-        if (!expenseDetail) return
-        await refreshExpenseHistory()
-      })()
-    }
-  }, [expenseDetail])
 
   return {
     expenseHistory,
