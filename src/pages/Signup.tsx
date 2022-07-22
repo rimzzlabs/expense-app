@@ -17,11 +17,14 @@ const SignupPage: React.FunctionComponent = () => {
     resolver: yupResolver(signupSchema),
     shouldFocusError: true
   })
+
   const onSubmit = async (args: SignupUserPayload) => {
     const response = await signUp(args)
+
     if (response) {
       navigate('/', { replace: true })
     }
+
     rhf.reset()
   }
 
@@ -32,8 +35,11 @@ const SignupPage: React.FunctionComponent = () => {
         <p>Want to try out ExpenseApp? signup to check it out!</p>
       </div>
 
-      <form onSubmit={rhf.handleSubmit(onSubmit)} className='grid grid-cols-1 md:grid-cols-2 gap-6'>
-        <h2 className='md:col-span-2'>
+      <form
+        onSubmit={rhf.handleSubmit(onSubmit)}
+        className='grid grid-cols-1 flex-auto gap-6 max-w-lg'
+      >
+        <h2>
           Signup to{' '}
           <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary-5 to-ternary-5'>
             ExpenseApp
@@ -96,7 +102,7 @@ const SignupPage: React.FunctionComponent = () => {
           </span>
         </div>
 
-        <div className='flex items-center gap-2 md:col-span-2'>
+        <div className='flex items-center gap-2'>
           <PrimaryButton
             type='submit'
             className={twclsx('w-full md:max-w-max', 'py-2.5 px-6 font-semibold')}
