@@ -1,4 +1,4 @@
-import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton } from '@/components'
+import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton, Tooltip } from '@/components'
 
 import empty_history from '@/assets/empty_history.svg'
 import { useExpense, useExpenseDetail, useExpenseHistory } from '@/hooks'
@@ -41,16 +41,24 @@ const ExpenseHistory: React.FunctionComponent = () => {
                 <HiCalendar />
                 <span>{formatDate(expenseDetail.created_at)}</span>
               </div>
-              <div
-                className={twclsx(
-                  'inline-flex items-center gap-2',
-                  'p-1 px-2 border rounded-lg font-medium',
-                  'text-theme-5 dark:text-theme-3 border-theme-3 dark:border-theme-6'
-                )}
+
+              <Tooltip
+                title='This is your base money'
+                position='top-start'
+                arrowSize='regular'
+                arrow
               >
-                <HiCash />
-                <span>{formatCurrency(expenseDetail.total_money)}</span>
-              </div>
+                <div
+                  className={twclsx(
+                    'inline-flex items-center gap-2',
+                    'p-1 px-2 border rounded-lg font-medium',
+                    'text-theme-5 dark:text-theme-3 border-theme-3 dark:border-theme-6'
+                  )}
+                >
+                  <HiCash />
+                  <span>{formatCurrency(expenseDetail.total_money)}</span>
+                </div>
+              </Tooltip>
             </div>
           </section>
 
@@ -86,13 +94,18 @@ const ExpenseHistory: React.FunctionComponent = () => {
                 </div>
               </div>
 
-              <PrimaryButton
-                onClick={openModal}
-                className={twclsx('self-start py-2 px-2 md:px-4', 'gap-2')}
+              <Tooltip
+                title='Create new history'
+                position='top-end'
+                arrowSize='regular'
+                className='self-start'
+                arrow
               >
-                <HiPlus />
-                <span className='hidden md:block'>Create</span>
-              </PrimaryButton>
+                <PrimaryButton onClick={openModal} className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
+                  <HiPlus />
+                  <span className='hidden md:block'>Create</span>
+                </PrimaryButton>
+              </Tooltip>
             </div>
 
             <div className='mt-4'>
