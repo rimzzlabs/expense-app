@@ -9,6 +9,7 @@ const useUser = () => {
 
   useEffect(() => {
     const supabaseUser = supabase.auth.user()
+
     if (supabaseUser) {
       setUser({
         email: supabaseUser?.email as string,
