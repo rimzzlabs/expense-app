@@ -17,7 +17,7 @@ type List = Array<{
 }>
 
 export const ModalCreateHistory = () => {
-  const { isOpen, closeModal, addHistory } = useExpenseHistory()
+  const { isOpen, closeModal, addHistory, refreshExpenseHistory } = useExpenseHistory()
   const [expense] = useAtom(expenseAtom)
 
   const defaultValues: CreateHistoryPayload = { source: '', amount: 0, type: 'income' }
@@ -53,6 +53,7 @@ export const ModalCreateHistory = () => {
     }
 
     await addHistory(val)
+    await refreshExpenseHistory()
 
     closeModal()
     rhf.reset()
