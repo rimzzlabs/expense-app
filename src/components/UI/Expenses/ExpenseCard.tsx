@@ -1,16 +1,19 @@
-import { ButtonLink, ErrorButton } from '@/components'
+import { Button, ButtonLink, ErrorButton } from '@/components'
 
 import { useExpense, usePrompt } from '@/hooks'
+import useEditExpense from '@/hooks/useEditExpense'
 import { deleteExpense } from '@/services'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
 import { Expense } from 'expense-app'
-import { useCallback } from 'react'
-import { HiArrowSmRight, HiTrash } from 'react-icons/hi'
+import React, { useCallback } from 'react'
+import { HiArrowSmRight, HiPencil, HiTrash } from 'react-icons/hi'
 
 const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
   const { openPrompt, closePrompt } = usePrompt()
   const { refreshExpense } = useExpense()
+  const { openExpenseModal } = useEditExpense()
+
   const expenseDate = formatDate(expense.created_at)
   const expenseTotalMoney = formatCurrency(expense.total_money)
   const expenseURL = '/expense/' + expense.history_id
@@ -20,6 +23,11 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
     await refreshExpense()
     closePrompt()
   }, [expense.id])
+
+  const showModal = useCallback(
+    () => openExpenseModal({ id: expense.id, title: expense.title }),
+    [expense]
+  )
 
   const handleDeleteClick = useCallback(
     () =>
@@ -61,6 +69,18 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
       </span>
 
       <div className={twclsx('inline-flex items-center justify-end', 'gap-4 w-full col-span-2')}>
+        <Button
+          onClick={showModal}
+          className={twclsx(
+            'inline-flex items-center justify-center mr-auto',
+            'w-8 md:w-10 h-8 md:h-10 border bg-transparent',
+            'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-5'
+          )}
+        >
+          <span className='sr-only'>Edit expense</span>
+          <HiPencil />
+        </Button>
+
         <ButtonLink
           state={{ foo: expense }}
           to={expenseURL}
