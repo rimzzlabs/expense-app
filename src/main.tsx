@@ -4,6 +4,7 @@ import App from '@/App'
 
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
+import 'react-tippy/dist/tippy.css'
 
 const root = document.getElementById('root') as HTMLElement
 
