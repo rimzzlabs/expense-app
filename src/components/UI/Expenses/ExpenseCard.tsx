@@ -1,4 +1,4 @@
-import { Button, ButtonLink, ErrorButton } from '@/components'
+import { Button, ButtonLink, ErrorButton, Tooltip } from '@/components'
 
 import { useExpense, usePrompt } from '@/hooks'
 import useEditExpense from '@/hooks/useEditExpense'
@@ -69,17 +69,19 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
       </span>
 
       <div className={twclsx('inline-flex items-center justify-end', 'gap-4 w-full col-span-2')}>
-        <Button
-          onClick={showModal}
-          className={twclsx(
-            'inline-flex items-center justify-center mr-auto',
-            'w-8 md:w-10 h-8 md:h-10 border bg-transparent',
-            'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-5'
-          )}
-        >
-          <span className='sr-only'>Edit expense</span>
-          <HiPencil />
-        </Button>
+        <Tooltip title='Edit Expense' className='mr-auto'>
+          <Button
+            onClick={showModal}
+            className={twclsx(
+              'inline-flex items-center justify-center',
+              'w-8 md:w-11 h-8 md:h-11 border bg-transparent',
+              'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-5'
+            )}
+          >
+            <span className='sr-only'>Edit expense</span>
+            <HiPencil />
+          </Button>
+        </Tooltip>
 
         <ButtonLink
           state={{ foo: expense }}
