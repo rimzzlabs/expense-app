@@ -47,3 +47,12 @@ export const createHistorySchema = yup.object().shape({
     .required(requiredMsg)
     .lessThan(5000000, 'Maximum money exceeded')
 })
+
+export const editExpenseSchema = (title: string) =>
+  yup.object().shape({
+    title: yup
+      .string()
+      .required('Field is required')
+      .min(6, 'At least 6 characters')
+      .not([title], 'Title same as before')
+  })
