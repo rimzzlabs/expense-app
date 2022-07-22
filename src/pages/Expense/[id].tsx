@@ -1,57 +1,35 @@
 import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton } from '@/components'
 
 import empty_history from '@/assets/empty_history.svg'
-import { useExpenseHistory } from '@/hooks'
-import * as atoms from '@/store'
+import { useExpense, useExpenseDetail, useExpenseHistory } from '@/hooks'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
-import { useAtom } from 'jotai'
 import { Suspense, lazy, useEffect } from 'react'
 import { HiCalendar, HiCash, HiCreditCard, HiPlus } from 'react-icons/hi'
-import { useNavigate, useParams } from 'react-router-dom'
 
 const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoyLists })))
 
 const ExpenseHistory: React.FunctionComponent = () => {
-  const param = useParams()
-  const navigate = useNavigate()
-
-  const [expenseLists] = useAtom(atoms.expenseListsAtom)
-  const [expense, setExpenseDetail] = useAtom(atoms.expenseAtom)
-
+  const { refreshExpenseHistory } = useExpenseHistory()
+  const { expenseLists } = useExpense()
+  const { expenseDetail, refreshExpenseDetail } = useExpenseDetail()
   const { expenseHistory, openModal } = useExpenseHistory()
 
   useEffect(() => {
-    const filteredExpense = expenseLists.filter((e) => e.history_id === param.id)[0]
-
-    if (!filteredExpense) {
-      navigate('/')
-      return
-    }
-
-    const totalIncome = expenseHistory
-      ?.filter((e) => e.type === 'income')
-      .reduce((acc, cur) => acc + cur.amount, 0)
-    const totalOutcome = expenseHistory
-      ?.filter((e) => e.type === 'outcome')
-      .reduce((acc, cur) => acc + cur.amount, 0)
-
-    setExpenseDetail({
-      ...filteredExpense,
-      totalIncome,
-      totalOutcome,
-      currentMoney: filteredExpense.total_money + totalIncome - totalOutcome
-    })
+    ;(async () => {
+      await refreshExpenseHistory()
+      refreshExpenseDetail()
+    })()
   }, [expenseLists, expenseHistory])
 
   return (
     <AuthLayer>
-      {!expense && <LoadingPage />}
+      {!expenseDetail && <LoadingPage />}
 
-      {expense && (
+      {expenseDetail && (
         <>
           <section className={twclsx('pt-10')}>
-            <h1>Expense History</h1>
+            <h1>History</h1>
             <div className='flex items-center gap-4 mt-4'>
               <div
                 className={twclsx(
@@ -61,7 +39,7 @@ const ExpenseHistory: React.FunctionComponent = () => {
                 )}
               >
                 <HiCalendar />
-                <span>{formatDate(expense.created_at)}</span>
+                <span>{formatDate(expenseDetail.created_at)}</span>
               </div>
               <div
                 className={twclsx(
@@ -71,7 +49,7 @@ const ExpenseHistory: React.FunctionComponent = () => {
                 )}
               >
                 <HiCash />
-                <span>{formatCurrency(expense.total_money)}</span>
+                <span>{formatCurrency(expenseDetail.total_money)}</span>
               </div>
             </div>
           </section>
@@ -81,28 +59,28 @@ const ExpenseHistory: React.FunctionComponent = () => {
               <div className='inline-flex flex-col gap-4'>
                 <h2 className='inline-flex items-center gap-2'>
                   <HiCreditCard />
-                  <span>{expense.title}</span>
+                  <span>{expenseDetail.title}</span>
                 </h2>
 
                 <div className={twclsx('inline-flex flex-col gap-2')}>
                   <p>
                     Curently have:{' '}
                     <span className='font-semibold text-success-1'>
-                      {formatCurrency(expense.currentMoney ?? 0)}
+                      {formatCurrency(expenseDetail.currentMoney ?? 0)}
                     </span>
                   </p>
 
                   <p>
                     Earned:{' '}
                     <span className='font-semibold text-success-1'>
-                      {formatCurrency(expense.totalIncome ?? 0)}
+                      {formatCurrency(expenseDetail.totalIncome ?? 0)}
                     </span>
                   </p>
 
                   <p>
                     Spended:{' '}
                     <span className='font-semibold text-warning-1'>
-                      {formatCurrency(expense.totalOutcome ?? 0)}
+                      {formatCurrency(expenseDetail.totalOutcome ?? 0)}
                     </span>
                   </p>
                 </div>
