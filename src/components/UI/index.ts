@@ -1,6 +1,7 @@
 export { default as Header } from './Header'
 export { default as AuthMenu } from './AuthMenu'
 export { default as Image } from './Image'
+export { default as Tooltip } from './Tooltip'
 export * from './ExpenseHistory'
 export * from './Buttons'
 export * from './Expenses'
