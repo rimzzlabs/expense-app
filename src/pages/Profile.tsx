@@ -1,4 +1,4 @@
-import { AuthLayer, ErrorButton, Input } from '@/components'
+import { AuthLayer, ErrorButton, Image, Input } from '@/components'
 
 import { usePrompt, useUser } from '@/hooks'
 import { signOut } from '@/services'
@@ -30,6 +30,11 @@ const ProfilePage: React.FunctionComponent = () => {
         <h1 className='mb-4'>Your Profile</h1>
 
         <form className='flex flex-col gap-4 mb-4'>
+          <Image
+            src={`https://ui-avatars.com/api/?name=${user?.username}&background=random`}
+            alt={user?.username as string}
+            className={twclsx('w-12 md:w-24 h-12 md:h-24', 'rounded-full object-cover')}
+          />
           <div className='inline-flex flex-col gap-2 w-full'>
             <label htmlFor='username'>Username</label>
 
