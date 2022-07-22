@@ -24,6 +24,7 @@
     "react-hot-toast": "^2.3.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.3.0",
+    "react-tippy": "^1.4.0",
     "uuid": "^8.3.2",
     "yup": "^0.32.11"
   },
