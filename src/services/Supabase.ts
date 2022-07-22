@@ -134,7 +134,7 @@ export const getExpenseById = async (expenseId: string, userId: string) => {
   }
 }
 
-export const updateExpense = async (payload: ExpenseDetail, userId: string, showToast = true) => {
+export const upsertExpense = async (payload: ExpenseDetail, userId: string, showToast = true) => {
   if (userId) {
     const toastId = toast.loading('Updating...')
     const body: Expense = {
@@ -166,6 +166,38 @@ export const updateExpense = async (payload: ExpenseDetail, userId: string, show
     }
   } else {
     toast.error('Unauthorized!')
+  }
+}
+
+export const updateExpense = async (
+  payload: Partial<Expense>,
+  userId: string,
+  showToast = true
+) => {
+  if (userId) {
+    const toastId = toast.loading('Updating...')
+
+    try {
+      const response = await supabase
+        .from<Expense>('expense')
+        .update(payload, { returning: 'minimal' })
+        .eq('id', payload.id as string)
+
+      if (response.status > 400) {
+        throw response
+      }
+
+      showToast && toast.success('Expense updated!')
+      return true
+    } catch (e) {
+      toast.error('Could not update expense, please try again later')
+      return null
+    } finally {
+      toast.remove(toastId)
+    }
+  } else {
+    toast.error('Unauthorized!')
+    return null
   }
 }
 
