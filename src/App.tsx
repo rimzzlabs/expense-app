@@ -19,7 +19,7 @@ const NotFound = lazy(() => import('./pages').then((m) => ({ default: m.NotFound
 
 const ModalPrompt = lazy(() => import('@/components').then((m) => ({ default: m.ModalPrompt })))
 const ModalCreateExpense = lazy(() =>
-  import('@/components').then((m) => ({ default: m.ModalCreateExpense }))
+  import('@/components').then((m) => ({ default: m.CreateExpenseModal }))
 )
 const ModalCreateHistory = lazy(() =>
   import('@/components').then((m) => ({ default: m.ModalCreateHistory }))

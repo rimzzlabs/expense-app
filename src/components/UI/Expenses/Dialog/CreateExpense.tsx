@@ -1,17 +1,15 @@
-import { Button, Input, InputError, PrimaryButton } from '@/components'
+import { Button, Input, InputError, Modal, PrimaryButton } from '@/components'
 
 import { useCreateExpenseModal, useExpense, useUser } from '@/hooks'
 import { createExpense } from '@/services'
 import { createExpenseSchema, twclsx } from '@/utils'
-
-import Modal from './Modal'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CreateExpensePayload } from 'expense-app'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
-const ModalCreateExpense: React.FunctionComponent = () => {
+export const CreateExpenseModal: React.FunctionComponent = () => {
   const defaultValues: CreateExpensePayload = { title: '', total_money: 0 }
   const user = useUser()
   const { refreshExpense } = useExpense()
@@ -100,5 +98,3 @@ const ModalCreateExpense: React.FunctionComponent = () => {
     </Modal>
   )
 }
-
-export default ModalCreateExpense

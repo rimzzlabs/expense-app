@@ -1,7 +1,6 @@
 import { Button, ButtonLink, ErrorButton, Tooltip } from '@/components'
 
-import { useExpense, usePrompt } from '@/hooks'
-import useEditExpense from '@/hooks/useEditExpense'
+import { useEditExpenseModal, useExpense, usePrompt } from '@/hooks'
 import { deleteExpense } from '@/services'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
@@ -12,7 +11,7 @@ import { HiArrowSmRight, HiPencil, HiTrash } from 'react-icons/hi'
 const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
   const { openPrompt, closePrompt } = usePrompt()
   const { refreshExpense } = useExpense()
-  const { openExpenseModal } = useEditExpense()
+  const { openExpenseModal } = useEditExpenseModal()
 
   const expenseDate = formatDate(expense.created_at)
   const expenseTotalMoney = formatCurrency(expense.total_money)

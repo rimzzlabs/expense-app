@@ -1,12 +1,15 @@
 import { themeAtom } from '@/store'
 
 import { useAtom } from 'jotai'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 const useTheme = () => {
   const [theme, setTheme] = useAtom(themeAtom)
 
-  const toggleTheme = () => setTheme((prevState) => (prevState === 'light' ? 'dark' : 'light'))
+  const toggleTheme = useCallback(
+    () => setTheme((prevState) => (prevState === 'light' ? 'dark' : 'light')),
+    []
+  )
 
   useEffect(() => {
     document.documentElement.className = theme

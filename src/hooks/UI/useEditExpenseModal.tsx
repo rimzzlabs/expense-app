@@ -8,7 +8,7 @@ type PayloadExpenseModal = {
   id: string
 }
 
-const useEditExpense = () => {
+const useEditExpenseModal = () => {
   const [editExpense, setEditExpense] = useAtom(editExpenseAtom)
 
   const openExpenseModal = useCallback(
@@ -27,4 +27,4 @@ const useEditExpense = () => {
   }
 }
 
-export default useEditExpense
+export default useEditExpenseModal

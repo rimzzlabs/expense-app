@@ -2,6 +2,7 @@ import { promptAtom } from '@/store'
 
 import { Prompt } from 'expense-app'
 import { useAtom } from 'jotai'
+import { useCallback } from 'react'
 
 type OpenPromptProps = {
   title: string
@@ -12,10 +13,15 @@ type OpenPromptProps = {
 const usePrompt = () => {
   const [state, setState] = useAtom(promptAtom)
 
-  const closePrompt = () => setState((prevState) => ({ ...prevState, isOpen: false }))
+  const closePrompt = useCallback(
+    () => setState((prevState) => ({ ...prevState, isOpen: false })),
+    []
+  )
 
-  const openPrompt = (value: OpenPromptProps) =>
-    setState({ ...value, onClose: closePrompt, isOpen: true })
+  const openPrompt = useCallback(
+    (value: OpenPromptProps) => setState({ ...value, onClose: closePrompt, isOpen: true }),
+    []
+  )
 
   return {
     state,

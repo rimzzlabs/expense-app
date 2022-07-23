@@ -1,7 +1,6 @@
 import { Button, Input, InputError, Modal, PrimaryButton } from '@/components'
 
-import { useExpense, useUser } from '@/hooks'
-import useEditExpense from '@/hooks/useEditExpense'
+import { useEditExpenseModal, useExpense, useUser } from '@/hooks'
 import { updateExpense } from '@/services'
 import { editExpenseSchema, twclsx } from '@/utils'
 
@@ -12,7 +11,7 @@ import { useForm } from 'react-hook-form'
 type EditExpensePayload = { title: string }
 
 export const EditExpense: React.FunctionComponent = () => {
-  const { editExpense, closeExpenseModal } = useEditExpense()
+  const { editExpense, closeExpenseModal } = useEditExpenseModal()
   const user = useUser()
   const { refreshExpense } = useExpense()
 
