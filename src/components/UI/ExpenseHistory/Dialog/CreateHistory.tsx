@@ -1,12 +1,11 @@
 import { Button, Input, InputError, Modal, PrimaryButton, Select } from '@/components'
 
-import { useExpenseHistory } from '@/hooks'
-import { expenseAtom } from '@/store'
+import { useCreateHistoryModal } from '@/hooks'
+import useExpenseDetail from '@/hooks/useExpenseDetail'
 import { createHistorySchema, twclsx } from '@/utils'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { CreateHistoryPayload } from 'expense-app'
-import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
@@ -17,8 +16,8 @@ type List = Array<{
 }>
 
 export const ModalCreateHistory = () => {
-  const { isOpen, closeModal, addHistory, refreshExpenseHistory } = useExpenseHistory()
-  const [expense] = useAtom(expenseAtom)
+  const { expenseDetail, addExpenseHistory } = useExpenseDetail()
+  const { isOpen, closeModal } = useCreateHistoryModal()
 
   const defaultValues: CreateHistoryPayload = { source: '', amount: 0, type: 'income' }
   const list: List = [
@@ -32,13 +31,12 @@ export const ModalCreateHistory = () => {
   })
 
   const onSubmit = async (val: CreateHistoryPayload) => {
-    if (!expense) {
-      closeModal()
+    if (!expenseDetail) {
       rhf.reset()
       return
     }
 
-    if (val.type === 'outcome' && expense.currentMoney - val.amount < 0) {
+    if (val.type === 'outcome' && expenseDetail.currentMoney - val.amount < 0) {
       toast.error('Not enough money to spent')
       rhf.reset({ amount: 0, type: 'income', source: val.source })
       rhf.setError('amount', { message: "You're broke😢" })
@@ -46,15 +44,13 @@ export const ModalCreateHistory = () => {
       return
     }
 
-    if (expense.currentMoney === 0 && val.type === 'outcome') {
+    if (expenseDetail.currentMoney === 0 && val.type === 'outcome') {
       toast.error("You don't have any money left!")
       rhf.reset()
       return
     }
 
-    await addHistory(val)
-    await refreshExpenseHistory()
-
+    await addExpenseHistory(val)
     closeModal()
     rhf.reset()
   }

@@ -90,8 +90,10 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
         </Tooltip>
 
         <ButtonLink
-          state={{ foo: expense }}
-          to={expenseURL}
+          to={{
+            pathname: expenseURL
+          }}
+          state={expense}
           className={twclsx('inline-flex items-center gap-1', 'py-1.5 px-4 md:py-2.5 md:px-6')}
         >
           <span>View</span>

@@ -7,7 +7,6 @@ import {
   CreateExpensePayload,
   CreateHistoryPayload,
   Expense,
-  ExpenseDetail,
   ExpenseHistory,
   SigninUserPayload,
   SignupUserPayload
@@ -107,14 +106,14 @@ export const getExpense = async (userId: string) => {
   }
 }
 
-export const getExpenseById = async (expenseId: string, userId: string) => {
+export const getExpenseByHistoryId = async (historyId: string, userId: string) => {
   if (userId) {
     try {
       const response = await supabase
         .from<Expense>('expense')
         .select('*')
+        .eq('history_id', historyId)
         .eq('user_id', userId)
-        .eq('history_id', expenseId)
 
       if (response.error) throw new CustomError(response.error)
 
@@ -125,39 +124,7 @@ export const getExpenseById = async (expenseId: string, userId: string) => {
       return null
     }
   }
-}
-
-export const upsertExpense = async (payload: ExpenseDetail, userId: string, showToast = true) => {
-  if (userId) {
-    const toastId = toast.loading('Updating...')
-    const body: Expense = {
-      id: payload.id,
-      created_at: payload.created_at,
-      history_id: payload.history_id,
-      title: payload.title,
-      total_money: payload.total_money,
-      user_id: payload.user_id
-    }
-
-    try {
-      const response = await supabase
-        .from<Expense>('expense')
-        .upsert(body, { returning: 'minimal' })
-        .eq('id', body.id)
-
-      if (response.error) throw new CustomError(response.error)
-      showToast && toast.success('Expense updated!')
-
-      return response.data
-    } catch (e) {
-      e instanceof Error && toast.error(e.message)
-    } finally {
-      toast.remove(toastId)
-    }
-  } else {
-    toast.error('Unauthorized!')
-    return null
-  }
+  return null
 }
 
 export const updateExpense = async (
@@ -199,7 +166,7 @@ export const deleteExpense = async (expenseId: string, expense_history: string) 
     const response = await supabase.from<Expense>('expense').delete().eq('id', expenseId)
     if (response.error) throw response
 
-    toast.success('Deleted successfully')
+    toast.success('  successfully')
     return response
   } catch (e) {
     e instanceof Error && toast.error(e.message)
@@ -210,7 +177,7 @@ export const deleteExpense = async (expenseId: string, expense_history: string) 
   }
 }
 
-export const getExpenseHistory = async (historyId: string) => {
+export const getExpenseHistory = async (historyId: string, showToast = false) => {
   try {
     const response = await supabase
       .from<ExpenseHistory>('history')
@@ -221,23 +188,23 @@ export const getExpenseHistory = async (historyId: string) => {
 
     return response.data
   } catch (e) {
-    e instanceof Error && toast.error(e.message)
+    e instanceof Error && showToast && toast.error(e.message)
 
     return null
   }
 }
 
-export const createExpenseHistory = async (payload: CreateHistoryPayload, id: string) => {
+export const createExpenseHistory = async (payload: CreateHistoryPayload, historyId: string) => {
   const toastId = toast.loading('Adding history...')
   try {
     const response = await supabase
       .from<ExpenseHistory>('history')
-      .insert({ ...payload, expense_id: id }, { returning: 'minimal' })
+      .insert({ ...payload, expense_id: historyId }, { returning: 'minimal' })
 
     if (response.error) throw new CustomError(response.error)
 
     toast.success('History added!')
-    return response.data
+    return true
   } catch (e) {
     e instanceof Error && toast.error(e.message)
 
