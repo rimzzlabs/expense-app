@@ -6,7 +6,7 @@ import { twclsx } from '@/utils'
 import { HiArrowSmLeft } from 'react-icons/hi'
 
 const NotFoundPage: React.FunctionComponent = () => {
-  const { user } = useUser()
+  const user = useUser()
   return (
     <div className={twclsx('flex items-center justify-center', 'w-full h-screen')}>
       <section className='flex flex-col text-center'>

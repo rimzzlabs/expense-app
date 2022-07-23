@@ -4,10 +4,14 @@ import empty_state from '@/assets/empty_expense.svg'
 import { useExpense } from '@/hooks'
 import { twclsx } from '@/utils'
 
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 
 const ExpenseLists: React.FunctionComponent = () => {
-  const { expenseLists } = useExpense()
+  const { expenseLists, refreshExpense } = useExpense()
+
+  useEffect(() => {
+    ;(async () => await refreshExpense())()
+  }, [])
 
   if (expenseLists.length > 0) {
     return (

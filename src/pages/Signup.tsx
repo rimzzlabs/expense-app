@@ -30,11 +30,6 @@ const SignupPage: React.FunctionComponent = () => {
 
   return (
     <section className={twclsx('flex flex-col gap-6', 'pt-10 md:gap-12')}>
-      <div className='w-full'>
-        <h1 className='text-4xl md:text-5xl mb-4'>Create Account</h1>
-        <p>Want to try out ExpenseApp? signup to check it out!</p>
-      </div>
-
       <form
         onSubmit={rhf.handleSubmit(onSubmit)}
         className='grid grid-cols-1 flex-auto gap-6 max-w-lg'

@@ -6,26 +6,37 @@ import { formatCurrency, formatDate, twclsx } from '@/utils'
 
 import { Suspense, lazy, useEffect } from 'react'
 import { HiCalendar, HiCash, HiCreditCard, HiPlus } from 'react-icons/hi'
+import { useParams } from 'react-router-dom'
 
 const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoyLists })))
 
 const ExpenseHistory: React.FunctionComponent = () => {
-  const { refreshExpenseHistory } = useExpenseHistory()
-  const { expenseLists } = useExpense()
   const { expenseDetail, refreshExpenseDetail } = useExpenseDetail()
+  const { refreshExpenseHistory } = useExpenseHistory()
   const { expenseHistory, openModal } = useExpenseHistory()
+  const { expenseLists, refreshExpense } = useExpense()
+  const param = useParams()
 
   useEffect(() => {
+    refreshExpenseDetail()
+  }, [expenseLists, param.id])
+
+  useEffect(() => {
+    if (!expenseDetail?.history_id) return
     ;(async () => {
       await refreshExpenseHistory()
-      refreshExpenseDetail()
     })()
-  }, [expenseLists, expenseHistory])
+  }, [expenseDetail])
+
+  useEffect(() => {
+    if (expenseLists.length > 0) return
+    ;(async () => await refreshExpense())()
+  }, [])
+
+  if (!expenseDetail) return <LoadingPage />
 
   return (
     <AuthLayer>
-      {!expenseDetail && <LoadingPage />}
-
       {expenseDetail && (
         <>
           <section className={twclsx('pt-10')}>

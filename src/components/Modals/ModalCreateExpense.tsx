@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form'
 
 const ModalCreateExpense: React.FunctionComponent = () => {
   const defaultValues: CreateExpensePayload = { title: '', total_money: 0 }
-  const { user } = useUser()
+  const user = useUser()
   const { refreshExpense } = useExpense()
 
   const { isOpen, closeModal } = useCreateExpenseModal()

@@ -5,25 +5,24 @@ import { useAtom } from 'jotai'
 import { useEffect } from 'react'
 
 const useUser = () => {
+  const supabaseUser = supabase.auth.user()
   const [user, setUser] = useAtom(userAtom)
 
   useEffect(() => {
-    const supabaseUser = supabase.auth.user()
-
-    if (supabaseUser) {
-      setUser({
-        email: supabaseUser?.email as string,
-        username: supabaseUser?.user_metadata.username as string,
-        id: supabaseUser.id
-      })
-    } else {
+    if (!supabaseUser) {
       setUser(null)
+      return
     }
-  }, [supabase.auth.user])
+    setUser({
+      email: supabaseUser.email as string,
+      id: supabaseUser.id,
+      username: supabaseUser.user_metadata.username
+    })
+  }, [supabase.auth.user()])
 
-  return {
-    user
-  }
+  if (!user) return null
+
+  return user
 }
 
 export default useUser

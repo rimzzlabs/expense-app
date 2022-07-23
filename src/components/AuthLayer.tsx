@@ -7,7 +7,7 @@ type AuthLayerProps = {
 }
 
 const AuthLayer: React.FunctionComponent<AuthLayerProps> = ({ children }) => {
-  const { user } = useUser()
+  const user = useUser()
 
   if (!user) {
     return <LoadingPage />

@@ -8,7 +8,7 @@ type CustomToolTip = { children: React.ReactNode } & TooltipProps
 const Tooltip: React.FunctionComponent<CustomToolTip> = ({ children, ...props }) => {
   const { theme } = useTheme()
 
-  return cloneElement(<TippyTooltip />, { ...props, children, theme })
+  return cloneElement<CustomToolTip>(<TippyTooltip />, { ...props, inertia: true, children, theme })
 }
 
 export default Tooltip

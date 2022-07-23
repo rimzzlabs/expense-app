@@ -5,7 +5,7 @@ import { useUser } from '@/hooks'
 import AuthMenu from './AuthMenu'
 
 const Nav = () => {
-  const { user } = useUser()
+  const user = useUser()
 
   if (!user) {
     return (

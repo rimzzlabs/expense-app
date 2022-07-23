@@ -8,7 +8,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const ProfilePage: React.FunctionComponent = () => {
-  const { user } = useUser()
+  const user = useUser()
   const navigate = useNavigate()
   const { openPrompt, closePrompt } = usePrompt()
 

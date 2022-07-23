@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom'
 
 const SigninPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
-  const { user } = useUser()
+  const user = useUser()
 
   const defaultValues: SigninUserPayload = { email: '', password: '' }
   const rhf = useForm<SigninUserPayload>({
@@ -42,7 +42,7 @@ const SigninPage: React.FunctionComponent = () => {
   return (
     <section className={twclsx('flex flex-col gap-4', 'pt-10 md:gap-8')}>
       <div className='w-full'>
-        <h1 className='text-4xl md:text-5xl mb-4'>Welcome back!</h1>
+        <h1 className='text-4xl md:text-5xl mb-2'>Welcome back!</h1>
         <p>Miss your expense history? signin to see your expenses💰.</p>
       </div>
 

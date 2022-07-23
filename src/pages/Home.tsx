@@ -8,7 +8,7 @@ import { Navigate } from 'react-router-dom'
 const ExpenseLists = lazy(() => import('@/components').then((m) => ({ default: m.ExpenseLists })))
 
 const HomePage: React.FunctionComponent = () => {
-  const { user } = useUser()
+  const user = useUser()
 
   if (!user) {
     return <Navigate to='/signin' replace />

@@ -13,7 +13,7 @@ type EditExpensePayload = { title: string }
 
 export const EditExpense: React.FunctionComponent = () => {
   const { editExpense, closeExpenseModal } = useEditExpense()
-  const { user } = useUser()
+  const user = useUser()
   const { refreshExpense } = useExpense()
 
   const rhf = useForm<EditExpensePayload>({

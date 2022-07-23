@@ -14,15 +14,19 @@ const useExpenseHistory = () => {
   const closeModal = useCallback(() => setIsOpen(false), [])
 
   const refreshExpenseHistory = useCallback(async () => {
-    const response = await getExpenseHistory(expenseDetail?.history_id as string)
+    if (!expenseDetail?.history_id) return
+
+    const response = await getExpenseHistory(expenseDetail?.history_id)
+
     if (!response) return null
+
     setExpenseHistory(response)
     return response
   }, [expenseDetail?.history_id])
 
   const addHistory = useCallback(
     async (payload: CreateHistoryPayload) =>
-      await createExpenseHistory(payload, expenseDetail?.history_id as string),
+      expenseDetail?.history_id && (await createExpenseHistory(payload, expenseDetail?.history_id)),
     [expenseDetail?.history_id]
   )
 

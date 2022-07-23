@@ -1,6 +1,6 @@
 import { Header, LoadingPage } from '@/components'
 
-import { usePrompt, useTheme } from '@/hooks'
+import { usePrompt, useTheme, useUser } from '@/hooks'
 import { Layout } from '@/templates'
 
 import { Suspense, lazy } from 'react'
@@ -31,6 +31,7 @@ const ModalEditExpense = lazy(() =>
 const ExpenseApp: React.FunctionComponent = () => {
   const { theme } = useTheme()
   const { state, closePrompt } = usePrompt()
+  useUser()
 
   return (
     <Suspense fallback={<LoadingPage />}>

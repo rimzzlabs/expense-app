@@ -12,6 +12,7 @@ const useExpenseDetail = () => {
 
   const refreshExpenseDetail = useCallback(() => {
     const filteredExpense = expenseLists.filter((e) => e.history_id === param.id)[0]
+    if (!filteredExpense) return
 
     const totalIncome = expenseHistory
       ?.filter((e) => e.type === 'income')
