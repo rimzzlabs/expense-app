@@ -1,5 +1,5 @@
 import { useEditHistoryModal, useExpenseDetail, usePrompt } from '@/hooks'
-import { deleteHistory } from '@/services'
+import { deleteSingleHistory } from '@/services'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
 import { Button, ErrorButton } from '../Buttons'
@@ -14,7 +14,7 @@ const HistoryCard: React.FunctionComponent<ExpenseHistory> = (exp) => {
   const { openModal } = useEditHistoryModal()
 
   const handleDelete = useCallback(async () => {
-    await deleteHistory(exp.id)
+    await deleteSingleHistory(exp.id)
     await refreshHistoryLists()
     closePrompt()
   }, [exp.id])

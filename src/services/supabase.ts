@@ -214,13 +214,34 @@ export const createExpenseHistory = async (payload: CreateHistoryPayload, histor
   }
 }
 
-export const deleteHistory = async (historyId: string, showToast = true) => {
+export const deleteHistory = async (expenseId: string, showToast = true) => {
   const toastId = showToast && toast.loading('Loading...')
   try {
     const response = await supabase
       .from<ExpenseHistory>('history')
       .delete({ returning: 'minimal' })
-      .eq('expense_id', historyId)
+      .eq('expense_id', expenseId)
+
+    if (response.error) throw new CustomError(response.error)
+    showToast && toast.success('Deleted successfully')
+
+    return response.data
+  } catch (e) {
+    e instanceof Error && toast.error(e.message)
+
+    return null
+  } finally {
+    toastId && toast.remove(toastId)
+  }
+}
+
+export const deleteSingleHistory = async (historyId: string, showToast = true) => {
+  const toastId = showToast && toast.loading('Loading...')
+  try {
+    const response = await supabase
+      .from<ExpenseHistory>('history')
+      .delete({ returning: 'minimal' })
+      .eq('id', historyId)
 
     if (response.error) throw new CustomError(response.error)
     showToast && toast.success('Deleted successfully')
