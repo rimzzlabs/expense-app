@@ -29,8 +29,8 @@ const Modal: React.FunctionComponent<ModalProps> = (props) => {
               'fixed inset-0',
               'bg-theme-1/50 dark:bg-theme-8/50',
               '[@supports(backdrop-filter:blur(0))]:backdrop-blur-md',
-              '[@supports(backdrop-filter:blur(0))]:bg-theme-1/80',
-              '[@supports(backdrop-filter:blur(0))]:bg-theme-7/80'
+              '[@supports(backdrop-filter:blur(0))]:bg-theme-1/50',
+              '[@supports(backdrop-filter:blur(0))]:dark:bg-theme-8/50'
             )}
           />
         </Transition.Child>
