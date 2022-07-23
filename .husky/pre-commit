@@ -13,7 +13,7 @@ yarn lint ||
 
 echo 'Running npx lintstaged 🔎'
 
-npx lint-staged || (
+yarn lint-staged || (
     echo 'There was a problem running lint-staged, quitting..';
     false;
 )
