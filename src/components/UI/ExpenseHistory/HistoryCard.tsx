@@ -1,13 +1,40 @@
+import { useEditHistoryModal, useExpenseDetail, usePrompt } from '@/hooks'
+import { deleteHistory } from '@/services'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
+import { Button, ErrorButton } from '../Buttons'
+
 import { ExpenseHistory } from 'expense-app'
+import { useCallback } from 'react'
+import { HiPencil, HiTrash } from 'react-icons/hi'
 
 const HistoryCard: React.FunctionComponent<ExpenseHistory> = (exp) => {
+  const { closePrompt, openPrompt } = usePrompt()
+  const { refreshHistoryLists } = useExpenseDetail()
+  const { openModal } = useEditHistoryModal()
+
+  const handleDelete = useCallback(async () => {
+    await deleteHistory(exp.id)
+    await refreshHistoryLists()
+    closePrompt()
+  }, [exp.id])
+
+  const handleClick = useCallback(() => {
+    openPrompt({
+      title: `Delete ${exp.source}?`,
+      message: `Are you sure you want to delete this history?`,
+      onConfirm: handleDelete
+    })
+  }, [exp.id])
+
+  const handleShowModal = useCallback(() => openModal({ id: exp.id, source: exp.source }), [exp])
+
   return (
     <div
       key={exp.id}
       className={twclsx(
         'relative',
+        'flex flex-col md:flex-row md:justify-between',
         'p-4 pl-6 rounded-lg shadow-md dark:shadow-none',
         'bg-theme-1 dark:bg-theme-7',
         'after:absolute after:left-0 after:inset-y-0',
@@ -15,19 +42,46 @@ const HistoryCard: React.FunctionComponent<ExpenseHistory> = (exp) => {
         exp.type === 'outcome' ? 'after:bg-error-1' : 'after:bg-success-1'
       )}
     >
-      <h3
-        className={twclsx(
-          exp.type === 'outcome'
-            ? 'text-error-2 dark:text-error-1'
-            : 'text-success-2 dark:text-success-1'
-        )}
-      >
-        {exp.type === 'outcome' ? '-' : '+'}
-        {formatCurrency(exp.amount)}
-      </h3>
-      <div className='inline-flex items-center gap-2 mt-2'>
-        <p className='text-sm'>{exp.source}/</p>
-        <p className='text-sm'>{formatDate(exp.created_at)}</p>
+      <div className='mb-2.5'>
+        <h3
+          className={twclsx(
+            'mb-2',
+            exp.type === 'outcome'
+              ? 'text-error-2 dark:text-error-1'
+              : 'text-success-2 dark:text-success-1'
+          )}
+        >
+          {exp.type === 'outcome' ? '-' : '+'}
+          {formatCurrency(exp.amount)}
+        </h3>
+        <p className='text-sm mb-1'>Source: {exp.source}</p>
+        <p className='text-sm'>{formatDate(exp.created_at, 'short')}</p>
+      </div>
+
+      <div className={twclsx('inline-flex items-center gap-2.5', 'self-end')}>
+        <Button
+          onClick={handleShowModal}
+          className={twclsx(
+            'w-8 h-8 md:w-10 md:h-10',
+            'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-6'
+          )}
+        >
+          <span className='sr-only'>Edit this history</span>
+          <HiPencil />
+        </Button>
+
+        <ErrorButton
+          onClick={handleClick}
+          className={twclsx(
+            'w-8 h-8 md:w-10 md:h-10',
+            'bg-transparent',
+            'text-error-1',
+            'hover:bg-error-1/10'
+          )}
+        >
+          <span className='sr-only'>Delete history</span>
+          <HiTrash />
+        </ErrorButton>
       </div>
     </div>
   )

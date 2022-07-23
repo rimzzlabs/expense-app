@@ -68,6 +68,12 @@ declare module 'expense-app' {
     title: string | null
   }
 
+  export type EditHistory = {
+    isOpen: boolean
+    id: string | null
+    source: string | null
+  }
+
   export type SelectOptionProps<T = Record<string, string>[]> = {
     list: T
   }

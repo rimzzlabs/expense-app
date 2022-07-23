@@ -85,7 +85,9 @@ const ExpenseHistory: React.FunctionComponent = () => {
               <p>
                 Spended:{' '}
                 <span className='font-semibold text-warning-1'>
-                  {expenseDetail?.totalIncome ? formatCurrency(expenseDetail.totalOutcome ?? 0) : 0}
+                  {expenseDetail?.totalOutcome
+                    ? formatCurrency(expenseDetail.totalOutcome ?? 0)
+                    : 0}
                 </span>
               </p>
             </div>

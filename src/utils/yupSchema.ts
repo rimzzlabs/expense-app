@@ -54,5 +54,16 @@ export const editExpenseSchema = (title: string) =>
       .string()
       .required('Field is required')
       .min(4, 'At least 4 characters')
+      .max(24, 'Should less than 24 characters')
       .not([title], 'Title were same as before')
+  })
+
+export const editHistorySchema = (source: string) =>
+  yup.object().shape({
+    source: yup
+      .string()
+      .required('Field is required')
+      .min(4, 'At least 6 characters')
+      .max(24, 'Should less than 24 characters')
+      .not([source], 'Source were same as before')
   })

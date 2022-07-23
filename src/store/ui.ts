@@ -1,4 +1,4 @@
-import { EditExpense, Prompt, Theme } from 'expense-app'
+import { EditExpense, EditHistory, Prompt, Theme } from 'expense-app'
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
@@ -19,4 +19,9 @@ export const editExpenseAtom = atom<EditExpense>({
   isOpen: false,
   id: null,
   title: null
+})
+export const editHistoryAtom = atom<EditHistory>({
+  isOpen: false,
+  id: null,
+  source: null
 })
