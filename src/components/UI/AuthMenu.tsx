@@ -68,11 +68,9 @@ const AuthMenu: React.FunctionComponent = () => {
           </Tooltip>
         )}
 
-        <Tooltip title='Switch theme'>
-          <Button onClick={toggleTheme} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
-            {theme === 'dark' ? <Sun /> : <Moon />}
-          </Button>
-        </Tooltip>
+        <Button onClick={toggleTheme} className={twclsx('h-10 w-10', 'text-lg hover:ring')}>
+          {theme === 'dark' ? <Sun /> : <Moon />}
+        </Button>
       </nav>
     )
   }
