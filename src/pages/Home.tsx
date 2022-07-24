@@ -29,7 +29,7 @@ const HomePage: React.FunctionComponent = () => {
 
       <section className='py-10'>
         <h2 className='mb-2.5'>💰My Expenses</h2>
-        <p className='mb-4'>List of your expenses, to view all your expense, go to expense page</p>
+        <p>List of your expenses, to view all your expense, go to expense page</p>
 
         <Suspense fallback={<Loading />}>
           <ExpenseLists expenseLists={expenseLists.slice(0, 4)} />

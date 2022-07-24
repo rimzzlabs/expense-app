@@ -107,7 +107,7 @@ const ExpenseHistory: React.FunctionComponent = () => {
           </Tooltip>
         </div>
 
-        <div className='mt-4'>
+        <div>
           {historyLists && historyLists.length > 0 ? (
             <Suspense fallback={<Loading />}>
               <HistoryLists history={historyLists} />
