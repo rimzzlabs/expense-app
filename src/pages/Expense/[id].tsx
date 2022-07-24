@@ -1,6 +1,5 @@
-import { AuthLayer, Image, Loading, PrimaryButton, Tooltip } from '@/components'
+import { AuthLayer, Loading, PrimaryButton, Tooltip } from '@/components'
 
-import empty_history from '@/assets/empty_history.svg'
 import { useCreateHistoryModal } from '@/hooks'
 import { useExpenseDetail } from '@/hooks'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
@@ -107,25 +106,9 @@ const ExpenseHistory: React.FunctionComponent = () => {
           </Tooltip>
         </div>
 
-        <div>
-          {historyLists && historyLists.length > 0 ? (
-            <Suspense fallback={<Loading />}>
-              <HistoryLists history={historyLists} />
-            </Suspense>
-          ) : (
-            <div
-              className={twclsx(
-                'flex flex-col items-center justify-center',
-                'gap-2 text-center w-full py-10'
-              )}
-            >
-              <Image src={empty_history} alt='No history' className='w-40 h-40' />
-              <p className='text-lg md:text-xl font-bold'>
-                There&apos;s nothing to show here, add some history!
-              </p>
-            </div>
-          )}
-        </div>
+        <Suspense fallback={<Loading />}>
+          <HistoryLists history={historyLists} />
+        </Suspense>
       </section>
     </AuthLayer>
   )
