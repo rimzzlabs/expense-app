@@ -13,7 +13,7 @@ type ExpenseListsProps = {
 const ExpenseLists: React.FunctionComponent<ExpenseListsProps> = ({ expenseLists = [] }) => {
   if (expenseLists.length > 0) {
     return (
-      <div className={twclsx('grid grid-cols-1 sm:grid-cols-2 gap-4 w-full flex-auto')}>
+      <div className={twclsx('grid grid-cols-1 sm:grid-cols-2 gap-4 w-full flex-auto', 'py-10')}>
         {expenseLists.map((expense) => (
           <ExpenseCard key={expense.id} {...expense} />
         ))}
