@@ -1,4 +1,4 @@
-import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton, Tooltip } from '@/components'
+import { AuthLayer, Image, Loading, PrimaryButton, Tooltip } from '@/components'
 
 import empty_history from '@/assets/empty_history.svg'
 import { useCreateHistoryModal } from '@/hooks'
@@ -19,7 +19,7 @@ const ExpenseHistory: React.FunctionComponent = () => {
     syncFirstMounted()
   }, [])
 
-  if (isLoading && !isError) return <LoadingPage />
+  if (isLoading && !isError) return <Loading />
 
   return (
     <AuthLayer>
