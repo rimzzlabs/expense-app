@@ -3,9 +3,10 @@ import { Header, LoadingPage } from '@/components'
 import { usePrompt, useTheme, useUser } from '@/hooks'
 import { Layout } from '@/templates'
 
+import { AnimatePresence } from 'framer-motion'
 import { Suspense, lazy } from 'react'
 import { Toaster } from 'react-hot-toast'
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import colors from 'tailwindcss/colors'
 
 const Home = lazy(() => import('./pages').then((m) => ({ default: m.Home })))
@@ -37,6 +38,7 @@ const ModalEditUsername = lazy(() =>
 const ExpenseApp: React.FunctionComponent = () => {
   const { theme } = useTheme()
   const { state, closePrompt } = usePrompt()
+  const location = useLocation()
   useUser()
 
   return (
@@ -50,20 +52,22 @@ const ExpenseApp: React.FunctionComponent = () => {
         }}
       />
       <Header />
-      <Routes>
-        <Route path='/' element={<Layout />}>
-          <Route index element={<Home />} />
-          <Route path='signup' element={<Signup />} />
-          <Route path='signin' element={<Signin />} />
-          <Route path='profile' element={<Profile />} />
-          <Route path='expense' element={<Expense />} />
-          <Route path='expense/:id' element={<ExpenseHistory />} />
-        </Route>
+      <AnimatePresence initial={false} exitBeforeEnter>
+        <Routes key={location.pathname} location={location}>
+          <Route path='/' element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path='signup' element={<Signup />} />
+            <Route path='signin' element={<Signin />} />
+            <Route path='profile' element={<Profile />} />
+            <Route path='expense' element={<Expense />} />
+            <Route path='expense/:id' element={<ExpenseHistory />} />
+          </Route>
 
-        <Route path='/404' element={<NotFound />} />
+          <Route path='/404' element={<NotFound />} />
 
-        <Route path='*' element={<Navigate to='/404' />} />
-      </Routes>
+          <Route path='*' element={<Navigate to='/404' />} />
+        </Routes>
+      </AnimatePresence>
 
       <Suspense fallback={<LoadingPage />}>
         <ModalPrompt {...state} onClose={closePrompt} />
