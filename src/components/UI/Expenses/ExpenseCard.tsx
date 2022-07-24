@@ -79,7 +79,7 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
             onClick={showModal}
             className={twclsx(
               'inline-flex items-center justify-center',
-              'w-8 md:w-11 h-8 md:h-11 border bg-transparent',
+              'w-10 md:w-11 h-10 md:h-11 border bg-transparent',
               'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-5'
             )}
           >
@@ -93,13 +93,13 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
             pathname: expenseURL
           }}
           state={expense}
-          className={twclsx('inline-flex items-center gap-1', 'py-1.5 px-4 md:py-2.5 md:px-6')}
+          className={twclsx('inline-flex items-center gap-1', 'h-10 px-4 md:h-11')}
         >
           <span>View</span>
           <HiArrowSmRight />
         </ButtonLink>
 
-        <ErrorButton onClick={handleDeleteClick} className='p-2 md:p-3'>
+        <ErrorButton onClick={handleDeleteClick} className='w-10 h-10 md:w-11 md:h-11'>
           <span className='sr-only'>delete expense</span>
           <HiTrash />
         </ErrorButton>

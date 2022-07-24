@@ -3,12 +3,12 @@ import { avatarAtom } from '@/store'
 
 import { User } from 'expense-app'
 import { useAtom } from 'jotai'
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 import toast from 'react-hot-toast'
 
 const useAvatar = (user: User) => {
   const [avatar, setAvatar] = useAtom(avatarAtom)
-  const fileName = user.username + user.id
+  const fileName = user.id
 
   const clearAvatar = useCallback(() => setAvatar(null), [])
 
@@ -48,12 +48,9 @@ const useAvatar = (user: User) => {
     [avatar, user]
   )
 
-  useEffect(() => {
-    refreshAvatar()
-  }, [user])
-
   return {
     avatar,
+    refreshAvatar,
     uploadAvatar,
     clearAvatar
   }

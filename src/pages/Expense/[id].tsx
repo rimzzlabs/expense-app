@@ -2,7 +2,7 @@ import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton, Tooltip } from '
 
 import empty_history from '@/assets/empty_history.svg'
 import { useCreateHistoryModal } from '@/hooks'
-import useExpenseDetail from '@/hooks/useExpenseDetail'
+import { useExpenseDetail } from '@/hooks'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
 import { Suspense, lazy, useEffect } from 'react'
@@ -97,7 +97,10 @@ const ExpenseHistory: React.FunctionComponent = () => {
             className='self-start'
             arrow
           >
-            <PrimaryButton onClick={openModal} className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
+            <PrimaryButton
+              onClick={openModal}
+              className={twclsx('w-10 h-10 md:h-11 md:w-[unset] md:px-4', 'gap-2')}
+            >
               <HiPlus />
               <span className='hidden md:block'>Create</span>
             </PrimaryButton>

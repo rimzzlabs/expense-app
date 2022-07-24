@@ -1,9 +1,10 @@
 import { AuthLayer, ErrorButton, Input, ProfilePicture } from '@/components'
 
-import { usePrompt, useUser } from '@/hooks'
+import { useAvatar, usePrompt, useUser } from '@/hooks'
 import { signOut } from '@/services'
 import { twclsx } from '@/utils'
 
+import { User } from 'expense-app'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
@@ -11,9 +12,11 @@ const ProfilePage: React.FunctionComponent = () => {
   const user = useUser()
   const navigate = useNavigate()
   const { openPrompt, closePrompt } = usePrompt()
+  const { clearAvatar } = useAvatar(user as User)
 
   const handleSignout = async () => {
     await signOut()
+    clearAvatar()
     closePrompt()
     navigate('/signin', { replace: true })
   }

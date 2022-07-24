@@ -4,6 +4,7 @@ import { useAvatar } from '@/hooks'
 import { twclsx } from '@/utils'
 
 import { User } from 'expense-app'
+import { useEffect } from 'react'
 import { HiCamera } from 'react-icons/hi'
 
 type ProfilePictureProps = {
@@ -11,7 +12,11 @@ type ProfilePictureProps = {
 }
 
 const ProfilePicture: React.FunctionComponent<ProfilePictureProps> = ({ user }) => {
-  const { avatar, uploadAvatar } = useAvatar(user as User)
+  const { avatar, uploadAvatar, refreshAvatar } = useAvatar(user as User)
+
+  useEffect(() => {
+    refreshAvatar()
+  }, [])
 
   return (
     <div
