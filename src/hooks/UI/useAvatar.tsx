@@ -1,19 +1,22 @@
-import { supabase } from '@/services'
+import { supabase, uploadUserAvatar } from '@/services'
 import { avatarAtom } from '@/store'
 
 import { User } from 'expense-app'
 import { useAtom } from 'jotai'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
+import toast from 'react-hot-toast'
 
 const useAvatar = (user: User) => {
   const [avatar, setAvatar] = useAtom(avatarAtom)
-  const bucketID = user.username + user.id
+  const fileName = user.username + user.id
 
-  useEffect(() => {
-    ;(async () => {
-      if (!user || avatar) return
+  const clearAvatar = useCallback(() => setAvatar(null), [])
 
-      const res = await supabase.storage.from('profiles').download(bucketID)
+  const refreshAvatar = useCallback(
+    async (force = false) => {
+      if (!user || (avatar && !force)) return
+
+      const res = await supabase.storage.from('profiles/avatar').download(fileName)
       if (!res.data) {
         setAvatar(null)
         return
@@ -21,10 +24,39 @@ const useAvatar = (user: User) => {
 
       const profile = URL.createObjectURL(res.data)
       setAvatar(profile)
-    })()
+    },
+    [user]
+  )
+
+  const uploadAvatar = useCallback(
+    async (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+        const file = e.target.files[0]
+
+        if (file.size >= 2e6) {
+          toast.error('Sorry, but image must be less than 2MB!')
+          return
+        }
+
+        const res = await uploadUserAvatar(file, fileName)
+
+        if (!res) return
+
+        await refreshAvatar(true)
+      }
+    },
+    [avatar, user]
+  )
+
+  useEffect(() => {
+    refreshAvatar()
   }, [user])
 
-  return avatar
+  return {
+    avatar,
+    uploadAvatar,
+    clearAvatar
+  }
 }
 
 export default useAvatar

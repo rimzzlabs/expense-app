@@ -1,26 +1,23 @@
-import {
-  AuthLayer,
-  HistoryLists,
-  Image,
-  Loading,
-  LoadingPage,
-  PrimaryButton,
-  Tooltip
-} from '@/components'
+import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton, Tooltip } from '@/components'
 
 import empty_history from '@/assets/empty_history.svg'
 import { useCreateHistoryModal } from '@/hooks'
 import useExpenseDetail from '@/hooks/useExpenseDetail'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
-import { Suspense } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import { HiCalendar, HiCash, HiCreditCard, HiPlus } from 'react-icons/hi'
 
-// const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoyLists })))
+const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoryLists })))
 
 const ExpenseHistory: React.FunctionComponent = () => {
   const { openModal } = useCreateHistoryModal()
-  const { expenseDetail, isLoading, isError, historyLists } = useExpenseDetail()
+
+  const { expenseDetail, isLoading, isError, historyLists, syncFirstMounted } = useExpenseDetail()
+
+  useEffect(() => {
+    syncFirstMounted()
+  }, [])
 
   if (isLoading && !isError) return <LoadingPage />
 

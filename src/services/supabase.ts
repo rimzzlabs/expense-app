@@ -276,3 +276,24 @@ export const updateExpenseHistory = async (payload: Partial<ExpenseHistory>, his
     toast.remove(toastId)
   }
 }
+
+export const uploadUserAvatar = async (payload: Blob, filename: string) => {
+  const toastId = toast.loading('Uploading profile picture')
+  try {
+    await supabase.storage.from('profiles').remove(['avatar/' + filename])
+    const response = await supabase.storage
+      .from('profiles/avatar')
+      .upload(filename, payload, { cacheControl: '3600', upsert: true })
+
+    if (response.error) throw new CustomError(response.error)
+    toast.success('Upload complete!')
+
+    return true
+  } catch (e) {
+    e instanceof Error && toast.error(e.message)
+
+    return null
+  } finally {
+    toast.remove(toastId)
+  }
+}

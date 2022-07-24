@@ -1,18 +1,16 @@
 import { ExpenseCard, Image } from '@/components'
 
 import empty_state from '@/assets/empty_expense.svg'
-import { useExpense } from '@/hooks'
 import { twclsx } from '@/utils'
 
-import { memo, useEffect } from 'react'
+import { Expense } from 'expense-app'
+import { memo } from 'react'
 
-const ExpenseLists: React.FunctionComponent = () => {
-  const { expenseLists, refreshExpense } = useExpense()
+type ExpenseListsProps = {
+  expenseLists: Expense[]
+}
 
-  useEffect(() => {
-    ;(async () => await refreshExpense())()
-  }, [])
-
+const ExpenseLists: React.FunctionComponent<ExpenseListsProps> = ({ expenseLists = [] }) => {
   if (expenseLists.length > 0) {
     return (
       <div className={twclsx('grid grid-cols-1 sm:grid-cols-2 gap-4 w-full flex-auto')}>

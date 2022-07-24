@@ -1,14 +1,20 @@
 import { AuthLayer, Loading, PrimaryButton } from '@/components'
 
-import { useCreateExpenseModal } from '@/hooks'
+import { useCreateExpenseModal, useExpense } from '@/hooks'
 
-import { Suspense, lazy } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import { HiPlus } from 'react-icons/hi'
 
 const ExpenseLists = lazy(() => import('@/components').then((m) => ({ default: m.ExpenseLists })))
 
 const ExpensePage: React.FunctionComponent = () => {
   const { openModal } = useCreateExpenseModal()
+  const { expenseLists, refreshExpense } = useExpense()
+
+  useEffect(() => {
+    ;(async () => await refreshExpense())()
+  }, [])
+
   return (
     <AuthLayer>
       <div className='inline-flex justify-between pt-10 w-full gap-4'>
@@ -26,7 +32,7 @@ const ExpensePage: React.FunctionComponent = () => {
       <section className='pt-10'>
         <h2 className='mb-4'>My Expense</h2>
         <Suspense fallback={<Loading />}>
-          <ExpenseLists />
+          <ExpenseLists expenseLists={expenseLists} />
         </Suspense>
       </section>
     </AuthLayer>
