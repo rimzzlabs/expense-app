@@ -8,7 +8,7 @@ import toast from 'react-hot-toast'
 
 const useAvatar = (user: User) => {
   const [avatar, setAvatar] = useAtom(avatarAtom)
-  const fileName = user.id
+  const fileName = user?.id ?? ''
 
   const clearAvatar = useCallback(() => setAvatar(null), [])
 
