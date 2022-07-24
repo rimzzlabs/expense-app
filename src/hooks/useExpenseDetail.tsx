@@ -3,10 +3,10 @@ import * as atoms from '@/store'
 
 import { CreateHistoryPayload, Expense, ExpenseHistory } from 'expense-app'
 import { useAtom } from 'jotai'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import { Location, useLocation, useNavigate } from 'react-router-dom'
 
-type TypedLocation = {
+export type TypedLocation = {
   state: Expense | null
 } & Location
 
@@ -71,27 +71,26 @@ const useExpenseDetail = () => {
     [expenseDetail]
   )
 
-  useEffect(() => {
+  const syncFirstMounted = useCallback(async () => {
     setStale((prev) => ({ ...prev, isLoading: true }))
-    ;(async () => {
-      if (!state) {
-        navigate('/', { replace: true })
-        return
-      }
 
-      const res = await getExpenseHistory(state.history_id)
+    if (!state) {
+      navigate('/', { replace: true })
+      return
+    }
 
-      if (res === null) {
-        setStale({ isError: true, isLoading: false })
-        setExpenseDetail({ ...state, currentMoney: 0, totalIncome: 0, totalOutcome: 0 })
-        return
-      }
+    const res = await getExpenseHistory(state.history_id)
 
-      refreshExpenseDetail(res)
-      setHistoryLists(res)
+    if (res === null) {
+      setStale({ isError: true, isLoading: false })
+      setExpenseDetail({ ...state, currentMoney: 0, totalIncome: 0, totalOutcome: 0 })
+      return
+    }
 
-      setStale({ isError: false, isLoading: false })
-    })()
+    refreshExpenseDetail(res)
+    setHistoryLists(res)
+
+    setStale({ isError: false, isLoading: false })
   }, [])
 
   return {
@@ -100,7 +99,8 @@ const useExpenseDetail = () => {
     historyLists: historyLists.sort(sort),
     refreshHistoryLists,
     expenseDetail,
-    addExpenseHistory
+    addExpenseHistory,
+    syncFirstMounted
   }
 }
 

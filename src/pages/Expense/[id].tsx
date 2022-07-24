@@ -1,26 +1,23 @@
-import {
-  AuthLayer,
-  HistoryLists,
-  Image,
-  Loading,
-  LoadingPage,
-  PrimaryButton,
-  Tooltip
-} from '@/components'
+import { AuthLayer, Image, Loading, LoadingPage, PrimaryButton, Tooltip } from '@/components'
 
 import empty_history from '@/assets/empty_history.svg'
 import { useCreateHistoryModal } from '@/hooks'
-import useExpenseDetail from '@/hooks/useExpenseDetail'
+import { useExpenseDetail } from '@/hooks'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
 
-import { Suspense } from 'react'
+import { Suspense, lazy, useEffect } from 'react'
 import { HiCalendar, HiCash, HiCreditCard, HiPlus } from 'react-icons/hi'
 
-// const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoyLists })))
+const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m.HistoryLists })))
 
 const ExpenseHistory: React.FunctionComponent = () => {
   const { openModal } = useCreateHistoryModal()
-  const { expenseDetail, isLoading, isError, historyLists } = useExpenseDetail()
+
+  const { expenseDetail, isLoading, isError, historyLists, syncFirstMounted } = useExpenseDetail()
+
+  useEffect(() => {
+    syncFirstMounted()
+  }, [])
 
   if (isLoading && !isError) return <LoadingPage />
 
@@ -100,14 +97,17 @@ const ExpenseHistory: React.FunctionComponent = () => {
             className='self-start'
             arrow
           >
-            <PrimaryButton onClick={openModal} className={twclsx('py-2 px-2 md:px-4', 'gap-2')}>
+            <PrimaryButton
+              onClick={openModal}
+              className={twclsx('w-10 h-10 md:h-11 md:w-[unset] md:px-4', 'gap-2')}
+            >
               <HiPlus />
               <span className='hidden md:block'>Create</span>
             </PrimaryButton>
           </Tooltip>
         </div>
 
-        <div className='mt-4'>
+        <div>
           {historyLists && historyLists.length > 0 ? (
             <Suspense fallback={<Loading />}>
               <HistoryLists history={historyLists} />

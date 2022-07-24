@@ -9,7 +9,9 @@ import {
   Expense,
   ExpenseHistory,
   SigninUserPayload,
-  SignupUserPayload
+  SignupUserPayload,
+  UpdateUserMetaDataPayload,
+  UpdateUserPayload
 } from 'expense-app'
 import toast from 'react-hot-toast'
 import { v4 as uid } from 'uuid'
@@ -268,6 +270,54 @@ export const updateExpenseHistory = async (payload: Partial<ExpenseHistory>, his
     toast.success('Updated successfully')
 
     return response.data
+  } catch (e) {
+    e instanceof Error && toast.error(e.message)
+
+    return null
+  } finally {
+    toast.remove(toastId)
+  }
+}
+
+export const uploadUserAvatar = async (payload: Blob, filename: string) => {
+  const toastId = toast.loading('Uploading profile picture')
+  try {
+    await supabase.storage.from('profiles').remove(['avatar/' + filename])
+    const response = await supabase.storage
+      .from('profiles/avatar')
+      .upload(filename, payload, { cacheControl: '3600', upsert: true })
+
+    if (response.error) throw new CustomError(response.error)
+    toast.success('Upload complete!')
+
+    return true
+  } catch (e) {
+    e instanceof Error && toast.error(e.message)
+
+    return null
+  } finally {
+    toast.remove(toastId)
+  }
+}
+
+/**
+ * use this function only update user `username` or `email`
+ * @returns
+ */
+export const updateUserProfile = async (
+  payload: Partial<UpdateUserPayload>,
+  metaData?: UpdateUserMetaDataPayload
+) => {
+  const toastId = toast.loading('Updating your profile')
+  try {
+    const response = await supabase.auth.update(
+      metaData ? { ...payload, data: metaData } : { ...payload }
+    )
+
+    if (response.error) throw new CustomError(response.error)
+    toast.success('Updated successfully!')
+
+    return true
   } catch (e) {
     e instanceof Error && toast.error(e.message)
 

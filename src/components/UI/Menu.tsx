@@ -1,17 +1,12 @@
 import { Button } from '@/components'
 
-import { usePrompt, useTheme } from '@/hooks'
+import { useAvatar, usePrompt, useTheme, useUser } from '@/hooks'
 import { signOut } from '@/services'
 import { twclsx } from '@/utils'
 
+import { User } from 'expense-app'
 import { forwardRef } from 'react'
-import {
-  HiCurrencyDollar,
-  HiLogout,
-  HiMoon as Moon,
-  HiSun as Sun,
-  HiUser as User
-} from 'react-icons/hi'
+import { HiCurrencyDollar, HiLogout, HiUser, HiMoon as Moon, HiSun as Sun } from 'react-icons/hi'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 type MenuProps = {
@@ -19,8 +14,10 @@ type MenuProps = {
 }
 
 const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
+  const user = useUser()
   const { theme, toggleTheme } = useTheme()
   const { openPrompt, closePrompt } = usePrompt()
+  const { clearAvatar } = useAvatar(user as User)
   const navigate = useNavigate()
 
   const resolveNavLinkClassName = (props: { isActive: boolean }) =>
@@ -31,8 +28,9 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
     )
 
   const handleLogout = async () => {
-    closePrompt()
     await signOut()
+    clearAvatar()
+    closePrompt()
     navigate('/signin')
   }
 
@@ -69,7 +67,7 @@ const Menu = forwardRef<HTMLDivElement, MenuProps>(({ toggleMenu }, ref) => {
 
         <nav className={twclsx('flex flex-col', 'h-full w-full')}>
           <NavLink onClick={toggleMenu} to='/profile' className={resolveNavLinkClassName}>
-            <User />
+            <HiUser />
             <span>Profile</span>
           </NavLink>
           <NavLink onClick={toggleMenu} to='/expense' className={resolveNavLinkClassName}>

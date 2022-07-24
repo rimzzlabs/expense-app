@@ -1,19 +1,23 @@
-import { AuthLayer, ErrorButton, Image, Input } from '@/components'
+import { AuthLayer, Button, ErrorButton, Input, ProfilePicture } from '@/components'
 
-import { usePrompt, useUser } from '@/hooks'
+import { useAvatar, useEditUsername, usePrompt, useUser } from '@/hooks'
 import { signOut } from '@/services'
 import { twclsx } from '@/utils'
 
+import { User } from 'expense-app'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const ProfilePage: React.FunctionComponent = () => {
   const user = useUser()
   const navigate = useNavigate()
+  const { clearAvatar } = useAvatar(user as User)
   const { openPrompt, closePrompt } = usePrompt()
+  const { openModal } = useEditUsername()
 
   const handleSignout = async () => {
     await signOut()
+    clearAvatar()
     closePrompt()
     navigate('/signin', { replace: true })
   }
@@ -29,23 +33,32 @@ const ProfilePage: React.FunctionComponent = () => {
       <div className='pt-10'>
         <h1 className='mb-4'>Your Profile</h1>
 
-        <form className='flex flex-col gap-4 mb-4 mt-8 md:mt-12'>
-          <Image
-            src={`https://ui-avatars.com/api/?name=${user?.username}&background=random`}
-            alt={user?.username as string}
-            className={twclsx('w-12 md:w-16 h-12 md:h-16', 'rounded-full object-cover')}
-          />
+        {user && <ProfilePicture user={user} />}
+
+        <div className='flex flex-col gap-6 mb-6 max-w-md'>
           <div className='inline-flex flex-col gap-2 w-full'>
             <label htmlFor='username'>Username</label>
 
-            <Input id='username' className='max-w-md' value={user?.username} readOnly disabled />
+            <Input id='username' value={user?.username} readOnly disabled />
+
+            <Button
+              onClick={openModal}
+              className='border-none justify-start max-w-max text-primary-4'
+            >
+              Update username
+            </Button>
           </div>
+
           <div className='inline-flex flex-col gap-2 w-full'>
             <label htmlFor='email'>Email address</label>
 
-            <Input id='email' className='max-w-md' value={user?.email} readOnly disabled />
+            <Input id='email' value={user?.email} readOnly disabled />
+
+            <Button className='border-none justify-start max-w-max text-primary-4'>
+              Update email address
+            </Button>
           </div>
-        </form>
+        </div>
 
         <ErrorButton
           onClick={() =>
