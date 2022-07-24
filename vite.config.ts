@@ -11,7 +11,6 @@ export default defineConfig({
   build: {
     minify: 'esbuild',
     cssCodeSplit: true,
-    sourcemap: 'hidden',
     polyfillModulePreload: true,
     reportCompressedSize: true
   }
