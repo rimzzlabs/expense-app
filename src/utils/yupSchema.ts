@@ -67,3 +67,12 @@ export const editHistorySchema = (source: string) =>
       .max(24, 'Should less than 24 characters')
       .not([source], 'Source were same as before')
   })
+
+export const editUsernameSchema = (username: string) =>
+  yup.object().shape({
+    username: yup
+      .string()
+      .required(requiredMsg)
+      .matches(/^\S*$/, 'Username should not contain space')
+      .not([username], 'username were same as before')
+  })

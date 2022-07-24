@@ -51,6 +51,15 @@ declare module 'expense-app' {
     password: string
   }
 
+  export type UpdateUserPayload = {
+    password: string
+    email: string
+  }
+
+  export type UpdateUserMetaDataPayload = {
+    username: string
+  }
+
   export type CreateExpensePayload = {
     title: string
     total_money: number

@@ -30,7 +30,7 @@ const ExpensePage: React.FunctionComponent = () => {
       </div>
 
       <section className='pt-10'>
-        <h2 className='mb-4'>My Expense</h2>
+        <h2>My Expense</h2>
         <Suspense fallback={<Loading />}>
           <ExpenseLists expenseLists={expenseLists} />
         </Suspense>
