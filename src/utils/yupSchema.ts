@@ -76,3 +76,12 @@ export const editUsernameSchema = (username: string) =>
       .matches(/^\S*$/, 'Username should not contain space')
       .not([username], 'username were same as before')
   })
+
+export const editEmailSchema = (email: string) =>
+  yup.object().shape({
+    email: yup
+      .string()
+      .required(requiredMsg)
+      .email('Invalid email address')
+      .not([email], 'email were same as before')
+  })

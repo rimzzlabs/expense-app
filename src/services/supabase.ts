@@ -316,6 +316,9 @@ export const updateUserProfile = async (
 
     if (response.error) throw new CustomError(response.error)
     toast.success('Updated successfully!')
+    if ('email' in payload && !metaData) {
+      toast.success('Please check your new email to verify your changes!')
+    }
 
     return true
   } catch (e) {

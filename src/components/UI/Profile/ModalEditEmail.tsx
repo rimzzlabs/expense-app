@@ -1,53 +1,57 @@
 import { Button, Input, InputError, Modal, PrimaryButton } from '@/components'
 
-import { useEditUsername, useUser } from '@/hooks/'
-import { editUsernameSchema, twclsx } from '@/utils'
+import { useEditEmail, useUser } from '@/hooks'
+import { editEmailSchema, twclsx } from '@/utils'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
 type FormData = {
-  username: string
+  email: string
 }
 
-export const ModalEditUsername: React.FunctionComponent = () => {
-  const { isOpen, closeModal, updateUsername } = useEditUsername()
+export const ModalEditEmail: React.FunctionComponent = () => {
+  const { isOpen, closeModal, updateEmailAddress } = useEditEmail()
   const user = useUser()
 
   const rhf = useForm<FormData>({
-    defaultValues: { username: user?.username ?? '' },
-    resolver: yupResolver(editUsernameSchema(user?.username ?? ''))
+    defaultValues: { email: user?.email ?? '' },
+    resolver: yupResolver(editEmailSchema(user?.email ?? ''))
   })
 
   const onSubmit = async (args: FormData) => {
-    await updateUsername({ email: user?.email }, { username: args.username })
+    console.info(args)
+    await updateEmailAddress({ ...args })
     rhf.reset()
   }
 
   useEffect(() => {
-    rhf.setValue('username', user?.username ?? '')
+    rhf.setValue('email', user?.email ?? '')
   }, [user])
 
   return (
-    <Modal show={isOpen} onClose={closeModal} title='Update username' className='max-w-lg'>
-      <p className='max-w-prose mt-2'>Update your username</p>
+    <Modal show={isOpen} onClose={closeModal} title='Update Email address' className='max-w-lg'>
+      <p className='max-w-prose mt-2'>Update your Email address</p>
+      <span className='text-xs md:text-sm font-semibold text-warning-1'>
+        * You need to verify your new email address after changed your email address
+      </span>
 
       <form onSubmit={rhf.handleSubmit(onSubmit)} className='mt-6 w-full'>
         <div className='inline-flex flex-col gap-2.5 w-full'>
-          <label htmlFor='username'>Username</label>
+          <label htmlFor='email'>Email Address</label>
           <Input
-            type='text'
-            id='username'
-            placeholder='E.g: JohnWick911'
+            type='email'
+            id='email'
+            placeholder='Your new email address'
             className={twclsx(
-              rhf.formState.errors.username?.message &&
+              rhf.formState.errors.email?.message &&
                 'border-error-1 dark:border-error-1 focus:border-error-2 focus:ring-error-1'
             )}
-            {...rhf.register('username')}
+            {...rhf.register('email')}
           />
-          {rhf.formState.errors.username?.message && (
-            <InputError msg={rhf.formState.errors.username.message} />
+          {rhf.formState.errors.email?.message && (
+            <InputError msg={rhf.formState.errors.email.message} />
           )}
         </div>
 

@@ -34,6 +34,9 @@ const ModalEditHistory = lazy(() =>
 const ModalEditUsername = lazy(() =>
   import('@/components').then((m) => ({ default: m.ModalEditUsername }))
 )
+const ModalEditEmail = lazy(() =>
+  import('@/components').then((m) => ({ default: m.ModalEditEmail }))
+)
 
 const ExpenseApp: React.FunctionComponent = () => {
   const { theme } = useTheme()
@@ -91,6 +94,10 @@ const ExpenseApp: React.FunctionComponent = () => {
 
       <Suspense fallback={<LoadingPage />}>
         <ModalEditUsername />
+      </Suspense>
+
+      <Suspense fallback={<LoadingPage />}>
+        <ModalEditEmail />
       </Suspense>
     </Suspense>
   )

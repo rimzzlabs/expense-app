@@ -1,6 +1,6 @@
 import { AuthLayer, Button, ErrorButton, Input, ProfilePicture } from '@/components'
 
-import { useAvatar, useEditUsername, usePrompt, useUser } from '@/hooks'
+import { useAvatar, useEditEmail, useEditUsername, usePrompt, useUser } from '@/hooks'
 import { signOut } from '@/services'
 import { twclsx } from '@/utils'
 
@@ -13,7 +13,8 @@ const ProfilePage: React.FunctionComponent = () => {
   const navigate = useNavigate()
   const { clearAvatar } = useAvatar(user as User)
   const { openPrompt, closePrompt } = usePrompt()
-  const { openModal } = useEditUsername()
+  const { openModal: openModalEditUsername } = useEditUsername()
+  const { openModal: openModalEditEmail } = useEditEmail()
 
   const handleSignout = async () => {
     await signOut()
@@ -42,7 +43,7 @@ const ProfilePage: React.FunctionComponent = () => {
             <Input id='username' value={user?.username} readOnly disabled />
 
             <Button
-              onClick={openModal}
+              onClick={openModalEditUsername}
               className='border-none justify-start max-w-max text-primary-4'
             >
               Update username
@@ -54,7 +55,10 @@ const ProfilePage: React.FunctionComponent = () => {
 
             <Input id='email' value={user?.email} readOnly disabled />
 
-            <Button className='border-none justify-start max-w-max text-primary-4'>
+            <Button
+              onClick={openModalEditEmail}
+              className='border-none justify-start max-w-max text-primary-4'
+            >
               Update email address
             </Button>
           </div>
