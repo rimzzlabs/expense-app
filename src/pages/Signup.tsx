@@ -94,8 +94,8 @@ const SignupPage: React.FunctionComponent = () => {
           )}
           <span className='text-sm'>
             * ExpenseApp will not share your data,{' '}
-            <Link to='/privacy-police' className='text-primary-5 dark:text-primary-4'>
-              See privacy police
+            <Link to='/privacy-policy' className='text-primary-5 dark:text-primary-4'>
+              See privacy policy
             </Link>
           </span>
         </div>

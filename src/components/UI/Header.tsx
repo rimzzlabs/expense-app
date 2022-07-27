@@ -9,7 +9,7 @@ const Header: React.FunctionComponent = () => {
   const { pathname } = useLocation()
   const isOnHomepage = pathname === '/' || pathname === '/signin' || pathname === '/signup'
 
-  if (pathname === '/404' || pathname === '/privacy-police') return null
+  if (pathname === '/404' || pathname === '/privacy-policy') return null
 
   return (
     <header
