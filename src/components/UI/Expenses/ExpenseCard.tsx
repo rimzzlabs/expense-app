@@ -63,9 +63,37 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
         <p className='mb-4'>{expenseDate}</p>
       </div>
 
-      <span className='w-full text-xl md:text-4xl font-bold text-right text-success-1'>
-        {expenseTotalMoney}
-      </span>
+      {expense.total_money > 99999 ? (
+        <Tooltip
+          className='text-ellipsis whitespace-nowrap overflow-hidden'
+          title={expenseTotalMoney}
+          arrowSize='small'
+          arrow
+        >
+          <span
+            className={twclsx(
+              'w-full',
+              'text-xl md:text-4xl',
+              'font-bold text-right',
+              'text-success-1'
+            )}
+          >
+            {expenseTotalMoney}
+          </span>
+        </Tooltip>
+      ) : (
+        <span
+          className={twclsx(
+            'w-full',
+            'text-xl md:text-4xl',
+            'text-ellipsis whitespace-nowrap overflow-hidden',
+            'font-bold text-right',
+            'text-success-1'
+          )}
+        >
+          {expenseTotalMoney}
+        </span>
+      )}
 
       <div className={twclsx('inline-flex items-center justify-end', 'gap-4 w-full col-span-2')}>
         <Tooltip

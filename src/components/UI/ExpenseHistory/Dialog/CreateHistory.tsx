@@ -55,7 +55,11 @@ export const ModalCreateHistory = () => {
     rhf.reset()
   }
 
-  useEffect(() => rhf.reset(), [])
+  useEffect(() => {
+    const timer = setTimeout(() => rhf.reset({ source: '' }, { keepDefaultValues: true }), 300)
+
+    return () => clearTimeout(timer)
+  }, [isOpen])
 
   return (
     <Modal show={isOpen} onClose={closeModal} title='New History' className={twclsx('max-w-lg')}>

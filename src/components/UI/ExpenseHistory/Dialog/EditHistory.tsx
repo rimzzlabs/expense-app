@@ -47,10 +47,10 @@ export const ModalEditHistory = () => {
     <Modal
       show={editHistory.isOpen}
       onClose={closeModal}
-      title={'Edit ' + editHistory.source}
+      title='Edit expense history'
       className='max-w-lg'
     >
-      <p className='max-w-prose mt-2'>Edit current history</p>
+      <p className='max-w-prose mt-2'>Edit the current history</p>
 
       <form onSubmit={rhf.handleSubmit(onSubmit)} className='mt-6 w-full'>
         <div className='inline-flex flex-col gap-2.5 w-full'>

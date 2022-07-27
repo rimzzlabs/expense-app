@@ -1,8 +1,8 @@
+import { Button, ErrorButton, Tooltip } from '@/components'
+
 import { useEditHistoryModal, useExpenseDetail, usePrompt } from '@/hooks'
 import { deleteSingleHistory } from '@/services'
 import { formatCurrency, formatDate, twclsx } from '@/utils'
-
-import { Button, ErrorButton } from '../Buttons'
 
 import { ExpenseHistory } from 'expense-app'
 import { useCallback } from 'react'
@@ -59,16 +59,18 @@ const HistoryCard: React.FunctionComponent<ExpenseHistory> = (exp) => {
       </div>
 
       <div className={twclsx('inline-flex items-center gap-2.5', 'self-end')}>
-        <Button
-          onClick={handleShowModal}
-          className={twclsx(
-            'w-8 h-8 md:w-10 md:h-10',
-            'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-6'
-          )}
-        >
-          <span className='sr-only'>Edit this history</span>
-          <HiPencil />
-        </Button>
+        <Tooltip title='Edit this expense history' arrowSize='regular' arrow>
+          <Button
+            onClick={handleShowModal}
+            className={twclsx(
+              'w-8 h-8 md:w-10 md:h-10',
+              'dark:border-theme-6 hover:bg-theme-2 dark:hover:bg-theme-6'
+            )}
+          >
+            <span className='sr-only'>Edit this history</span>
+            <HiPencil />
+          </Button>
+        </Tooltip>
 
         <ErrorButton
           onClick={handleClick}
