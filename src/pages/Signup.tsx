@@ -6,7 +6,7 @@ import { signupSchema, twclsx } from '@/utils'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { SignupUserPayload } from 'expense-app'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SignupPage: React.FunctionComponent = () => {
   const defaultValues: SignupUserPayload = { email: '', password: '', username: '' }
@@ -92,12 +92,15 @@ const SignupPage: React.FunctionComponent = () => {
           {rhf.formState.errors.password?.message && (
             <InputError msg={rhf.formState.errors.password.message} />
           )}
-          <span className='text-sm text-success-2 dark:text-success-1'>
-            * ExpenseApp will not share your data
+          <span className='text-sm'>
+            * ExpenseApp will not share your data,{' '}
+            <Link to='/privacy-police' className='text-primary-5 dark:text-primary-4'>
+              See privacy police
+            </Link>
           </span>
         </div>
 
-        <div className='flex items-center gap-2'>
+        <div className='flex flex-col md:flex-row items-center gap-4 md:gap-2.5'>
           <PrimaryButton type='submit' className={twclsx('w-full', 'py-2.5 px-6 font-semibold')}>
             Signup
           </PrimaryButton>
