@@ -1,4 +1,4 @@
-import { ButtonLink, Input, InputError, PrimaryButton } from '@/components'
+import { ButtonLink, Input, InputError, OAuthButton, PrimaryButton } from '@/components'
 
 import { signUp } from '@/services'
 import { signupSchema, twclsx } from '@/utils'
@@ -32,7 +32,7 @@ const SignupPage: React.FunctionComponent = () => {
     <section className={twclsx('flex flex-col gap-6', 'pt-10 md:gap-12')}>
       <form
         onSubmit={rhf.handleSubmit(onSubmit)}
-        className='grid grid-cols-1 flex-auto gap-6 max-w-lg'
+        className='grid grid-cols-1 flex-auto gap-6 max-w-md'
       >
         <h2>
           Signup to{' '}
@@ -98,16 +98,13 @@ const SignupPage: React.FunctionComponent = () => {
         </div>
 
         <div className='flex items-center gap-2'>
-          <PrimaryButton
-            type='submit'
-            className={twclsx('w-full md:max-w-max', 'py-2.5 px-6 font-semibold')}
-          >
+          <PrimaryButton type='submit' className={twclsx('w-full', 'py-2.5 px-6 font-semibold')}>
             Signup
           </PrimaryButton>
           <ButtonLink
             to='/signin'
             className={twclsx(
-              'w-full md:max-w-max',
+              'w-full',
               'bg-transparent border px-6',
               'text-theme-6 dark:text-theme-3 border-theme-3 dark:border-theme-7',
               'hover:bg-theme-8 dark:hover:bg-theme-6 hover:text-theme-1'
@@ -117,6 +114,8 @@ const SignupPage: React.FunctionComponent = () => {
           </ButtonLink>
         </div>
       </form>
+
+      <OAuthButton />
     </section>
   )
 }

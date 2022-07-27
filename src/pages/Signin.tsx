@@ -1,11 +1,4 @@
-import {
-  ButtonLink,
-  GitHubButton,
-  GoogleButton,
-  Input,
-  InputError,
-  PrimaryButton
-} from '@/components'
+import { ButtonLink, Input, InputError, OAuthButton, PrimaryButton } from '@/components'
 
 import { useUser } from '@/hooks'
 import { signIn } from '@/services'
@@ -55,7 +48,7 @@ const SigninPage: React.FunctionComponent = () => {
 
       <form onSubmit={rhf.handleSubmit(onSubmit)} className='grid grid-cols-1 gap-6 max-w-md'>
         <h2>
-          Signin to mt-4{' '}
+          Signin to{' '}
           <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary-5 to-ternary-5'>
             ExpenseApp
           </span>
@@ -98,13 +91,13 @@ const SigninPage: React.FunctionComponent = () => {
         </div>
 
         <div className='flex flex-col md:flex-row items-center gap-4 md:gap-2.5'>
-          <PrimaryButton className={twclsx('w-full md:max-w-max', 'py-2.5 px-6 font-semibold')}>
+          <PrimaryButton className={twclsx('w-full', 'py-2.5 px-6 font-semibold')}>
             Signin
           </PrimaryButton>
           <ButtonLink
             to='/signup'
             className={twclsx(
-              'w-full md:max-w-max',
+              'w-full',
               'bg-transparent border px-6',
               'text-theme-6 dark:text-theme-3 border-theme-3 dark:border-theme-7',
               'hover:bg-theme-8 dark:hover:bg-theme-6 hover:text-theme-1'
@@ -115,10 +108,7 @@ const SigninPage: React.FunctionComponent = () => {
         </div>
       </form>
 
-      <div className={twclsx('flex flex-col items-center', 'max-w-md gap-2.5 flex-auto mt-4')}>
-        <GitHubButton />
-        <GoogleButton />
-      </div>
+      <OAuthButton />
     </section>
   )
 }

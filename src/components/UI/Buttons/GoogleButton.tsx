@@ -17,7 +17,7 @@ const GoogleButton = () => {
       onClick={SignInWithGoogle}
     >
       <Image className='w-[1em] h-[1em]' src={google} alt='google' />
-      <span>Signin with Google</span>
+      <span>Signin with Google </span>
     </Button>
   )
 }
