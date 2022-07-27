@@ -1,6 +1,7 @@
 import { Button, Input, InputError, Modal, PrimaryButton } from '@/components'
 
 import { useEditEmail, useUser } from '@/hooks'
+import { signOut } from '@/services'
 import { editEmailSchema, twclsx } from '@/utils'
 
 import { yupResolver } from '@hookform/resolvers/yup'
@@ -21,8 +22,8 @@ export const ModalEditEmail: React.FunctionComponent = () => {
   })
 
   const onSubmit = async (args: FormData) => {
-    console.info(args)
     await updateEmailAddress({ ...args })
+    await signOut()
     rhf.reset()
   }
 
@@ -32,10 +33,12 @@ export const ModalEditEmail: React.FunctionComponent = () => {
 
   return (
     <Modal show={isOpen} onClose={closeModal} title='Update Email address' className='max-w-lg'>
-      <p className='max-w-prose mt-2'>Update your Email address</p>
-      <span className='text-xs md:text-sm font-semibold text-warning-1'>
-        * You need to verify your new email address after changed your email address
-      </span>
+      <p className='font-semibold mt-4 mb-2.5 text-warning-1'>
+        * You need to verify your both old and new email address after you&apos;ve changed it.
+      </p>
+      <p>
+        See instruction on question mark next to <strong>Change email address</strong>
+      </p>
 
       <form onSubmit={rhf.handleSubmit(onSubmit)} className='mt-6 w-full'>
         <div className='inline-flex flex-col gap-2.5 w-full'>
