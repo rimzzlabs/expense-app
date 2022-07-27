@@ -1,4 +1,11 @@
-import { ButtonLink, Input, InputError, PrimaryButton } from '@/components'
+import {
+  ButtonLink,
+  GitHubButton,
+  GoogleButton,
+  Input,
+  InputError,
+  PrimaryButton
+} from '@/components'
 
 import { useUser } from '@/hooks'
 import { signIn } from '@/services'
@@ -46,9 +53,9 @@ const SigninPage: React.FunctionComponent = () => {
         <p>Miss your expense history? signin to see your expenses💰.</p>
       </div>
 
-      <form onSubmit={rhf.handleSubmit(onSubmit)} className='grid grid-cols-1 gap-6 max-w-lg'>
+      <form onSubmit={rhf.handleSubmit(onSubmit)} className='grid grid-cols-1 gap-6 max-w-md'>
         <h2>
-          Signin to{' '}
+          Signin to mt-4{' '}
           <span className='bg-clip-text text-transparent bg-gradient-to-r from-primary-5 to-ternary-5'>
             ExpenseApp
           </span>
@@ -90,7 +97,7 @@ const SigninPage: React.FunctionComponent = () => {
           )}
         </div>
 
-        <div className='flex items-center gap-2'>
+        <div className='flex flex-col md:flex-row items-center gap-4 md:gap-2.5'>
           <PrimaryButton className={twclsx('w-full md:max-w-max', 'py-2.5 px-6 font-semibold')}>
             Signin
           </PrimaryButton>
@@ -107,6 +114,11 @@ const SigninPage: React.FunctionComponent = () => {
           </ButtonLink>
         </div>
       </form>
+
+      <div className={twclsx('flex flex-col items-center', 'max-w-md gap-2.5 flex-auto mt-4')}>
+        <GitHubButton />
+        <GoogleButton />
+      </div>
     </section>
   )
 }

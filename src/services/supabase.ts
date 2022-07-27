@@ -36,6 +36,10 @@ export const signIn = async (payload: SigninUserPayload) => {
   }
 }
 
+export const SignInWithGoogle = async () => await supabase.auth.signIn({ provider: 'google' })
+
+export const SignInWithGitHub = async () => await supabase.auth.signIn({ provider: 'github' })
+
 export const signUp = async (payload: SignupUserPayload) => {
   const toastId = toast.loading('Loading...')
   try {
