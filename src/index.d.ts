@@ -14,6 +14,8 @@ declare module 'expense-app' {
     id: string
     username: string
     email: string
+    name?: string
+    picture?: null
   }
 
   export type Expense = {

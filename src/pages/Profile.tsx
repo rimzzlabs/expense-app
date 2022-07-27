@@ -49,7 +49,12 @@ const ProfilePage: React.FunctionComponent = () => {
           <div className='inline-flex flex-col gap-2 w-full'>
             <label htmlFor='username'>Username</label>
 
-            <Input id='username' value={user?.username} readOnly disabled />
+            <Input
+              id='username'
+              value={user?.username ?? user?.name?.replaceAll(' ', '')}
+              readOnly
+              disabled
+            />
 
             <Button
               onClick={openModalEditUsername}

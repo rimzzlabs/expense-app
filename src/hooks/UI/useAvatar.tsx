@@ -16,6 +16,11 @@ const useAvatar = (user: User) => {
     async (force = false) => {
       if (!user || (avatar && !force)) return
 
+      if (user.picture) {
+        setAvatar(user.picture)
+        return
+      }
+
       const res = await supabase.storage.from('profiles/avatar').download(fileName)
       if (!res.data) {
         setAvatar(null)

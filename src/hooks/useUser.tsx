@@ -16,7 +16,9 @@ const useUser = () => {
     setUser({
       email: supabaseUser.email as string,
       id: supabaseUser.id,
-      username: supabaseUser.user_metadata.username
+      username: supabaseUser.user_metadata.username,
+      name: supabaseUser.user_metadata?.name ?? null,
+      picture: supabaseUser.user_metadata?.picture ?? null
     })
   }, [supabase.auth.user()])
 
