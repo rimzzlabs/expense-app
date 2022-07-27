@@ -1,14 +1,29 @@
 import { formatDate, twclsx } from '@/utils'
 
+import { HiArrowSmLeft } from 'react-icons/hi'
+import { Link } from 'react-router-dom'
+
 const PrivacyPolicePage: React.FunctionComponent = () => {
   return (
     <div
       className={twclsx(
-        'py-10 max-w-prose',
+        'pb-10 max-w-prose',
         '[&>:is(p,ul):not(:last-child)]:mb-[0.725em]',
         '[&>:is(h1,h2)]:mb-[0.875em] [&>:is(h1,h2):not(:first-child)]:mt-[0.675em]'
       )}
     >
+      <Link
+        to='/signin'
+        className={twclsx(
+          'inline-flex items-center gap-2.5',
+          'hover:underline',
+          'text-primary-5 dark:text-primary-4'
+        )}
+      >
+        <HiArrowSmLeft />
+        <span>Back</span>
+      </Link>
+
       <h1>Privacy Police</h1>
       <p>
         Rizki M Citra built the ExpenseApp app as an Open Source app. This SERVICE is provided by

@@ -7,13 +7,9 @@ import { Link, useLocation } from 'react-router-dom'
 
 const Header: React.FunctionComponent = () => {
   const { pathname } = useLocation()
-  const isOnHomepage =
-    pathname === '/' ||
-    pathname === '/signin' ||
-    pathname === '/signup' ||
-    pathname === '/privacy-police'
+  const isOnHomepage = pathname === '/' || pathname === '/signin' || pathname === '/signup'
 
-  if (pathname === '/404') return null
+  if (pathname === '/404' || pathname === '/privacy-police') return null
 
   return (
     <header
