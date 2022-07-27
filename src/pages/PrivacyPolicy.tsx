@@ -3,7 +3,7 @@ import { formatDate, twclsx } from '@/utils'
 import { HiArrowSmLeft } from 'react-icons/hi'
 import { Link } from 'react-router-dom'
 
-const PrivacyPolicePage: React.FunctionComponent = () => {
+const PrivacyPolicyPage: React.FunctionComponent = () => {
   return (
     <div
       className={twclsx(
@@ -24,7 +24,7 @@ const PrivacyPolicePage: React.FunctionComponent = () => {
         <span>Back</span>
       </Link>
 
-      <h1>Privacy Police</h1>
+      <h1>Privacy Policy</h1>
       <p>
         Rizki M Citra built the ExpenseApp app as an Open Source app. This SERVICE is provided by
         Rizki M Citra at no cost and is intended for use as is.
@@ -124,4 +124,4 @@ const PrivacyPolicePage: React.FunctionComponent = () => {
   )
 }
 
-export default PrivacyPolicePage
+export default PrivacyPolicyPage

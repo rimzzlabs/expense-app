@@ -15,7 +15,7 @@ const Signin = lazy(() => import('./pages').then((m) => ({ default: m.Signin }))
 const Profile = lazy(() => import('./pages').then((m) => ({ default: m.Profile })))
 const Expense = lazy(() => import('./pages').then((m) => ({ default: m.Expense })))
 const ExpenseHistory = lazy(() => import('./pages').then((m) => ({ default: m.ExpenseHistory })))
-const PrivacyPolice = lazy(() => import('./pages').then((m) => ({ default: m.PrivacyPolice })))
+const PrivacyPolicy = lazy(() => import('./pages').then((m) => ({ default: m.PrivacyPolicy })))
 
 const NotFound = lazy(() => import('./pages').then((m) => ({ default: m.NotFound })))
 
@@ -68,7 +68,7 @@ const ExpenseApp: React.FunctionComponent = () => {
             <Route path='profile' element={<Profile />} />
             <Route path='expense' element={<Expense />} />
             <Route path='expense/:id' element={<ExpenseHistory />} />
-            <Route path='/privacy-police' element={<PrivacyPolice />} />
+            <Route path='/privacy-policy' element={<PrivacyPolicy />} />
           </Route>
 
           <Route path='/404' element={<NotFound />} />
