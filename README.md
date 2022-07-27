@@ -44,7 +44,7 @@ This app is an implementation of React with Supabase, simply have Authentication
 - [x] Update User Email
 - [ ] Update User Password
 - [ ] Forgot Password
-- [ ] oAuth with Google and GitHub
+- [x] oAuth with Google and GitHub
 
 ## Contribution
 
