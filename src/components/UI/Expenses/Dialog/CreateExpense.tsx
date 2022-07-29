@@ -40,7 +40,7 @@ export const CreateExpenseModal: React.FunctionComponent = () => {
       </p>
 
       <form
-        onSubmit={rhf.handleSubmit(onSubmit, (args) => console.info(args))}
+        onSubmit={rhf.handleSubmit(onSubmit)}
         className={twclsx('flex flex-col gap-4 md:gap-6', 'w-full mt-8')}
       >
         <div className='inline-flex flex-col gap-2.5'>
