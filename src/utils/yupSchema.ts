@@ -9,7 +9,7 @@ export const signupSchema = yup.object().shape({
   password: yup
     .string()
     .required(requiredMsg)
-    .min(8, 'Should be 8 to 16 characters')
+    .min(8, 'Should be 8 to 32 characters')
     .max(32, 'Password should less than 32 characters'),
   username: yup.string().required(requiredMsg).matches(/^\S*$/, 'Username should not contain space')
 })
@@ -76,6 +76,7 @@ export const editUsernameSchema = (username: string) =>
       .string()
       .required(requiredMsg)
       .matches(/^\S*$/, 'Username should not contain space')
+      .max(30, 'Should less than 30 characters')
       .not([username], 'username were same as before')
   })
 
@@ -87,3 +88,7 @@ export const editEmailSchema = (email: string) =>
       .email('Invalid email address')
       .not([email], 'email were same as before')
   })
+
+export const editPasswordSchema = yup.object().shape({
+  password: signupSchema.fields.password
+})

@@ -3,6 +3,7 @@ import { AuthLayer, Button, ErrorButton, Input, ProfilePicture, Tooltip } from '
 import {
   useAvatar,
   useEditEmail,
+  useEditPassword,
   useEditUsername,
   usePrompt,
   useStepsUpdateEmail,
@@ -24,6 +25,7 @@ const ProfilePage: React.FunctionComponent = () => {
   const { openModal: openModalEditUsername } = useEditUsername()
   const { openModal: openModalEditEmail } = useEditEmail()
   const { openModal: openModalSteps } = useStepsUpdateEmail()
+  const { openModal: openModalPassword } = useEditPassword()
 
   const handleSignout = async () => {
     await signOut()
@@ -56,12 +58,22 @@ const ProfilePage: React.FunctionComponent = () => {
               disabled
             />
 
-            <Button
-              onClick={openModalEditUsername}
-              className='border-none justify-start max-w-max text-primary-4'
-            >
-              Update username
-            </Button>
+            <div className='flex items-center justify-between'>
+              <Button
+                onClick={openModalEditUsername}
+                className='border-none justify-start max-w-max text-primary-4'
+              >
+                Update username
+              </Button>
+
+              <Button
+                onClick={openModalPassword}
+                type='button'
+                className='max-w-max border-0 p-0 text-error-1'
+              >
+                Update password
+              </Button>
+            </div>
           </div>
 
           <div className='inline-flex flex-col gap-2 w-full'>

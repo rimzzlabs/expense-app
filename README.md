@@ -42,7 +42,7 @@ This app is an implementation of React with Supabase, simply have Authentication
 - [x] Update User Profile Picture
 - [x] Update User Username
 - [x] Update User Email
-- [ ] Update User Password
+- [x] Update User Password
 - [ ] Forgot Password
 - [x] oAuth with Google and GitHub
 

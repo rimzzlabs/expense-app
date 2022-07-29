@@ -41,6 +41,9 @@ const ModalEditEmail = lazy(() =>
 const ModalStepsUpdateEmail = lazy(() =>
   import('@/components').then((m) => ({ default: m.ModalStepsUpdateEmail }))
 )
+const ModalEditPassword = lazy(() =>
+  import('@/components').then((m) => ({ default: m.ModalEditPassword }))
+)
 
 const ExpenseApp: React.FunctionComponent = () => {
   const { theme } = useTheme()
@@ -107,6 +110,10 @@ const ExpenseApp: React.FunctionComponent = () => {
 
       <Suspense fallback={<LoadingPage />}>
         <ModalStepsUpdateEmail />
+      </Suspense>
+
+      <Suspense fallback={<LoadingPage />}>
+        <ModalEditPassword />
       </Suspense>
     </Suspense>
   )

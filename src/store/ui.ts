@@ -17,6 +17,7 @@ export const createExpenseModalIsOpen = atom(false)
 export const createdHistoryModal = atom(false)
 export const editUsernameModal = atom(false)
 export const editEmailModal = atom(false)
+export const editPasswordModal = atom(false)
 export const stepsUpdateEmail = atom(false)
 export const avatarAtom = atom<string | null>(null)
 export const editExpenseAtom = atom<EditExpense>({

@@ -333,3 +333,21 @@ export const updateUserProfile = async (
     toast.remove(toastId)
   }
 }
+
+export const updateUserPassword = async (password: string) => {
+  const toastId = toast.loading('Updating your password')
+  try {
+    const response = await supabase.auth.update({ password })
+
+    if (response.error) throw new CustomError(response.error)
+    toast.success('Updated successfully!')
+
+    return true
+  } catch (e) {
+    e instanceof Error && toast.error(e.message)
+
+    return null
+  } finally {
+    toast.remove(toastId)
+  }
+}
