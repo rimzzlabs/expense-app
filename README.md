@@ -17,11 +17,11 @@ This app is an implementation of React with Supabase, simply have Authentication
 
 ### Stack
 
-- React ⚛️
 - Vite ⚡
+- React ⚛️
 - Supabase 🔥
 - TailwindCSS 💨
-- Misc 🔌
+- Miscellaneous 🔌
   - Jotai 👻
   - Headless UI 🔋
   - React Hot Toast 🔔
