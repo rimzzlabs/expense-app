@@ -92,3 +92,7 @@ export const editEmailSchema = (email: string) =>
 export const editPasswordSchema = yup.object().shape({
   password: signupSchema.fields.password
 })
+
+export const forgotPasswordSchema = yup.object().shape({
+  email: signupSchema.fields.email
+})

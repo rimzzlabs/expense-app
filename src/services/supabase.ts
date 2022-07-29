@@ -351,3 +351,17 @@ export const updateUserPassword = async (password: string) => {
     toast.remove(toastId)
   }
 }
+
+export const resetPassword = async (email: string) => {
+  const toastId = toast.loading('Sending you an email confirmation..')
+  try {
+    const response = await supabase.auth.api.resetPasswordForEmail(email)
+
+    if (response.error) throw new CustomError(response.error)
+    toast.success('Check your email to update your password!')
+  } catch (e) {
+    e instanceof Error && toast.error(e.message)
+  } finally {
+    toast.remove(toastId)
+  }
+}

@@ -1,4 +1,4 @@
-import { Button, ButtonLink, Input, InputError, OAuthButton, PrimaryButton } from '@/components'
+import { ButtonLink, Input, InputError, OAuthButton, PrimaryButton } from '@/components'
 
 import { useUser } from '@/hooks'
 import { signIn } from '@/services'
@@ -8,7 +8,7 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { SigninUserPayload } from 'expense-app'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const SigninPage: React.FunctionComponent = () => {
   const navigate = useNavigate()
@@ -88,9 +88,9 @@ const SigninPage: React.FunctionComponent = () => {
           {rhf.formState.errors.password?.message && (
             <InputError msg={rhf.formState.errors.password.message} />
           )}
-          <Button type='button' className='max-w-max border-0 p-0 ml-auto text-error-1'>
+          <Link to='/forgot-password' className='max-w-max border-0 p-0 ml-auto text-error-1'>
             Forgot passsword?
-          </Button>
+          </Link>
         </div>
 
         <div className='flex flex-col md:flex-row items-center gap-4 md:gap-2.5'>
