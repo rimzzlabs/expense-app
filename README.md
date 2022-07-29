@@ -46,7 +46,7 @@ This app is an implementation of React with Supabase, simply have Authentication
 3. Paste it on `.env.file`
 4. Create table `expense`, with 6 columns:
    1. `id` `(uuid)` default value: `uuid_generate_v4()` as **primary key**
-   2. `user_id` `(uuid)` **relation with `user.id`** mark as `unique`
+   2. `user_id` `(uuid)` **relation with `user.id`**
    3. `history_id` `(uuid)` mark as `unique`
    4. `created_at` `(timestamptz)` default value: `now()` mark as `allow nullable`
    5. `title` `(text)`

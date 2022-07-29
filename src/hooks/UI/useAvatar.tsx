@@ -37,6 +37,7 @@ const useAvatar = (user: User) => {
       if (e.target.files && e.target.files[0]) {
         const file = e.target.files[0]
 
+        // if file size are uqals or more than 2MB
         if (file.size >= 2e6) {
           toast.error('Sorry, but image must be less than 2MB!')
           return
