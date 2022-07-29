@@ -2,6 +2,8 @@ import * as yup from 'yup'
 
 const requiredMsg = 'This field is required'
 
+const int4MaxValue = 2_000_000_000
+
 export const signupSchema = yup.object().shape({
   email: yup.string().required(requiredMsg).email('Invalid email address'),
   password: yup
@@ -29,7 +31,7 @@ export const createExpenseSchema = yup.object().shape({
     .negative('Should not a negative number')
     .min(1, 'At least 1 dollar')
     .required(requiredMsg)
-    .lessThan(10000000000, 'Maximum money exceeded')
+    .lessThan(int4MaxValue, 'Should less than 2 billions')
 })
 
 export const createHistorySchema = yup.object().shape({
@@ -45,7 +47,7 @@ export const createHistorySchema = yup.object().shape({
     .negative('Should not a negative number')
     .min(1, 'At least 1 dollar')
     .required(requiredMsg)
-    .lessThan(5000000, 'Maximum money exceeded')
+    .lessThan(int4MaxValue, 'Should less than 2 billions')
 })
 
 export const editExpenseSchema = (title: string) =>
