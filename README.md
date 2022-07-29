@@ -1,4 +1,4 @@
-# <p align="center">**[WIP]ExpenseApp💰**</p>
+# <p align="center">**ExpenseApp💰**</p>
 
 ExpenseApp is an app to see you expense history, income history and help you notes what you're buying lately💰
 
@@ -43,7 +43,7 @@ This app is an implementation of React with Supabase, simply have Authentication
 - [x] Update User Username
 - [x] Update User Email
 - [x] Update User Password
-- [ ] Forgot Password
+- [x] Forgot Password
 - [x] oAuth with Google and GitHub
 
 ## Contribution

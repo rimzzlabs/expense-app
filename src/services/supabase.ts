@@ -358,7 +358,7 @@ export const resetPassword = async (email: string) => {
     const response = await supabase.auth.api.resetPasswordForEmail(email)
 
     if (response.error) throw new CustomError(response.error)
-    toast.success('Check your email to update your password!')
+    toast.success('Check your email to login and proceed updating your password!')
   } catch (e) {
     e instanceof Error && toast.error(e.message)
   } finally {

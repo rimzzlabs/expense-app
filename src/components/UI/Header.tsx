@@ -8,10 +8,10 @@ import { Link, useLocation } from 'react-router-dom'
 const Header: React.FunctionComponent = () => {
   const { pathname } = useLocation()
   const isOnHomepage = pathname === '/' || pathname === '/signin' || pathname === '/signup'
-  const shouldHideHeader =
+  const shouldHeaderHidden =
     pathname === '/404' || pathname === '/privacy-policy' || pathname === '/forgot-password'
 
-  if (shouldHideHeader) return null
+  if (shouldHeaderHidden) return null
 
   return (
     <header

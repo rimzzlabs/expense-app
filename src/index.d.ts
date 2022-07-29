@@ -88,4 +88,12 @@ declare module 'expense-app' {
   export type SelectOptionProps<T = Record<string, string>[]> = {
     list: T
   }
+
+  export type HashQuery = Partial<{
+    access_token: string
+    refresh_token: string
+    expires_in: string
+    token_type: 'bearer'
+    type: 'recovery'
+  }>
 }
