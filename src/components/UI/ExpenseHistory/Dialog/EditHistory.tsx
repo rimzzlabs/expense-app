@@ -47,7 +47,7 @@ export const ModalEditHistory = () => {
     <Modal
       show={editHistory.isOpen}
       onClose={closeModal}
-      title='Edit expense history'
+      title={'Edit ' + editHistory.source}
       className='max-w-lg'
     >
       <p className='max-w-prose mt-2'>Edit the current history</p>

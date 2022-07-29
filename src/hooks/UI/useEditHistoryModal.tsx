@@ -15,10 +15,7 @@ const useEditHistoryModal = () => {
     (payload: PayloadEditHistoryModal) => setEditHistory({ ...payload, isOpen: true }),
     []
   )
-  const closeModal = useCallback(
-    () => setEditHistory({ id: null, source: null, isOpen: false }),
-    []
-  )
+  const closeModal = useCallback(() => setEditHistory((prev) => ({ ...prev, isOpen: false })), [])
 
   return {
     openModal,

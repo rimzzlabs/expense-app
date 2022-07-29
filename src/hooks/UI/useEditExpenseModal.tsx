@@ -16,7 +16,7 @@ const useEditExpenseModal = () => {
     []
   )
   const closeExpenseModal = useCallback(
-    () => setEditExpense({ id: null, title: null, isOpen: false }),
+    () => setEditExpense((prev) => ({ ...prev, isOpen: false })),
     []
   )
 
