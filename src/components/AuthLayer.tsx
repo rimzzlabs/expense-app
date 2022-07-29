@@ -6,7 +6,7 @@ type AuthLayerProps = {
   children: React.ReactNode
 }
 
-const AuthLayer: React.FunctionComponent<AuthLayerProps> = ({ children }) => {
+export const AuthLayer: React.FunctionComponent<AuthLayerProps> = ({ children }) => {
   const user = useUser()
 
   if (!user) {
@@ -15,5 +15,3 @@ const AuthLayer: React.FunctionComponent<AuthLayerProps> = ({ children }) => {
 
   return <>{children}</>
 }
-
-export default AuthLayer
