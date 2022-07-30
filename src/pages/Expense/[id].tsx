@@ -1,9 +1,11 @@
-import { AuthLayer, Loading, PrimaryButton, Searchbar, Tooltip } from '@/components'
+import { AuthLayer, Image, Loading, PrimaryButton, Searchbar, Tooltip } from '@/components'
 
+import empty_history from '@/assets/empty_history.svg'
 import { useCreateHistoryModal } from '@/hooks'
 import { useExpenseDetail } from '@/hooks'
-import { formatCurrency, formatDate, twclsx } from '@/utils'
+import { cardListVariants, formatCurrency, formatDate, twclsx } from '@/utils'
 
+import { m } from 'framer-motion'
 import { Suspense, lazy, useEffect } from 'react'
 import { HiCalendar, HiCash, HiCreditCard, HiPlus } from 'react-icons/hi'
 
@@ -111,6 +113,7 @@ const ExpenseHistory: React.FunctionComponent = () => {
         </div>
 
         <Searchbar
+          disabled={expDetail.historyLists.length === 0}
           placeholder='Search History...'
           value={expDetail.searchQuery}
           onChange={expDetail.handleSearch}
@@ -124,17 +127,37 @@ const ExpenseHistory: React.FunctionComponent = () => {
 
         {expDetail.searchQuery.length > 0 ? (
           <>
-            {expDetail.filteredHistoryLists.length > 0 ? (
+            <h3>Search History</h3>
+            {expDetail.filteredHistoryLists.length > 0 && (
               <Suspense fallback={<Loading />}>
                 <HistoryLists history={expDetail.filteredHistoryLists} />
               </Suspense>
-            ) : (
+            )}
+
+            {expDetail.historyLists.length > 0 && expDetail.filteredHistoryLists.length === 0 && (
               <p className='text-xl md:text-2xl font-bold text-center py-10 text-theme-6 dark:text-theme-4'>
                 No History Found
               </p>
             )}
           </>
         ) : null}
+
+        {expDetail.historyLists.length === 0 && (
+          <m.div
+            variants={cardListVariants}
+            initial='hidden'
+            animate='enter'
+            className={twclsx(
+              'flex flex-col items-center justify-center',
+              'gap-2 text-center w-full py-10'
+            )}
+          >
+            <Image src={empty_history} alt='No history' className='w-40 h-40' />
+            <p className='text-lg md:text-xl font-bold'>
+              There&apos;s nothing to show here, add some history!
+            </p>
+          </m.div>
+        )}
       </section>
     </AuthLayer>
   )

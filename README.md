@@ -66,3 +66,25 @@ This app is an implementation of React with Supabase, simply have Authentication
 ## Contribution
 
 PR's are always open
+
+<!-- ## Note ( DONT PUSH TO REPO)
+
+Halo, selamat sore Pak Dhika dan temen-temen WPU izin share side project di waktu weekend dan waktu luang
+
+ExpenseApp - App sederhana yg nge lacak history pendapatan dan pengeluaran, untuk sekarang kurensi nya masih $ (U.S Dollar) ya, klo kamu minat untuk berkontribusi menambahkan kurensi selain USD ataupun fitur lain sangat diperbolehkan :smile: .
+
+- Stack
+- Vite :zap:
+- React :atom:
+- Supabase :fire:
+- TailwindCSS :dash:
+- Miscellaneous :electric_plug:
+  - Jotai :ghost:
+  - Headless UI :battery:
+  - React Hot Toast :bell:
+  - React Hook Form :page_with_curl:
+
+GitHub: https://github.com/rizkimcitra/expense-tracker
+Website: https://expp-tracker.vercel.app
+
+Thank you -->

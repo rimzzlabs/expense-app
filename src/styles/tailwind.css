@@ -44,4 +44,9 @@
   button:disabled {
     @apply opacity-40 cursor-not-allowed;
   }
+
+  input:disabled {
+    @apply cursor-not-allowed outline-dashed outline-1;
+    @apply bg-transparent dark:bg-transparent outline-theme-3 dark:outline-theme-7;
+  }
 }

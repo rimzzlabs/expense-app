@@ -1,7 +1,10 @@
-import { AuthLayer, Loading } from '@/components'
+import { AuthLayer, Image, Loading } from '@/components'
 
+import empty_state from '@/assets/empty_expense.svg'
 import { useExpense, useUser } from '@/hooks'
+import { cardListVariants, twclsx } from '@/utils'
 
+import { m } from 'framer-motion'
 import { Suspense, lazy, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 
@@ -34,6 +37,22 @@ const HomePage: React.FunctionComponent = () => {
         <Suspense fallback={<Loading />}>
           <ExpenseLists expenseLists={expenseLists.slice(0, 4)} />
         </Suspense>
+
+        {expenseLists.length === 0 && (
+          <m.div
+            variants={cardListVariants}
+            initial='hidden'
+            animate='enter'
+            className={twclsx(
+              'flex flex-col items-center justify-center',
+              'gap-2 w-full',
+              'text-center py-10'
+            )}
+          >
+            <Image src={empty_state} alt='Empty state' className='w-40 h-40' />
+            <p className='text-lg md:text-xl font-bold'>You don&apos;t have any expenses</p>
+          </m.div>
+        )}
       </section>
     </AuthLayer>
   )
