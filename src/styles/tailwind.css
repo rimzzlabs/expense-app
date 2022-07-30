@@ -40,4 +40,8 @@
   .layout {
     @apply w-11/12 mx-auto max-w-3xl;
   }
+
+  button:disabled {
+    @apply opacity-40 cursor-not-allowed;
+  }
 }

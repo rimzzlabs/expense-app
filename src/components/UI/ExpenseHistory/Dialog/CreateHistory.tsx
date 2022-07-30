@@ -114,7 +114,11 @@ export const ModalCreateHistory = () => {
         </div>
 
         <div className='inline-flex items-center gap-4'>
-          <PrimaryButton type='submit' className='py-2 px-4 md:py-2.5 md:px-6'>
+          <PrimaryButton
+            disabled={rhf.formState.isSubmitting}
+            type='submit'
+            className='py-2 px-4 md:py-2.5 md:px-6'
+          >
             Create
           </PrimaryButton>
           <Button

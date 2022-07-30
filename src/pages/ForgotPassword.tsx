@@ -64,7 +64,9 @@ const ForgotPassword: React.FunctionComponent = () => {
         </div>
 
         <div className='inline-flex items-center gap-4'>
-          <PrimaryButton className='h-10 px-4'>Submit</PrimaryButton>
+          <PrimaryButton disabled={rhf.formState.isSubmitting} type='submit' className='h-10 px-4'>
+            Submit
+          </PrimaryButton>
 
           <ButtonLink
             className='h-10 font-normal gap-2 bg-transparent text-theme-7 dark:text-theme-2 hover:text-theme-1'

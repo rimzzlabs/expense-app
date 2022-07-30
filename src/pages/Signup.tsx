@@ -101,7 +101,11 @@ const SignupPage: React.FunctionComponent = () => {
         </div>
 
         <div className='flex flex-col md:flex-row items-center gap-4 md:gap-2.5'>
-          <PrimaryButton type='submit' className={twclsx('w-full', 'py-2.5 px-6 font-semibold')}>
+          <PrimaryButton
+            disabled={rhf.formState.isSubmitting}
+            type='submit'
+            className={twclsx('w-full', 'py-2.5 px-6 font-semibold')}
+          >
             Signup
           </PrimaryButton>
           <ButtonLink
