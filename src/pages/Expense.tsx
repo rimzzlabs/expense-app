@@ -1,15 +1,17 @@
-import { AuthLayer, Input, Loading, PrimaryButton } from '@/components'
+import { AuthLayer, Loading, PrimaryButton, Searchbar } from '@/components'
 
 import { useCreateExpenseModal, useExpense } from '@/hooks'
 
 import { Suspense, lazy, useEffect } from 'react'
-import { HiOutlineSearch, HiPlus } from 'react-icons/hi'
+import { HiPlus } from 'react-icons/hi'
 
 const ExpenseLists = lazy(() => import('@/components').then((m) => ({ default: m.ExpenseLists })))
 
 const ExpensePage: React.FunctionComponent = () => {
   const { openModal } = useCreateExpenseModal()
   const exp = useExpense()
+
+  console.info(exp)
 
   useEffect(() => {
     ;(async () => await exp.refreshExpense())()
@@ -19,7 +21,7 @@ const ExpensePage: React.FunctionComponent = () => {
     <AuthLayer>
       <div className='inline-flex justify-between pt-10 w-full gap-4'>
         <section>
-          <h1>Expenses💰</h1>
+          <h1 className='mb-2.5'>Expenses💰</h1>
           <p>List of your expense, you can create, modify or delete your expense here.</p>
         </section>
 
@@ -29,19 +31,7 @@ const ExpensePage: React.FunctionComponent = () => {
         </PrimaryButton>
       </div>
 
-      <div className='my-4 md:my-8'>
-        <div className='relative'>
-          <Input
-            type='text'
-            className='peer w-full md:h-12 pr-8 border-none focus:ring-0'
-            placeholder='Search Expense..'
-            value={exp.searchQuery}
-            onChange={exp.handleSearch}
-          />
-
-          <HiOutlineSearch className='absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 opacity-30 peer-focus:opacity-100' />
-        </div>
-      </div>
+      <Searchbar placeholder='Search expense' value={exp.searchQuery} onChange={exp.handleSearch} />
 
       {exp.expenseLists.length > 0 && exp.searchQuery.length === 0 ? (
         <section className='pt-10'>
@@ -60,7 +50,9 @@ const ExpensePage: React.FunctionComponent = () => {
               <ExpenseLists expenseLists={exp.filteredExpenseLists} />
             </Suspense>
           ) : (
-            <p>No Expense Found</p>
+            <p className='text-xl md:text-2xl font-bold text-center py-10 text-theme-6 dark:text-theme-4'>
+              No Expense Found
+            </p>
           )}
         </section>
       ) : null}

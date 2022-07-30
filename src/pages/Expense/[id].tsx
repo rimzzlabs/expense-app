@@ -1,4 +1,4 @@
-import { AuthLayer, Loading, PrimaryButton, Tooltip } from '@/components'
+import { AuthLayer, Loading, PrimaryButton, Searchbar, Tooltip } from '@/components'
 
 import { useCreateHistoryModal } from '@/hooks'
 import { useExpenseDetail } from '@/hooks'
@@ -12,13 +12,13 @@ const HistoryLists = lazy(() => import('@/components').then((m) => ({ default: m
 const ExpenseHistory: React.FunctionComponent = () => {
   const { openModal } = useCreateHistoryModal()
 
-  const { expenseDetail, isLoading, isError, historyLists, syncFirstMounted } = useExpenseDetail()
+  const expDetail = useExpenseDetail()
 
   useEffect(() => {
-    syncFirstMounted()
+    expDetail.syncFirstMounted()
   }, [])
 
-  if (isLoading && !isError) return <Loading />
+  if (expDetail.isLoading && !expDetail.isError) return <Loading />
 
   return (
     <AuthLayer>
@@ -33,7 +33,9 @@ const ExpenseHistory: React.FunctionComponent = () => {
             )}
           >
             <HiCalendar />
-            {expenseDetail?.created_at && <span>{formatDate(expenseDetail?.created_at)}</span>}
+            {expDetail.expenseDetail?.created_at && (
+              <span>{formatDate(expDetail.expenseDetail?.created_at)}</span>
+            )}
           </div>
 
           <Tooltip title='This is your base money' position='top-start' arrowSize='regular' arrow>
@@ -45,8 +47,8 @@ const ExpenseHistory: React.FunctionComponent = () => {
               )}
             >
               <HiCash />
-              {expenseDetail?.total_money && (
-                <span>{formatCurrency(expenseDetail.total_money)}</span>
+              {expDetail.expenseDetail?.total_money && (
+                <span>{formatCurrency(expDetail.expenseDetail.total_money)}</span>
               )}
             </div>
           </Tooltip>
@@ -58,15 +60,15 @@ const ExpenseHistory: React.FunctionComponent = () => {
           <div className='inline-flex flex-col gap-4'>
             <h2 className='inline-flex items-center gap-2'>
               <HiCreditCard />
-              <span>{expenseDetail?.title ?? ''}</span>
+              <span>{expDetail.expenseDetail?.title ?? ''}</span>
             </h2>
 
             <div className={twclsx('inline-flex flex-col gap-2')}>
               <p>
                 Curently have:{' '}
                 <span className='font-semibold text-success-1'>
-                  {expenseDetail?.currentMoney
-                    ? formatCurrency(expenseDetail.currentMoney ?? 0)
+                  {expDetail.expenseDetail?.currentMoney
+                    ? formatCurrency(expDetail.expenseDetail.currentMoney ?? 0)
                     : 0}
                 </span>
               </p>
@@ -74,15 +76,17 @@ const ExpenseHistory: React.FunctionComponent = () => {
               <p>
                 Earned:{' '}
                 <span className='font-semibold text-success-1'>
-                  {expenseDetail?.totalIncome ? formatCurrency(expenseDetail.totalIncome ?? 0) : 0}
+                  {expDetail.expenseDetail?.totalIncome
+                    ? formatCurrency(expDetail.expenseDetail.totalIncome ?? 0)
+                    : 0}
                 </span>
               </p>
 
               <p>
                 Spended:{' '}
                 <span className='font-semibold text-warning-1'>
-                  {expenseDetail?.totalOutcome
-                    ? formatCurrency(expenseDetail.totalOutcome ?? 0)
+                  {expDetail.expenseDetail?.totalOutcome
+                    ? formatCurrency(expDetail.expenseDetail.totalOutcome ?? 0)
                     : 0}
                 </span>
               </p>
@@ -106,9 +110,31 @@ const ExpenseHistory: React.FunctionComponent = () => {
           </Tooltip>
         </div>
 
-        <Suspense fallback={<Loading />}>
-          <HistoryLists history={historyLists} />
-        </Suspense>
+        <Searchbar
+          placeholder='Search History...'
+          value={expDetail.searchQuery}
+          onChange={expDetail.handleSearch}
+        />
+
+        {expDetail.historyLists.length > 0 && expDetail.searchQuery.length === 0 ? (
+          <Suspense fallback={<Loading />}>
+            <HistoryLists history={expDetail.historyLists} />
+          </Suspense>
+        ) : null}
+
+        {expDetail.searchQuery.length > 0 ? (
+          <>
+            {expDetail.filteredHistoryLists.length > 0 ? (
+              <Suspense fallback={<Loading />}>
+                <HistoryLists history={expDetail.filteredHistoryLists} />
+              </Suspense>
+            ) : (
+              <p className='text-xl md:text-2xl font-bold text-center py-10 text-theme-6 dark:text-theme-4'>
+                No History Found
+              </p>
+            )}
+          </>
+        ) : null}
       </section>
     </AuthLayer>
   )
