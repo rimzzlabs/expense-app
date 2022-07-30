@@ -1,18 +1,18 @@
-import { AuthLayer, Loading, PrimaryButton } from '@/components'
+import { AuthLayer, Input, Loading, PrimaryButton } from '@/components'
 
 import { useCreateExpenseModal, useExpense } from '@/hooks'
 
 import { Suspense, lazy, useEffect } from 'react'
-import { HiPlus } from 'react-icons/hi'
+import { HiOutlineSearch, HiPlus } from 'react-icons/hi'
 
 const ExpenseLists = lazy(() => import('@/components').then((m) => ({ default: m.ExpenseLists })))
 
 const ExpensePage: React.FunctionComponent = () => {
   const { openModal } = useCreateExpenseModal()
-  const { expenseLists, refreshExpense } = useExpense()
+  const exp = useExpense()
 
   useEffect(() => {
-    ;(async () => await refreshExpense())()
+    ;(async () => await exp.refreshExpense())()
   }, [])
 
   return (
@@ -29,12 +29,41 @@ const ExpensePage: React.FunctionComponent = () => {
         </PrimaryButton>
       </div>
 
-      <section className='pt-10'>
-        <h2>My Expense</h2>
-        <Suspense fallback={<Loading />}>
-          <ExpenseLists expenseLists={expenseLists} />
-        </Suspense>
-      </section>
+      <div className='my-4 md:my-8'>
+        <div className='relative'>
+          <Input
+            type='text'
+            className='peer w-full md:h-12 pr-8 border-none focus:ring-0'
+            placeholder='Search Expense..'
+            value={exp.searchQuery}
+            onChange={exp.handleSearch}
+          />
+
+          <HiOutlineSearch className='absolute right-1 top-1/2 -translate-y-1/2 flex items-center justify-center w-8 opacity-30 peer-focus:opacity-100' />
+        </div>
+      </div>
+
+      {exp.expenseLists.length > 0 && exp.searchQuery.length === 0 ? (
+        <section className='pt-10'>
+          <h2>My Expense</h2>
+          <Suspense fallback={<Loading />}>
+            <ExpenseLists expenseLists={exp.expenseLists} />
+          </Suspense>
+        </section>
+      ) : null}
+
+      {exp.searchQuery.length > 0 ? (
+        <section className='pt-10'>
+          <h2>Search Expense</h2>
+          {exp.filteredExpenseLists.length > 0 ? (
+            <Suspense fallback={<Loading />}>
+              <ExpenseLists expenseLists={exp.filteredExpenseLists} />
+            </Suspense>
+          ) : (
+            <p>No Expense Found</p>
+          )}
+        </section>
+      ) : null}
     </AuthLayer>
   )
 }

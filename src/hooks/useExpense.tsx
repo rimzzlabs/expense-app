@@ -1,14 +1,34 @@
 import { getExpense } from '@/services'
-import { expenseListsAtom } from '@/store'
+import * as atoms from '@/store'
 
 import useUser from './useUser'
 
+import { Expense } from 'expense-app'
 import { useAtom } from 'jotai'
+import { useCallback, useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 
 const useExpense = () => {
   const user = useUser()
-  const [expenseLists, setExpenseLists] = useAtom(expenseListsAtom)
+  const [expenseLists, setExpenseLists] = useAtom(atoms.expenseListsAtom)
+  const [filteredExpenseLists, setFilteredExpenseLists] = useAtom(atoms.filteredExpenseListsAtom)
+  const [searchQuery, setSearchQuery] = useState('')
+
+  const getNewestExpense = (expense: Expense[]) =>
+    expense
+      .slice(0)
+      .sort((a: Expense, b: Expense) =>
+        new Date(a.created_at) < new Date(b.created_at)
+          ? 1
+          : new Date(a.created_at) > new Date(b.created_at)
+          ? -1
+          : 0
+      )
+
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value),
+    []
+  )
 
   const refreshExpense = async () => {
     if (user) {
@@ -21,15 +41,27 @@ const useExpense = () => {
     toast.error('Could not refresh expense')
   }
 
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      const timer = setTimeout(() => {
+        const filterResult =
+          expenseLists.filter((exp) =>
+            exp.title.toLowerCase().includes(searchQuery.toLowerCase())
+          ) || []
+
+        setFilteredExpenseLists(filterResult)
+      }, 50)
+
+      return () => clearTimeout(timer)
+    }
+  }, [searchQuery])
+
   return {
-    expenseLists: expenseLists.sort((a, b) =>
-      new Date(a.created_at) < new Date(b.created_at)
-        ? 1
-        : new Date(a.created_at) > new Date(b.created_at)
-        ? -1
-        : 0
-    ),
-    refreshExpense
+    searchQuery,
+    handleSearch,
+    refreshExpense,
+    filteredExpenseLists: getNewestExpense(filteredExpenseLists),
+    expenseLists: getNewestExpense(expenseLists)
   }
 }
 
