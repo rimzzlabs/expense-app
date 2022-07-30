@@ -36,7 +36,7 @@ export const ModalEditPassword: React.FunctionComponent = () => {
   return (
     <Modal show={isOpen} onClose={closeModal} title='Update Password' className='max-w-lg'>
       <p className='mt-4 mb-2.5'>
-        After updating your password, you should use able to login with your new password.
+        After updating your password, you should able to login with your new password.
       </p>
 
       <form onSubmit={rhf.handleSubmit(onSubmit)} className='mt-6 w-full'>
