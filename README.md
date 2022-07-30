@@ -15,6 +15,7 @@ This app is an implementation of React with Supabase, simply have Authentication
 - Supabase 🔥
 - TailwindCSS 💨
 - Miscellaneous 🔌
+  - Framer Motion 🎞️
   - Jotai 👻
   - Headless UI 🔋
   - React Hot Toast 🔔
