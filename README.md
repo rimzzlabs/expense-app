@@ -32,6 +32,7 @@ This app is an implementation of React with Supabase, simply have Authentication
 - [x] Delete Expense
 - [x] Read Expense History
 - [x] Write Expense History
+- [x] Delete Expense History
 - [x] Update Expense History
 - [x] Update User Profile Picture
 - [x] Update User Username
