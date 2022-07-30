@@ -200,7 +200,10 @@ export const getExpenseHistory = async (historyId: string, showToast = false) =>
   }
 }
 
-export const createExpenseHistory = async (payload: CreateHistoryPayload, historyId: string) => {
+export const createExpenseHistory = async (
+  payload: CreateHistoryPayload & { user_id: string },
+  historyId: string
+) => {
   const toastId = toast.loading('Adding history...')
   try {
     const response = await supabase

@@ -35,6 +35,7 @@ declare module 'expense-app' {
 
   export type ExpenseHistory = {
     id: string
+    user_id?: string
     expense_id: string
     created_at: string | Date
     source: string

@@ -9,11 +9,11 @@ import {
   useStepsUpdateEmail,
   useUser
 } from '@/hooks'
-import { signOut } from '@/services'
+import { deleteUser, signOut } from '@/services'
 import { twclsx } from '@/utils'
 
 import { User } from 'expense-app'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import { HiQuestionMarkCircle } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 
@@ -27,12 +27,39 @@ const ProfilePage: React.FunctionComponent = () => {
   const { openModal: openModalSteps } = useStepsUpdateEmail()
   const { openModal: openModalPassword } = useEditPassword()
 
-  const handleSignout = async () => {
+  const handleDeleteUser = useCallback(async () => {
+    if (user && user.id) {
+      await deleteUser(user?.id)
+      closePrompt()
+    }
+  }, [])
+
+  const handleSignout = useCallback(async () => {
     await signOut()
     clearAvatar()
     closePrompt()
     navigate('/signin', { replace: true })
-  }
+  }, [])
+
+  const openSignOut = useCallback(
+    () =>
+      openPrompt({
+        message: 'Are you sure you want to signout from ExpenseApp?',
+        title: 'Signout warning',
+        onConfirm: handleSignout
+      }),
+    []
+  )
+
+  const openDeleteUser = useCallback(
+    () =>
+      openPrompt({
+        title: 'Delete account warning',
+        message: 'Are you sure you want to delete your ExpenseApp account?',
+        onConfirm: handleDeleteUser
+      }),
+    []
+  )
 
   useEffect(() => {
     if (!user) {
@@ -46,6 +73,12 @@ const ProfilePage: React.FunctionComponent = () => {
         <h1 className='mb-4'>Your Profile</h1>
 
         {user && <ProfilePicture user={user} />}
+
+        <div className='flex justify-end w-full mt-4 max-w-md'>
+          <Button onClick={openDeleteUser} className='text-error-2 dark:text-error-1 border-none'>
+            Delete account
+          </Button>
+        </div>
 
         <div className='flex flex-col gap-6 mb-6 max-w-md'>
           <div className='inline-flex flex-col gap-2 w-full'>
@@ -104,16 +137,7 @@ const ProfilePage: React.FunctionComponent = () => {
           </div>
         </div>
 
-        <ErrorButton
-          onClick={() =>
-            openPrompt({
-              message: 'Are you sure you want to signout from ExpenseApp?',
-              title: 'Signout warning',
-              onConfirm: handleSignout
-            })
-          }
-          className={twclsx('py-2.5 px-5')}
-        >
+        <ErrorButton onClick={openSignOut} className={twclsx('py-2.5 px-5')}>
           Signout
         </ErrorButton>
       </div>

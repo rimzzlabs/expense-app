@@ -1,4 +1,4 @@
-import { createExpenseHistory, getExpenseHistory } from '@/services'
+import { createExpenseHistory, getExpenseHistory, supabase } from '@/services'
 import * as atoms from '@/store'
 
 import { CreateHistoryPayload, Expense, ExpenseHistory } from 'expense-app'
@@ -70,12 +70,18 @@ const useExpenseDetail = () => {
 
   const addExpenseHistory = useCallback(
     async (payload: CreateHistoryPayload) => {
+      const user = supabase.auth.user()
       if (!expenseDetail) return
 
-      const res = await createExpenseHistory(payload, expenseDetail.history_id)
-      if (!res) return
+      if (user) {
+        const res = await createExpenseHistory(
+          { ...payload, user_id: user.id },
+          expenseDetail.history_id
+        )
+        if (!res) return
 
-      await refreshHistoryLists()
+        await refreshHistoryLists()
+      }
     },
     [expenseDetail]
   )
