@@ -10,12 +10,14 @@ import { HiPencil, HiTrash } from 'react-icons/hi'
 
 const HistoryCard: React.FunctionComponent<ExpenseHistory> = (exp) => {
   const { closePrompt, openPrompt } = usePrompt()
-  const { refreshHistoryLists } = useExpenseDetail()
+  const { refreshHistoryLists, clearValue } = useExpenseDetail()
   const { openModal } = useEditHistoryModal()
 
   const handleDelete = useCallback(async () => {
     await deleteSingleHistory(exp.id)
     await refreshHistoryLists()
+
+    clearValue()
     closePrompt()
   }, [exp.id])
 

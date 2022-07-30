@@ -12,7 +12,7 @@ type EditPayload = { source: string }
 
 export const ModalEditHistory = () => {
   const { editHistory, closeModal } = useEditHistoryModal()
-  const { refreshHistoryLists } = useExpenseDetail()
+  const { refreshHistoryLists, clearValue } = useExpenseDetail()
   const rhf = useForm<EditPayload>({
     defaultValues: {
       source: ''
@@ -27,6 +27,7 @@ export const ModalEditHistory = () => {
       await updateExpenseHistory(args, editHistory.id)
       await refreshHistoryLists()
 
+      clearValue()
       closeModal()
     },
     [editHistory]

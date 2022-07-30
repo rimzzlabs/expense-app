@@ -10,7 +10,7 @@ import { HiArrowSmRight, HiPencil, HiTrash } from 'react-icons/hi'
 
 const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
   const { openPrompt, closePrompt } = usePrompt()
-  const { refreshExpense } = useExpense()
+  const { refreshExpense, clearValue } = useExpense()
   const { openExpenseModal } = useEditExpenseModal()
 
   const expenseDate = formatDate(expense.created_at)
@@ -20,6 +20,7 @@ const ExpenseCard: React.FunctionComponent<Expense> = (expense) => {
   const handleDelete = useCallback(async () => {
     await deleteExpense(expense.id, expense.history_id)
     await refreshExpense()
+    clearValue()
     closePrompt()
   }, [expense.id])
 

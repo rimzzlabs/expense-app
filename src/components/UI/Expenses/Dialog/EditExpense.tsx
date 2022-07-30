@@ -13,7 +13,7 @@ type EditExpensePayload = { title: string }
 export const EditExpense: React.FunctionComponent = () => {
   const { editExpense, closeExpenseModal } = useEditExpenseModal()
   const user = useUser()
-  const { refreshExpense } = useExpense()
+  const { refreshExpense, clearValue } = useExpense()
 
   const rhf = useForm<EditExpensePayload>({
     defaultValues: { title: '' },
@@ -25,6 +25,7 @@ export const EditExpense: React.FunctionComponent = () => {
       await updateExpense({ id: editExpense.id as string, title: args.title }, user.id)
       await refreshExpense()
 
+      clearValue()
       closeExpenseModal()
     }
   }
