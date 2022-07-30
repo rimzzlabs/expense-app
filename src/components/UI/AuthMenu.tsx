@@ -51,11 +51,11 @@ const AuthMenu: React.FunctionComponent = () => {
   if (isMatches) {
     return (
       <nav className={twclsx('inline-flex items-center gap-2.5')}>
-        <NavLink to='/expense' className={resolveNavLinkClassName}>
+        <NavLink end to='/expense' className={resolveNavLinkClassName}>
           Expense
         </NavLink>
 
-        <NavLink to='/profile' className={resolveNavLinkClassName}>
+        <NavLink end to='/profile' className={resolveNavLinkClassName}>
           Profile
         </NavLink>
 
