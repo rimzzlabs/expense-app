@@ -5,14 +5,20 @@ import useUser from './useUser'
 
 import { Expense } from 'expense-app'
 import { useAtom } from 'jotai'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect } from 'react'
 import toast from 'react-hot-toast'
 
 const useExpense = () => {
   const user = useUser()
   const [expenseLists, setExpenseLists] = useAtom(atoms.expenseListsAtom)
   const [filteredExpenseLists, setFilteredExpenseLists] = useAtom(atoms.filteredExpenseListsAtom)
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useAtom(atoms.queryExpenseListsAtom)
+
+  const clearValue = useCallback(() => setSearchQuery(''), [])
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value),
+    []
+  )
 
   const getNewestExpense = (expense: Expense[]) =>
     expense
@@ -24,11 +30,6 @@ const useExpense = () => {
           ? -1
           : 0
       )
-
-  const handleSearch = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value),
-    []
-  )
 
   const refreshExpense = async () => {
     if (user) {
@@ -60,6 +61,7 @@ const useExpense = () => {
     searchQuery,
     handleSearch,
     refreshExpense,
+    clearValue,
     filteredExpenseLists: getNewestExpense(filteredExpenseLists),
     expenseLists: getNewestExpense(expenseLists)
   }

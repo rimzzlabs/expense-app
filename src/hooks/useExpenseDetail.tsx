@@ -3,7 +3,7 @@ import * as atoms from '@/store'
 
 import { CreateHistoryPayload, Expense, ExpenseHistory } from 'expense-app'
 import { useAtom } from 'jotai'
-import { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Location, useLocation, useNavigate } from 'react-router-dom'
 
 export type TypedLocation = {
@@ -13,6 +13,8 @@ export type TypedLocation = {
 const useExpenseDetail = () => {
   const [expenseDetail, setExpenseDetail] = useAtom(atoms.expenseDetailAtom)
   const [historyLists, setHistoryLists] = useAtom(atoms.historyListsAtom)
+  const [filteredHistoryLists, setFilteredHistoryLists] = useAtom(atoms.filteredHistoryListsAtom)
+  const [searchQuery, setSearchQuery] = useAtom(atoms.queryHistoryListsAtom)
   const [stale, setStale] = useState({
     isError: false,
     isLoading: false
@@ -20,6 +22,13 @@ const useExpenseDetail = () => {
 
   const { state } = useLocation() as TypedLocation
   const navigate = useNavigate()
+
+  const clearValue = useCallback(() => setSearchQuery(''), [])
+
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value),
+    []
+  )
 
   const sort = (a: ExpenseHistory, b: ExpenseHistory) =>
     new Date(a.created_at) < new Date(b.created_at)
@@ -93,10 +102,27 @@ const useExpenseDetail = () => {
     setStale({ isError: false, isLoading: false })
   }, [])
 
+  useEffect(() => {
+    if (searchQuery.length > 0) {
+      const timer = setTimeout(() => {
+        const filterResult = historyLists.filter((h) =>
+          h.source.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+
+        setFilteredHistoryLists(filterResult)
+      }, 100)
+      return () => clearInterval(timer)
+    }
+  }, [searchQuery])
+
   return {
     isError: stale.isError,
     isLoading: stale.isLoading,
-    historyLists: historyLists.sort(sort),
+    historyLists: historyLists.slice().sort(sort),
+    filteredHistoryLists: filteredHistoryLists.slice().sort(sort),
+    handleSearch,
+    clearValue,
+    searchQuery,
     refreshHistoryLists,
     expenseDetail,
     addExpenseHistory,
