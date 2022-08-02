@@ -55,12 +55,13 @@ This app is an implementation of React with Supabase, simply have Authentication
    6. `total_money` `(int4)`
 5. Create table `history`, with 6 columns:
    1. `id` `(uuid)` default value: `uuid_generate_v4()` as **primary key**
-   2. `expense_id` `(uuid)` **relation with `history.history_id`**
-   3. `created_at` `(timestamptz)` default value: `now()` mark as `allow nullable`
-   4. `source` `(text)`
-   5. `type` `(text)` this actually should be 2(income, and outcome), default value: `income`
-   6. `amount` `(int4)`
-6. Create bucket `profiles`
+   2. `user_id` (uuid) **relation with user.id**
+   3. `expense_id` `(uuid)` **relation with `history.history_id`**
+   4. `created_at` `(timestamptz)` default value: `now()` mark as `allow nullable`
+   5. `source` `(text)`
+   6. `type` `(text)` this actually should be 2(income, and outcome), default value: `income`
+   7. `amount` `(int4)`
+6. Create bucket `profiles` for profile picture
 7. Inside `profiles` bucket, create folder `avatar`
 8. Create **policies** for tables and bucket
    1. soon..
