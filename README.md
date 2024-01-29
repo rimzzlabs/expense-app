@@ -43,27 +43,42 @@ This app is an implementation of React with Supabase, simply have Authentication
 
 ## Develop on your local machine
 
-1. Register to [Supabase](https://supabase.com)
-2. Get your projects' **Anon Key** and your Supabase project **URL**
-3. Paste it on `.env.file`
-4. Create table `expense`, with 6 columns:
-   1. `id` `(uuid)` default value: `uuid_generate_v4()` as **primary key**
-   2. `user_id` `(uuid)` **relation with `user.id`**
-   3. `history_id` `(uuid)` mark as `unique`
-   4. `created_at` `(timestamptz)` default value: `now()` mark as `allow nullable`
-   5. `title` `(text)`
-   6. `total_money` `(int4)`
-5. Create table `history`, with 6 columns:
-   1. `id` `(uuid)` default value: `uuid_generate_v4()` as **primary key**
-   2. `user_id` (uuid) **relation with user.id**
-   3. `expense_id` `(uuid)` **relation with `history.history_id`**
-   4. `created_at` `(timestamptz)` default value: `now()` mark as `allow nullable`
-   5. `source` `(text)`
-   6. `type` `(text)` this actually should be 2(income, and outcome), default value: `income`
-   7. `amount` `(int4)`
-6. Create bucket `profiles` for profile picture
-7. Inside `profiles` bucket, create folder `avatar`
-8. Create **policies** for tables and bucket
+1. Register on [Supabase](https://supabase.com).
+2. Obtain your project's **Anon Key** and your Supabase project **URL**.
+3. Paste them into the `.env.file`.
+4. Go to the "SQL editor" in your Supabase Dashboard and click "New Query."
+5. Execute the following SQL code to create the `expense` table:
+
+```sql
+DROP TABLE IF EXISTS expense CASCADE;
+CREATE TABLE expense (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id),
+    history_id UUID UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT NOW() NULL,
+    title TEXT,
+    total_money INT4
+);
+```
+
+6. Execute the following SQL code to create the `history` table:
+
+```sql
+DROP TABLE IF EXISTS history CASCADE;
+CREATE TABLE history (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    user_id UUID REFERENCES auth.users(id),
+    expense_id UUID REFERENCES expense(history_id),
+    created_at TIMESTAMPTZ DEFAULT NOW() NULL,
+    source TEXT,
+    type TEXT DEFAULT 'income',
+    amount INT4
+);
+```
+
+7. Create bucket `profiles` for profile picture
+8. Inside `profiles` bucket, create folder `avatar`
+9. Create **policies** for tables and bucket
    1. soon..
 
 ## Contribution
